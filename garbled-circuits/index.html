@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="shortcut icon" href="&#x2F;favicon.ico"><title>Garbled Circuits | elijah.run</title>
+  <meta name="title" content="Garbled Circuits">
+<meta name="description" content="A blog about tech, media, and art">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="alternate" type="application/atom+xml" title="elijah.run" href="/atom.xml">
+  <style>
+    :root {
+    --width: 586px;
+    --font-main: Verdana, sans-serif;
+    --font-secondary: "Times New Roman", serif;
+    --font-scale: 1.1em;
+    --background-color: #fff;
+    --heading-color: #222;
+    --text-color: #444;
+    --link-color: #3273dc;
+    --visited-color: #8b6fcb;
+    --blockquote-color: #222;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background-color: #01242e;
+      --heading-color: #eee;
+      --text-color: #ddd;
+      --link-color: #8cc2dd;
+      --visited-color: #8b6fcb;
+      --blockquote-color: #ccc;
+    }
+  }
+
+  body {
+    font-family: var(--font-secondary);
+    font-size: var(--font-scale);
+    margin: auto;
+    padding: 20px;
+    max-width: var(--width);
+    text-align: left;
+    background-color: var(--background-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: var(--text-color);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-main);
+    color: var(--heading-color);
+  }
+
+  a {
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  nav a {
+    margin-right: 8px;
+  }
+
+  nav span.active {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  strong,
+  b {
+    color: var(--heading-color);
+  }
+
+  button {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  main {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px dashed;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  pre code {
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 0.875rem;
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: monospace;
+    padding: 2px;
+    border-radius: 3px;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: var(--code-color);
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px 0;
+    text-align: center;
+  }
+
+  .title:hover {
+    text-decoration: none;
+  }
+
+  .title h1 {
+    font-size: 1.5em;
+  }
+
+  .inline {
+    width: auto !important;
+  }
+
+  .highlight,
+  .code {
+    padding: 1px 15px;
+    background-color: var(--code-background-color);
+    color: var(--code-color);
+    border-radius: 3px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    overflow-x: auto;
+  }
+
+  /* blog post list */
+  ul.posts {
+    list-style-type: none;
+    padding: unset;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  ul.posts li {
+    line-height: 1;
+    margin: 0;
+  }
+
+  ul.posts li time {
+    margin-left: 0px;
+    font-size: 12px;
+  }
+
+  ul.posts li a:visited {
+    color: var(--visited-color);
+  }
+
+  li.post {
+    padding: 0px 0px 10px 0px;
+  }
+
+  span.tags {
+    font-size: smaller;
+  }
+
+  /* table of contents */
+  details ul {
+    list-style-type: circle;
+  }
+
+  </style>
+</head>
+<body>
+  <header>
+  <a href="/" class="title">
+    <h1>elijah.run</h1>
+  </a>
+  <nav aria-label="site">
+      <a href="/">(🏠 elijah.run)</a>
+      <a href="https:&#x2F;&#x2F;games.elijah.run">(🕹️ games)</a>
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;pop">(🐙 github 🐱)</a>
+      <a href="/Elijah Voigt.pdf">(👔 resume)</a>
+  </nav>
+</header>
+<h1>Garbled Circuits</h1>
+      <p>
+        <i>
+          <time datetime="2017-10-10T00:00:00+00:00" pubdate>Tue 10 Oct 2017</time>
+        </i>
+      </p>
+    <details open>
+      <summary>Table of contents</summary>
+    <ul>
+        <li>
+          <a href="/garbled-circuits/#2-party-secure-function-evaluation">2-Party Secure Function Evaluation</a>
+        </li>
+        <li>
+          <a href="/garbled-circuits/#garbling-a-gate">Garbling a gate</a>
+        </li>
+        <li>
+          <a href="/garbled-circuits/#problems-with-garbled-circuits">Problems with garbled circuits</a>
+        </li>
+        <li>
+          <a href="/garbled-circuits/#improvements-on-garbled-circuit-security">Improvements on garbled circuit security</a>
+        </li>
+        <li>
+          <a href="/garbled-circuits/#the-free-xor-optimization">The &quot;Free XOR&quot; Optimization</a>
+        </li>
+        <li>
+          <a href="/garbled-circuits/#annotated-bibliography">Annotated Bibliography</a>
+        </li>
+        <li>
+          <a href="/garbled-circuits/#errata">Errata</a>
+        </li>
+    </ul>
+    </details>
+  <main>
+    <span class="note">
+    <span class="note-title">
+        Note
+    </span>
+
+    <span class="note-body">
+        &lt;p&gt;This is a part of a series of blog posts I wrote for an Independent Study on cryptography at Oregon State University.
+To read all of the posts, check out the &#x27;Independent Crypto&#x27; tag.&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<p>Let's imagine you are a billionaire.
+You want to know if you have more money than your billionaire friend Bob, but for some reason it's <em>very</em> faux pas to let anybody know how much money you have, even your good friend Bob.</p>
+<p>But you're a billionaire!
+You're not used to the phrase "that isn't possible".
+In your frustration you try to figure out if you can use some of your billions to find a solution.</p>
+<p>The first solution you come up with is Trusty Tina.
+You tell Tina how much you make, Bob tells Tina how much he makes, and then Tina tells both of you who makes more.</p>
+<p>The only problem is that Tina isn't <em>that</em> trustworthy, her parent's just named her that.
+Like... you wouldn't trust her with your life or anything.
+You could pay her to keep your assets secret but Bob might pay her a bit more reveal your number to him.
+Tina reminds you of this so you have to pay her <em>more</em> to keep the secret, and eventually you have an arms-race type situation at hand.
+With your cunning accountant skills you can already tell that Tina might be more trouble than she's worth.</p>
+<p>If you won't tell Bob directly, and you can't depend on Manipulative Tina, is there <em>any</em> way to determine out who has more money?</p>
+<p>Yes.</p>
+<h2 id="2-party-secure-function-evaluation">2-Party Secure Function Evaluation</h2>
+<p>The problem above is the Millionaires problem<sup class="footnote-reference"><a href="#1">1</a></sup> and it is solved by the use of 2-party secure function evaluation (SFE).
+The general idea<sup class="footnote-reference"><a href="#2">2</a></sup> is that you have a function <code>f</code> which takes as input <code>x</code> and <code>y</code>.
+This function is garbled by one of the two parties into <code>f'</code> and the inputs are garbled into <code>x'</code> and <code>y'</code> by each of the parties.
+<code>f'(x', y') == f(x,y)</code> but does not leak any of the inputs, because <code>x</code> and <code>y</code> were obfuscated.</p>
+<p>In other words...</p>
+<ol>
+<li>Alice and Bob agree on a function (i.e., circuit) <code>f(a,b)</code>.</li>
+<li>Alice garbles the function (<em>cough</em> circuit) <code>f</code> and her input <code>a</code>.</li>
+<li>Alice sends <code>f'</code> and <code>a'</code> to Bob.</li>
+<li>Bob gets his input <code>b</code> garbled into <code>b'</code>.</li>
+<li>Bob evaluates <code>f'(a', b')</code>.</li>
+<li>This reveals the result of <code>f(a,b)</code> to Bob, but does not reveal
+Alice's input.</li>
+</ol>
+<span class="note">
+    <span class="note-title">
+        Note
+    </span>
+
+    <span class="note-body">
+        &lt;p&gt;The first half of this post focuses on honest garbled circuit uses,
+meaning both parties are acting honestly (and don&#x27;t pull any fast-ones).&lt;&#x2F;p&gt;
+&lt;p&gt;The latter portion focuses on problems with that &#x27;vanilla&#x27; garbled
+circuit implementation and potential solutions.&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<h2 id="garbling-a-gate">Garbling a gate</h2>
+<p>How does Alice actually... 'garble' a circuit?
+It sounds kinda dirty.</p>
+<p>Each gate (OR, AND, XOR, etc) has two inputs.
+Stick with me.
+Each input is encrypted.
+Keeping up?
+So you need a <em>key</em> to use <em>each gate</em>.
+It gets better.
+But if you have the keys, you don't know which key corresponds with a <code>1</code> or a <code>0</code> so you can compute a function without knowing the actual values you put in.
+Whoa.</p>
+<p>Let's use the OR gate as an example.</p>
+<p>Remember truth-tables for OR? Here's a reminder:</p>
+<table><thead><tr><th>OR</th><th><strong>0</strong></th><th><strong>1</strong></th></tr></thead><tbody>
+<tr><td><strong>0</strong></td><td>0</td><td>1</td></tr>
+<tr><td><strong>1</strong></td><td>1</td><td>1</td></tr>
+</tbody></table>
+<p>This table is going to be important for Alice's part of this dance.</p>
+<h3 id="alice-s-circuit-input">Alice's circuit &amp; input</h3>
+<p>Alice definitely does the heavy lifting in this transaction.</p>
+<ol>
+<li>Alice generates 4 keys <code>Kx0</code>, <code>Kx1</code>, <code>Ky0</code>, and <code>Ky1</code>.</li>
+<li>Alice creates four variables corresponding with the four values in the OR table:</li>
+</ol>
+<table><thead><tr><th>OR</th><th>0</th><th>1</th></tr></thead><tbody>
+<tr><td><strong>0</strong></td><td><code>B00</code> = 0</td><td><code>B01</code> = 1</td></tr>
+<tr><td><strong>1</strong></td><td><code>B10</code> = 1</td><td><code>B11</code> = 1</td></tr>
+</tbody></table>
+<ol start="3">
+<li>Each box is encrypted with the two keys:</li>
+</ol>
+<table><thead><tr><th>OR</th><th>0</th><th>1</th></tr></thead><tbody>
+<tr><td><strong>0</strong></td><td>`E(Kx0</td><td></td></tr>
+<tr><td><strong>1</strong></td><td>`E(Kx1</td><td></td></tr>
+</tbody></table>
+<ol start="4">
+<li>Alice sends these ciphertexts (unordered) to Bob.</li>
+</ol>
+<h3 id="bob-s-input">Bob's input</h3>
+<ol start="5">
+<li>Bob gets Alice's input, key <code>KxA</code>, from Alice.</li>
+<li>Bob uses oblivious transfer<sup class="footnote-reference"><a href="#3">3</a></sup> to get his input <code>KyB</code>.</li>
+<li>With these two keys Bob is able to process the circuit (an OR gate).</li>
+</ol>
+<p>Bob has enough information to get one of the four possible outputs of the circuit, but doesn't know if Alice's input is a 1 or a 0.</p>
+<p>Importantly, while Bob can share the output of the circuit, he should <strong>not</strong> share his input. That would make using OT (step 6) obtuse.</p>
+<h3 id="extending-the-garbled-gate">Extending the garbled gate</h3>
+<p><img src="/images/independent-crypto/garbled-circuit.jpg" alt="Garbled circuit example diagram" /></p>
+<span class="note">
+    <span class="note-title">
+        Note
+    </span>
+
+    <span class="note-body">
+        &lt;p&gt;The UTF-8 Padlock symbol doesn&#x27;t render on my browser because I seem to
+have gone back in the time to the late 90s. Being stuck in the past, we
+have to comprmise. The ⛨ symbol is meant to represent a lock and the ⚿
+represents a key.&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<p>Multiple gates can be connected together to build more complicated
+circuits. One important difference is that while each intermediate
+circuit still has four cipher-texts, for the four outcomes of a
+truth-table, those decrypt to a <em>key</em> and not a 1 or 0. The only gates
+which decrypt to a plain-text of 0 or 1 are output gates, not the
+intermediate gates.</p>
+<span class="note">
+    <span class="note-title">
+        Note
+    </span>
+
+    <span class="note-body">
+        &lt;p&gt;&lt;em&gt;PSST&lt;&#x2F;em&gt; Check out the end of this post for a &lt;strong&gt;GAME&lt;&#x2F;strong&gt;!&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<h2 id="problems-with-garbled-circuits">Problems with garbled circuits</h2>
+<p>There are a few important flaws in the <em>security</em> of garbled circuits as
+they have been described. The first is that although Alice and Bob agree
+on a circuit to garble there is no guarantee that the circuit one is
+evaluating (if you're Bob) is the circuit you agreed upon.</p>
+<p>For example:</p>
+<ol>
+<li>Alice and Bob 'agree' on a function <code>f(a,b)</code>.</li>
+<li>Alice creates her own function <code>g(a,b)</code>.</li>
+<li>Alice garbles <code>g</code> and her input <code>a</code> and sends it to Bob as <code>f'</code> and <code>a'</code>.</li>
+<li>Bob evaluates <code>g'(a',b')</code> and reveals the output to Alice.
+Alice now knows something other than than Bob agreed to.</li>
+</ol>
+<h2 id="improvements-on-garbled-circuit-security">Improvements on garbled circuit security</h2>
+<p>To prevent the above adversarial attack we do something called "Cut-and-Choose".
+This is when Bob checks Alice's work to make sure she's not cheating.</p>
+<p>Remember that Alice and Bob agreed on a given circuit.</p>
+<ol>
+<li>Alice generates M garbled circuits for the agreed upon function where M &gt; 1.</li>
+<li>All secrets for a randomly chosen N circuits are revealed where 1 ≤ N &lt; M, the circuits are "opened".</li>
+<li>Bob selects one of the remaining M-N circuits to evaluate as outlined earlier.</li>
+</ol>
+<p>This ensures that Alice is not nefarious to some statistical certainty.
+She had control over how the circuits were garbled but she does not have control over which are revealed or evaluated.
+If she made one (or two or three...) nefarious circuits that bad behavior is <em>probably</em> revealed in step 2, if all the checked circuits are good Alice is <em>probably</em> being honest.</p>
+<p>This doesn't break garbled circuits for the following reasons:</p>
+<ul>
+<li>While Alice reveals the secrets of the N circuits, she doesn't reveal anything about her input.
+We are only un-garbling the circuit not the inputs (revealing all possible inputs, not Alice's).</li>
+<li>We're not un-garbling the M-N circuits which may be evaluated, so those are still secret.</li>
+</ul>
+<p>As M grows and N approaches M this method gets more secure at the cost of computation cycles and bandwidth in transferring the garbled circuits.</p>
+<h2 id="the-free-xor-optimization">The "Free XOR" Optimization</h2>
+<p>I'm definitely not a circuits person.
+You can show me a circuit diagram and I'll say
+"Yep, that's a circuit. What's it do?"
+I couldn't even even identify which gate is which without Wikipedia.</p>
+<p>I was told during my research for this post that XOR gates are very popular with garbled circuit design, and more broadly circuit design in
+general.
+This was shared to me in the form of a cryptic hint so I figured I'd investigate and share my findings here.</p>
+<p>As it turns out the Wikipedia page notes that this XOR optimization exists and even cites the original paper published on the topic.<sup class="footnote-reference"><a href="#4">4</a></sup></p>
+<p>The jist of this optimization is that one can very efficiently garble an XOR gate such that the output of the gate is encoded as the XOR of the keys used to unlock the gate and some known global constant.
+This is in contrast with the implementations discussed in the beginning where each gate had to be decrypted with two cipher-texts and revealed another key.</p>
+<p>Basically using XOR, which is pretty fast, we can avoid generating four keys per gate and instead craft 1 key which is produced as the result of 'unlocking' a gate.</p>
+<p>Put a bit more formally:</p>
+<blockquote>
+<p>Given a gate G with input wires A and B and output wire C and a random string R, the garbled gate is obtained by XORing the garbled gates inputs C<sup>1</sup> = C<sup>0</sup> ⊕ R:</p>
+<blockquote>
+<p>C<sup>0</sup> = A<sup>0</sup> ⊕ B<sup>0</sup> = (A<sup>0</sup> ⊕ R ) ⊕ (B<sup>0</sup> ⊕ R) = A<sup>1</sup> ⊕ B<sup>1</sup>
+C<sup>1</sup> = C<sup>0</sup> ⊕ R = A<sup>0</sup> (B<sup>0</sup> ⊕ R) = A<sup>0</sup> ⊕ B<sup>1</sup> = (A<sup>0</sup> ⊕ R) ⊕ B<sup>0</sup> = A<sup>1</sup> ⊕ B<sup>0</sup></p>
+</blockquote>
+</blockquote>
+<span class="note">
+    <span class="note-title">
+        Note
+    </span>
+
+    <span class="note-body">
+        &lt;p&gt;LETTER&lt;sup&gt;{0,1}&lt;&#x2F;sup&gt; is short-hand for the True or False output of the
+given gate.&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<p>This isn't super intuitive, and honestly I just put those equations up there to prove that I read a paper about this.</p>
+<p>The main takeaway is that 'free XOR' saves us computation generating and processing cryptographic keys by simply performing the XOR operation.
+This optimization is so powerful that using <em>mostly</em> XOR gates makes garbled circuits notably faster and more useful for secure computation.<sup class="footnote-reference"><a href="#5">5</a></sup></p>
+<h2 id="annotated-bibliography">Annotated Bibliography</h2>
+<p>Foundations of Garbled Circuits<sup class="footnote-reference"><a href="#6">6</a></sup> This is by far the most thorough academic source I have.
+If I had a better foundation in academic reading this might be the perfect paper but most of it went way over my head.
+That said the overview of each section was fairly human-readable and gave me a good rough overview for many of the topics covered in this post.</p>
+<p>A Brief History of Practical Garbled Circuits<sup class="footnote-reference"><a href="#7">7</a></sup> This was the first source I checked out to get a feel for how difficult garbled circuits are as a topic.
+It quickly glanced at the basics of garbled circuits and then quickly went into the optimizations on garbled circuits.
+This was overwhelming, but as I started to learn more about garbled circuits and filled in the knowledge gaps it gained significant value.</p>
+<p>It's a great talk about Garbled Circuits which wasn't ideal for beginners, but did give me a good breadth of the topic and what I could dive into.</p>
+<p>Improved garbled Circuit: Free XOR Gates and Applications<sup class="footnote-reference"><a href="#8">8</a></sup>
+This paper was useful in giving me an academic preview of the XOR optimization in Garbled Circuits.
+I quickly started looking at the many other papers referenced by this one, kind of like following down the Wikipedia wormhole, but with more PDFs and less pictures.</p>
+<p>SFE: Yao's Garbled Circuit<sup class="footnote-reference"><a href="#9">9</a></sup>
+This slide-deck was very useful as a reference for basic GCs and securing GC's with cut-and-choose.
+It wasn't a great initial source for this material, but it was useful <em>after</em> I had a basic understanding of a topic to solidify it with pretty pictures and Comic Sans.</p>
+<p>Mike Rosulek on Stack Exchange[^10]<sup class="footnote-reference"><a href="#11">10</a></sup>
+This is more of a shout-out than a citation.
+Mike Rosulek's posts on crypto.stackexchange.com were very helpful in breaking down core concepts like what garbled circuits are and why XOR is "free".
+They also provided a good list of further reading which was helpful in addition to the resources provided in the syllabus.</p>
+<h2 id="errata">Errata</h2>
+<iframe src="/garbled-circuits-game.html" height="400px" width="100%"></iframe>
+<span class="note">
+    <span class="note-title">
+        Note
+    </span>
+
+    <span class="note-body">
+        &lt;p&gt;Yes, the name is a misnomer. The goal is to &lt;em&gt;evaluate&lt;&#x2F;em&gt; a garbled
+circuit, but that just doesn&#x27;t roll off the tongue the same.&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>The original problem was developed in the 80's.
+This post adjusts the scenario for inflation.</p>
+</div>
+<div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
+<p>To completely level with you, it's been anecdotally proven that there is at least 1 definition of Garbled Circuits for each paper on the topic.</p>
+</div>
+<div class="footnote-definition" id="3"><sup class="footnote-definition-label">3</sup>
+<p>Oblivious Transfer has been described to me as:</p>
+<ul>
+<li>Alice sends two possible options to a box labeled OT.</li>
+<li>Bob sends a choice to the box labeled OT.</li>
+<li>Bob gets back one of the two options, without knowledge of the
+other.</li>
+<li>Alice does not know which option Bob got.</li>
+</ul>
+<p>This is a cryptographic primitive which is very useful for tasks like generating Bob's input to the garbled circuit <code>f'</code>.</p>
+</div>
+<div class="footnote-definition" id="4"><sup class="footnote-definition-label">4</sup>
+<p>Improved garbled Circuit: Free XOR Gates and Applications, Written by Vladimir Kolesnikov and Thomas Shneider, Published July 2008. <a href="http://www.cs.toronto.edu/~vlad/papers/XOR_ICALP08.pdf">http://www.cs.toronto.edu/~vlad/papers/XOR_ICALP08.pdf</a></p>
+</div>
+<div class="footnote-definition" id="5"><sup class="footnote-definition-label">5</sup>
+<p>A Brief History of Practical Garbled Circuit Optimizations, Presented by Mike Rosulek, Published by the Simons Institute, June 15, 2015. <a href="https://youtu.be/FTxh908u9y8">https://youtu.be/FTxh908u9y8</a></p>
+</div>
+<div class="footnote-definition" id="6"><sup class="footnote-definition-label">6</sup>
+<p>Foundations of Garbled Circuits, Written by Mihir Bellare, Viet tung Hoang, and Phillip Rogaway, Published October, 2012. <a href="https://eprint.iacr.org/2012/265.pdf">https://eprint.iacr.org/2012/265.pdf</a></p>
+</div>
+<div class="footnote-definition" id="7"><sup class="footnote-definition-label">7</sup>
+<p>A Brief History of Practical Garbled Circuit Optimizations, Presented by Mike Rosulek, Published by the Simons Institute, June 15, 2015. <a href="https://youtu.be/FTxh908u9y8">https://youtu.be/FTxh908u9y8</a></p>
+</div>
+<div class="footnote-definition" id="8"><sup class="footnote-definition-label">8</sup>
+<p>Improved garbled Circuit: Free XOR Gates and Applications, Written by Vladimir Kolesnikov and Thomas Shneider, Published July 2008. <a href="http://www.cs.toronto.edu/~vlad/papers/XOR_ICALP08.pdf">http://www.cs.toronto.edu/~vlad/papers/XOR_ICALP08.pdf</a></p>
+</div>
+<div class="footnote-definition" id="9"><sup class="footnote-definition-label">9</sup>
+<p>SFE: Yao's Garbled Circuit, Published by engr.illinois.edu, for the course CS 598, Fall 2009. <a href="https://courses.engr.illinois.edu/cs598man/fa2009/slides/ac-f09-lect16-yao.pdf">https://courses.engr.illinois.edu/cs598man/fa2009/slides/ac-f09-lect16-yao.pdf</a></p>
+</div>
+<div class="footnote-definition" id="10"><sup class="footnote-definition-label">11</sup>
+<p>What exactly is a "garbled circuit"? Asked by user Ella Rose, Answered by user Mikero on on July 27, 2016. <a href="https://crypto.stackexchange.com/a/37993">https://crypto.stackexchange.com/a/37993</a></p>
+</div>
+<div class="footnote-definition" id="11"><sup class="footnote-definition-label">10</sup>
+<p>Why XOR and NOT is free in garbled circuits Asked by user Jason, Answered by user Mikero on February 28, 2017. <a href="https://crypto.stackexchange.com/a/44278">https://crypto.stackexchange.com/a/44278</a></p>
+</div>
+
+  </main>
+  <p>
+        Tags:
+          <a href="/tags/independent-crypto/">#independent crypto</a>
+  </p>
+<footer>
+  Made with <a href="https://www.getzola.org/">Zola</a>;
+  theme inspired by <a href="https://codeberg.org/alanpearce/zola-bearblog">Zola ʕ•ᴥ•ʔ Bear</a>.
+</footer>
+</body>
+</html>

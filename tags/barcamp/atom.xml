@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>elijah.run - barcamp</title>
+    <subtitle>A blog about tech, media, and art</subtitle>
+    <link rel="self" type="application/atom+xml" href="/tags/barcamp/atom.xml"/>
+    <link rel="alternate" type="text/html" href="/"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2015-10-12T00:00:00+00:00</updated>
+    <id>/tags/barcamp/atom.xml</id>
+    <entry xml:lang="en">
+        <title>CatBarcamp 2015</title>
+        <published>2015-10-12T00:00:00+00:00</published>
+        <updated>2015-10-12T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/cat-barcamp-2015/"/>
+        <id>/cat-barcamp-2015/</id>
+        
+        <content type="html" xml:base="/cat-barcamp-2015/">&lt;p&gt;This weekend I went to &lt;a href=&quot;http:&#x2F;&#x2F;catbarcamp.org&#x2F;&quot;&gt;Cat Barcamp 2015&lt;&#x2F;a&gt;, an unconference run by the PSU &lt;a href=&quot;http:&#x2F;&#x2F;cat.pdx.edu&#x2F;&quot;&gt;Computer Action Team&lt;&#x2F;a&gt;.
+I went to some awesome talks (and gave one myself).&lt;&#x2F;p&gt;
+&lt;p&gt;I enjoyed every talk I went to. Here they are in order:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;History of Cryptography.&lt;&#x2F;strong&gt;
+This was given by one of my OSL co-workers.
+It didn&#x27;t contain a ton of new information for me, but was delivered very well and focused on different types of cryptography and the context in which each one was developed.
+I enjoyed it.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Haskell on Steroids.&lt;&#x2F;strong&gt;
+I kinda checked out during this talk because I wanted to write my slides... Wooops.
+It looked very interesting and mathey though...&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Introduction to Test Driven Development in Power Shell.&lt;&#x2F;strong&gt;
+Whoa Windows
+(actually though, I learned more about Power Shell than I ever expected to know).&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;MY TALK.&lt;&#x2F;strong&gt;
+&lt;a href=&quot;&#x2F;cat-barcamp-2015&#x2F;#my-talk&quot;&gt;(see below)&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;A Whirlwind Tour of Lojban.&lt;&#x2F;strong&gt;
+Lojban seems like a cool language. Corbin (previous LUG president) gave this talk, he&#x27;s a cool guy... you might even say he&#x27;s TheMostAwesomeDude.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Adventures in IT Security: Then and now.&lt;&#x2F;strong&gt;
+I like history.
+I also like computers.
+This was a good talk.
+I am biased.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Talking to people! (or, How I learned to stop worrying and love the user.)&lt;&#x2F;strong&gt;
+Spoiler: The secret is understanding social cues.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h2 id=&quot;my-talk&quot;&gt;My Talk&lt;&#x2F;h2&gt;
+&lt;p&gt;I decided on the spur of the moment to give a talk &#x27;How to Write a (very mediocre) Static Site Generator&#x27; and with only 40 minutes of prep work I was able to fill an hour pretty well.&lt;&#x2F;p&gt;
+&lt;p&gt;Here are some links from that:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;The &lt;a href=&quot;https:&#x2F;&#x2F;gist.github.com&#x2F;ElijahCaine&#x2F;0ee1ef21692f3cbb6934&quot;&gt;demo code&lt;&#x2F;a&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;The &lt;a href=&quot;http:&#x2F;&#x2F;elijahcaine.me&#x2F;catbarcamp2015-demo&#x2F;&quot;&gt;abomination of a website&lt;&#x2F;a&gt; we built between the demo and the end of the session (epilepsy warning... no seriously).&lt;&#x2F;li&gt;
+&lt;li&gt;The &lt;a href=&quot;http:&#x2F;&#x2F;slides.elijahcaine.me&#x2F;cat-barcamp-2015_how-to-an-ssg&#x2F;&quot;&gt;very sparse slides&lt;&#x2F;a&gt;.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;tldr&quot;&gt;TLDR&lt;&#x2F;h2&gt;
+&lt;p&gt;The CAT is an awesome group of people.
+I&#x27;m glad I was able to get a few LUG members to come to the event.
+If I went to PSU I would be honored to work with the CAT.
+They throw a hellofan event.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

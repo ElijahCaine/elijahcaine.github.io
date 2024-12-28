@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="shortcut icon" href="&#x2F;favicon.ico"><title>Memory Hard Functions | elijah.run</title>
+  <meta name="title" content="Memory Hard Functions">
+<meta name="description" content="A blog about tech, media, and art">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="alternate" type="application/atom+xml" title="elijah.run" href="/atom.xml">
+  <style>
+    :root {
+    --width: 586px;
+    --font-main: Verdana, sans-serif;
+    --font-secondary: "Times New Roman", serif;
+    --font-scale: 1.1em;
+    --background-color: #fff;
+    --heading-color: #222;
+    --text-color: #444;
+    --link-color: #3273dc;
+    --visited-color: #8b6fcb;
+    --blockquote-color: #222;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background-color: #01242e;
+      --heading-color: #eee;
+      --text-color: #ddd;
+      --link-color: #8cc2dd;
+      --visited-color: #8b6fcb;
+      --blockquote-color: #ccc;
+    }
+  }
+
+  body {
+    font-family: var(--font-secondary);
+    font-size: var(--font-scale);
+    margin: auto;
+    padding: 20px;
+    max-width: var(--width);
+    text-align: left;
+    background-color: var(--background-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: var(--text-color);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-main);
+    color: var(--heading-color);
+  }
+
+  a {
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  nav a {
+    margin-right: 8px;
+  }
+
+  nav span.active {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  strong,
+  b {
+    color: var(--heading-color);
+  }
+
+  button {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  main {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px dashed;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  pre code {
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 0.875rem;
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: monospace;
+    padding: 2px;
+    border-radius: 3px;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: var(--code-color);
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px 0;
+    text-align: center;
+  }
+
+  .title:hover {
+    text-decoration: none;
+  }
+
+  .title h1 {
+    font-size: 1.5em;
+  }
+
+  .inline {
+    width: auto !important;
+  }
+
+  .highlight,
+  .code {
+    padding: 1px 15px;
+    background-color: var(--code-background-color);
+    color: var(--code-color);
+    border-radius: 3px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    overflow-x: auto;
+  }
+
+  /* blog post list */
+  ul.posts {
+    list-style-type: none;
+    padding: unset;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  ul.posts li {
+    line-height: 1;
+    margin: 0;
+  }
+
+  ul.posts li time {
+    margin-left: 0px;
+    font-size: 12px;
+  }
+
+  ul.posts li a:visited {
+    color: var(--visited-color);
+  }
+
+  li.post {
+    padding: 0px 0px 10px 0px;
+  }
+
+  span.tags {
+    font-size: smaller;
+  }
+
+  /* table of contents */
+  details ul {
+    list-style-type: circle;
+  }
+
+  </style>
+</head>
+<body>
+  <header>
+  <a href="/" class="title">
+    <h1>elijah.run</h1>
+  </a>
+  <nav aria-label="site">
+      <a href="/">(🏠 elijah.run)</a>
+      <a href="https:&#x2F;&#x2F;games.elijah.run">(🕹️ games)</a>
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;pop">(🐙 github 🐱)</a>
+      <a href="/Elijah Voigt.pdf">(👔 resume)</a>
+  </nav>
+</header>
+<h1>Memory Hard Functions</h1>
+      <p>
+        <i>
+          <time datetime="2017-10-17T00:00:00+00:00" pubdate>Tue 17 Oct 2017</time>
+        </i>
+      </p>
+    <details open>
+      <summary>Table of contents</summary>
+    <ul>
+        <li>
+          <a href="/memory-hard-functions/#problem-storing-passwords-is-hard">Problem: storing passwords is hard</a>
+        </li>
+        <li>
+          <a href="/memory-hard-functions/#solution-1-add-salt">Solution 1: add salt</a>
+        </li>
+        <li>
+          <a href="/memory-hard-functions/#solution-2-h-h-h-x">Solution 2: H(H(..H(x)..)</a>
+        </li>
+        <li>
+          <a href="/memory-hard-functions/#solution-3-memory-hard-functions">Solution 3: Memory Hard Functions</a>
+        </li>
+        <li>
+          <a href="/memory-hard-functions/#scrypt-a-wild-mhf">scrypt: a wild MHF</a>
+        </li>
+        <li>
+          <a href="/memory-hard-functions/#data-independent-mhfs-imhfs">Data-independent MHFs (iMHFs)</a>
+        </li>
+        <li>
+          <a href="/memory-hard-functions/#pebbling-a-directed-acyclic-graph-dag">Pebbling a Directed Acyclic Graph (DAG)</a>
+        </li>
+        <li>
+          <a href="/memory-hard-functions/#attacks-on-imhfs">Attacks on iMHFs</a>
+        </li>
+        <li>
+          <a href="/memory-hard-functions/#conclusion">Conclusion</a>
+        </li>
+        <li>
+          <a href="/memory-hard-functions/#annotated-bibliography">Annotated Bibliography</a>
+        </li>
+        <li>
+          <a href="/memory-hard-functions/#errata">Errata</a>
+        </li>
+    </ul>
+    </details>
+  <main>
+    <span class="note">
+    <span class="note-title">
+        Note
+    </span>
+
+    <span class="note-body">
+        &lt;p&gt;This is a part of a series of blog posts I wrote for an Independent
+Study on cryptography at Oregon State University. To read all of the
+posts, check out the &#x27;Independent Crypto&#x27; tag.&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<h2 id="problem-storing-passwords-is-hard">Problem: storing passwords is hard</h2>
+<p>You're a system administrator and -- oh no! A hacker stole your database!</p>
+<p>Well, not yet... but they <em>could</em>.
+Once you get popular enough it's bound to happen.<sup class="footnote-reference"><a href="#1">1</a></sup> Can you make sure your users data is safe <strong>when</strong> that happens?</p>
+<p>When you store passwords in a database you never store them in plain text.
+Instead, you store a <a href="https://en.wikipedia.org/wiki/Hash_function">hash</a> of that password.
+For example:</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>Password: 12345678
+</span><span>sha256sum (hash): 2634c3097f98e36865f0c572009c4ffd73316bc8b88ccfe8d196af35f46e2394
+</span></code></pre>
+<p>The hash is generated when the user tries to login.
+The <em>hash</em> of the password the user sends at login is compared against the corresponding password hash for that user.
+If it matches that means the user sent the right password and so they are authenticated.</p>
+<p>What happens if the hacker pre-computes a bunch of popular passwords?
+This might sound crazy, but there are lots of people that re-use passwords, like <code>123456</code>.
+The hacker can pre-compute the hash for the 1,000,000 most popular passwords and more or less reverse-search for any user's password once they have a database dump.</p>
+<h2 id="solution-1-add-salt">Solution 1: add salt</h2>
+<p>Our first naive solution to solve this problem is to make the adversary's life harder by adding <em>salt</em> to our passwords.
+This is a piece of known information which is added to the password so adversaries can't pre-compute a hash-table, they have to compute this after they have the database and figure out the salt.
+For example:</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>Password: 12345678
+</span><span>Salt: cryptoHeckYeah!
+</span><span>New Password: 12345678cryptoHeckYeah!
+</span><span>sha256sum: 6e8a7780df48a0b687e9e272e8d082f5f4c0c3a8c43b63461c3f62618b111e9d
+</span></code></pre>
+<p>Unfortunately we live in 2017 and Graphics processors and <a href="https://en.wikipedia.org/wiki/Application-specific_integrated_circuit">ASICs</a> are cheap and can compute sha256sums <strong>super fast</strong> for <strong>really cheap</strong>.
+This means that it might be more of a pain, but the adversary can still crack a password with relative ease and efficiency because they've got a computer <em>designed</em> to generate lots of hashes.
+Curses.</p>
+<h2 id="solution-2-h-h-h-x">Solution 2: H(H(..H(x)..)</h2>
+<p>Computing a single sha256sum is easy, but what if the hacker had to compute like... 1000 sha256sums for each password!
+That sounds pretty hard... right?
+If we compute the hash of the hash of the hash (etc) it would take like... 1000x longer to compute each user's password.
+Something like this:</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>p = &#39;12345678cryptoHeckYeah!&#39;
+</span><span>for x in 1..1000
+</span><span>  p = sha256sum( p )
+</span><span>end
+</span><span>return p
+</span><span>
+</span><span>Result: 47c76630def739ede9c05fd974065b1200d4712aa2421eefb1f6b241a1ca6bea
+</span><span>Time: 0m1.547s
+</span></code></pre>
+<p>Unfortunately this hurts more than it helps.</p>
+<p>In bash on non-specialized hardware, this took about 1.6 seconds.
+On specialized hardware, written in a systems programming language, and implemented in parallel it'd be much less costly for an adversary to crack passwords hashed this way.</p>
+<p>Worst of all, this is <em>easier for an adversary to compute than it is for the the "good guys"</em> because the non-malicious actor is using generalized hardware and the adversary is using specialized hardware to compute the hashes.
+It's like trying to beat a Roadster in a drag race when you're behind the wheel of a Minivan; the Minivan ("good guys") <em>can't win</em> because they weren't built for drag races.</p>
+<h2 id="solution-3-memory-hard-functions">Solution 3: Memory Hard Functions</h2>
+<p>The big problem we have is that CPUs can be specialized to crack passwords <em>very quickly</em>.
+No matter how fast your AWS EC2 instance is, or even that top of the line IBM server you just bought, it will <em>never</em> be faster than a cheap custom designed ASIC.
+At around 3000$/box it won't break the adversary's bank to break into yours.<sup class="footnote-reference"><a href="#2">2</a></sup></p>
+<p>While there specialized hash-cracking CPUs <strong>do</strong> exist, specialized hash-cracking <em>memory</em> does <strong>not</strong> exist.<sup class="footnote-reference"><a href="#3">3</a></sup>
+If we were to create an algorithm which depends on lots of memory, instead of lots of CPU cycles, we could "level the playing field".
+This should help stop adversaries from reversing passwords as fast as they currently can.</p>
+<p>This theoretical hash-function is called a Memory Hard Function (MHF).
+These are difficult to perform unless you have a certain threshold of memory.
+As a result non-malicious actors can perform a hash in M seconds and it will take a malicious actor <em>at least</em> M seconds to perform the same hash.</p>
+<span class="note">
+    <span class="note-title">
+        Note
+    </span>
+
+    <span class="note-body">
+        &lt;p&gt;TLDR: We want a hash function that takes as long for an adversary to
+compute as it does for the &quot;good guys&quot; to compute. Since nobody has
+specialized hash-cracking RAM we should be able to create a hash
+function which is memory-intensive and fits our criteria. If we have a
+function that fits this we will have got a &lt;em&gt;Memory hard Function&lt;&#x2F;em&gt; (MHF).&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<h2 id="scrypt-a-wild-mhf">scrypt: a wild MHF</h2>
+<p>scrpyt is a key derivation function <a href="http://www.tarsnap.com/scrypt.html">developed for the Tarsnap project</a>.
+It was designed explicitly to solve this problem and has some pretty impressive results.
+Some especially impressive results include:</p>
+<ul>
+<li>scrypt is about 2<sup>5</sup> times more expensive to attack for logins than bcrypt.</li>
+<li>scrypt is about 2<sup>15</sup> times more espensive to attack for logins than MD5 CRYPT.</li>
+<li>scrypt is about 2<sup>37</sup> times more expensive to attack for file encryption than MD5.</li>
+</ul>
+<p>scrypt also happens to be a MHF.
+Yay we found one!</p>
+<p>So... how does it work?</p>
+<p>Given a hash function H, an input B, and an integer N, compute:</p>
+<blockquote>
+<p>V<sub>i</sub> = H<sup>i</sup>(B), given 0 ≤ i &lt; N,</p>
+</blockquote>
+<p>and</p>
+<blockquote>
+<p>X = H<sup>N</sup>(B)</p>
+</blockquote>
+<p>then iterate</p>
+<blockquote>
+<ul>
+<li>j &lt;- Integrify(X) mod N</li>
+<li>X &lt;- H(X ⊕ V<sub>j</sub>)</li>
+</ul>
+<p>N times; and output X</p>
+<p>The function Integrify can be any bijection<sup class="footnote-reference"><a href="#4">4</a></sup> from {0,1}<sup>k</sup>
+to {0...2<sup>k</sup> - 1}.</p>
+</blockquote>
+<p>Breaking that down a bit:</p>
+<ul>
+<li>The function is given a different hash function (H), an input to compute the hash of (B), and a modulus (N).</li>
+<li>N hashes are generated with variations of H and the input B called V<sub>0..N</sub>.</li>
+<li>X is initialized with a hash value and a loop begins:
+<ol>
+<li>j is set to a psuedo-random integer mod N.</li>
+<li>X is set to the hash of the existing X value xor'd with one of the V values.</li>
+</ol>
+</li>
+<li>Loop N times and output the final X.</li>
+</ul>
+<p>One of the biggest gripes with scrypt is that it has a very predictable runtime.
+This means that the running of the function is predictable based on the user's input and so can be victim to a cache-timing side-channel attack.
+We won't be able to get into what this attack means, but basically you can say "scrypt is good, but not perfect".</p>
+<h2 id="data-independent-mhfs-imhfs">Data-independent MHFs (iMHFs)</h2>
+<p><img src="/images/independent-crypto/DAG.gif" alt="A directed acyclic graph map." /></p>
+<p>iMHFs are supposed to solve the problem that scrypt has (side-channel attacks) by have unpredictable runtimes which still result in the same output.</p>
+<p>iMHFs can be thought of as Directed Acyclic Graphs (DAGs) which are traversed during runtime.</p>
+<p>Some specifics:</p>
+<ul>
+<li>The function depends on a random oracle H: {0,1}<sup>2k</sup> -&gt; {0,1}<sup>k</sup></li>
+<li>The function provides a Directed Acyclic Graph Directed Acyclic Graph (DAG) G used to encode data-dependencies</li>
+<li>The initial input is a password and a salt.</li>
+<li>Each other node is labeled with the hash of it's parent nodes.</li>
+<li>The output is the hash of the value of the last node.</li>
+</ul>
+<p>As mentioned before, a very nice feature of iMHFs is that their memory usage pattern does not depend on the user's input (password) and so is not vulnerable to side-channel attacks.</p>
+<h2 id="pebbling-a-directed-acyclic-graph-dag">Pebbling a Directed Acyclic Graph (DAG)</h2>
+<p><img src="/images/independent-crypto/dag-animated.gif" alt="A directed acyclic graph traversal." /></p>
+<p>We can think of the process of computing the output of an iMHF as pebbling a graph where:</p>
+<ul>
+<li>Computing the value of a node is to pebble it.</li>
+<li>There are rules about which nodes can be pebbled at any time.</li>
+<li>When a pebble is removed from a node it is freed from memory.</li>
+<li>Our goal is to pebble the last node.</li>
+</ul>
+<p>Rules:</p>
+<ul>
+<li>We can only place a pebble on a node if we have pebbles on all of it's parents nodes.</li>
+<li>Our goal is to get to the sink node (exit node).</li>
+</ul>
+<p>The naive pebbling algorithm, the one the 'good guy' user would utilize is as follows:</p>
+<ul>
+<li>Only one pebble can be placed per time-step.</li>
+<li>The graph is pebbled in in topological order.</li>
+<li>Pebbles (calculated nodes) are never discarded until the end of the function.</li>
+<li>Expected cost: scales with n<sup>2</sup> where n is the number of nodes.</li>
+</ul>
+<p>This does take up considerable resources, but it isn't prohibitive for users on commodity hardware.
+This means it won't take <em>too long</em> to get your account authenticated.
+More importantly, it will take about as long for the bad guys to calculate a token as it took you to calculate a token, as opposed to a small fraction it would take if this was a "normal" hash function.</p>
+<h2 id="attacks-on-imhfs">Attacks on iMHFs</h2>
+<p>An attack is defined as when cost of calculating a hash from an iMHF is lower than via the nieve approach.</p>
+<p>The general idea of an iMHF attack is that it has two phases: light phase and balloon phase.</p>
+<h3 id="light-phase">Light Phase</h3>
+<p>In the light phase the algorithm races through the DAG discarding as many pebbles as possible, essentially performing a breadth first search for the end of the graph, computing nodes in parallel when possible.
+Once a node is computed and it isn't immediately needed it is discarded.</p>
+<p>If the DAG were a straight line from beginning to end this would be fairly memory efficient.</p>
+<h3 id="balloon-phase">Balloon Phase</h3>
+<p>In the balloon phase the algorithm has 'hit a wall' and back-computes the nodes it needs to compute the next node whose parent's have already been discarded.
+This causes a slow-down.</p>
+<p>An attack described like this has the following complexity:</p>
+<blockquote>
+<p>E<sub>R</sub>(A) = O(en + √(n<sup>3</sup>d))</p>
+</blockquote>
+<p>For small values of e and d this results in an attack as:</p>
+<blockquote>
+<p>E<sub>R</sub>(A) = O(n<sup>2</sup>) for e,d = O(n)</p>
+</blockquote>
+<p>Preventing against this type of attack is where much of the research into iMHF's is focused.
+An ideal iMHF DAG minimize the disparity between the attackers compute time and the "good guy's" compute time.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>This has been a rough overview of Memory Hard functions, how they work, and how variations of MHFs differ.</p>
+<p>MHFs are functions which remove the advantage that adversaries have to crack passwords by depending heavily on memory.
+This reduces the adversary's advantage if they have an ASIC or GPU processor(s) to brute-force a password crack and ought to make it very difficult (ideally <em>impractical</em>) for adversaries to crack a password hashed with an MHF.</p>
+<p>Some existing MHFs, like scrypt, are vulnerable to side-channel attacks so iMHFs have been theorized which do not have a predictable runtime and so are not vulnerable to side-channel attacks.
+No iMHFs exist yet, however many functions have been developed with get <em>close</em> and offer many of the benefits of iMFHs.
+Some of these include Argon2i, Catena, and Balloon hashing, which we did not cover in this post.</p>
+<h2 id="annotated-bibliography">Annotated Bibliography</h2>
+<p>Conference Presentations by Jeremiah Blocki[^5][^6]<sup class="footnote-reference"><a href="#7">5</a></sup> The video presentations online by Jeremiah were a very important resource for getting a grasp on what MHFs are, and more specifically what iMHFS and how they worked.
+The three videos cited in this post cover largely the same content and present the material, including the problem, naive solution, MHF solution, iMFH solution, and possible attacks against iMHFs in about 30 minutes.
+I like to think I'm pretty good at public speaking, but this material was very complicated and presented in a very digestible format.</p>
+<p>I cannot stress enough how useful these videos were.
+I learned an incredible amount from these videos and referenced them for the majority of this content.</p>
+<p>Strict Memory Hard Hashing Functions<sup class="footnote-reference"><a href="#8">6</a></sup>
+This paper was very short and presented some essential knowledge to discuss the differences between MHFs and iMHFs.
+I didn't directly use or reference this content, however it did present an easily understandable academic definition and comparison of iMHF compared to MHFs.</p>
+<p>Practical Graphs for Optimal Side-Channel Resistant Memory-Hard Functions<sup class="footnote-reference"><a href="#9">7</a></sup>
+This paper was used in the writing of this post, however it was very long and dense, so it was never directly cited.</p>
+<p>scrypt: A new key derivation function<sup class="footnote-reference"><a href="#10">8</a></sup>
+This was the soul reference for the scrypt section of this post.
+There is an academic paper published too, but the slides were simple and presented all of the same knowledge (I think) sans any proofs.</p>
+<p>If I feel an existential hole in my heart I might read the proofs, but in the interest of time I chose not to right now.</p>
+<h2 id="errata">Errata</h2>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p><a href="https://haveibeenpwned.com/PwnedWebsites">https://haveibeenpwned.com/PwnedWebsites</a></p>
+</div>
+<div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
+<p>Antminer "Bitcoin Miner" <a href="http://a.co/2E20HW8">http://a.co/2E20HW8</a></p>
+</div>
+<div class="footnote-definition" id="3"><sup class="footnote-definition-label">3</sup>
+<p>Yet.</p>
+</div>
+<div class="footnote-definition" id="4"><sup class="footnote-definition-label">4</sup>
+<p>Bijection: A function which creates a 1-to-1 relationship between inputs and outputs.</p>
+</div>
+<div class="footnote-definition" id="5"><sup class="footnote-definition-label">9</sup>
+<p>Efficiently Computing Data Independent Memory Hard Functions (Video) Joël Alwen and Jeremiah Blocki, Crypto 2016, September 26, 2016, <a href="https://youtu.be/ujpvPtn_N5Y">https://youtu.be/ujpvPtn_N5Y</a></p>
+</div>
+<div class="footnote-definition" id="6"><sup class="footnote-definition-label">10</sup>
+<p>Towards a Theory of Data-Independent Memory Hard Functions (Video), Jeremiah Blocki with Joel Alwen, Krzysztof Pietrzak 2017, Real World Crypto conference, February 1, 2017, <a href="https://youtu.be/YtfVLzUkwME">https://youtu.be/YtfVLzUkwME</a></p>
+</div>
+<div class="footnote-definition" id="7"><sup class="footnote-definition-label">5</sup>
+<p>Memory Hard Functions and Password Hashings (Video), CERIAS Symposium 2017 - TechTalk, Jeremiah M. Blocki - Assistant Professor, Computer Science - Purdue University, May 1, 2017, <a href="https://youtu.be/9yX4v89m5oo">https://youtu.be/9yX4v89m5oo</a></p>
+</div>
+<div class="footnote-definition" id="8"><sup class="footnote-definition-label">6</sup>
+<p>Strict Memory Hard Hashing Functions, Sergio Demian Lerner, (Preliminary v0.3, 01-19-14), <a href="http://www.hashcash.org/papers/memohash.pdf">http://www.hashcash.org/papers/memohash.pdf</a></p>
+</div>
+<div class="footnote-definition" id="9"><sup class="footnote-definition-label">7</sup>
+<p>Practical Graphs for Optimal Side-Channel Resistant Memory-Hard Functions Joel Alwen, Jeremiah Blocki, Ben Harsha IACR Cryptography ePrint Archive, 2017, <a href="https://eprint.iacr.org/2017/443.pdf">https://eprint.iacr.org/2017/443.pdf</a></p>
+</div>
+<div class="footnote-definition" id="10"><sup class="footnote-definition-label">8</sup>
+<p>scrypt: A new key derivation function (variable subtitles) Colin Percival, May 9, 2009, <a href="http://www.tarsnap.com/scrypt/scrypt-slides.pdf">http://www.tarsnap.com/scrypt/scrypt-slides.pdf</a></p>
+</div>
+
+  </main>
+  <p>
+        Tags:
+          <a href="/tags/independent-crypto/">#independent crypto</a>
+  </p>
+<footer>
+  Made with <a href="https://www.getzola.org/">Zola</a>;
+  theme inspired by <a href="https://codeberg.org/alanpearce/zola-bearblog">Zola ʕ•ᴥ•ʔ Bear</a>.
+</footer>
+</body>
+</html>

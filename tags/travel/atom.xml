@@ -1,0 +1,726 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>elijah.run - travel</title>
+    <subtitle>A blog about tech, media, and art</subtitle>
+    <link rel="self" type="application/atom+xml" href="/tags/travel/atom.xml"/>
+    <link rel="alternate" type="text/html" href="/"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2018-10-13T00:00:00+00:00</updated>
+    <id>/tags/travel/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Kubernetes as an external service proxy</title>
+        <published>2018-10-13T00:00:00+00:00</published>
+        <updated>2018-10-13T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/kubernetes-as-an-external-service-proxy/"/>
+        <id>/kubernetes-as-an-external-service-proxy/</id>
+        
+        <content type="html" xml:base="/kubernetes-as-an-external-service-proxy/">&lt;p&gt;Say you have a firewall restriction that creates the following situation:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;App1 cannot communicate directly with App2.&lt;&#x2F;li&gt;
+&lt;li&gt;App1 and App2 can both talk to a Kubernets cluster.&lt;&#x2F;li&gt;
+&lt;li&gt;Neither app is hosted on the Kubernetes cluster.&lt;&#x2F;li&gt;
+&lt;li&gt;How can you get messages between App1 and App2?&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;The way the problem is stated makes it pretty obvious that the solution &lt;em&gt;involves&lt;&#x2F;em&gt; using a Kubernetes cluster, but how exactly?&lt;&#x2F;p&gt;
+&lt;p&gt;The naive solution might be to spin up a container which acts as a proxy; Nginx comes to mind.
+This would definitely work, but I am exceedingly lazy and don&#x27;t want to learn how to configure Nginx.
+In fact, the solution I came to doesn&#x27;t involve running any new pods!&lt;&#x2F;p&gt;
+&lt;p&gt;Here&#x27;s the code.
+Below I&#x27;ll explain what&#x27;s happening here and why it works.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;yaml&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-yaml &quot;&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;kind&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;Endpoints
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;metadata&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;name&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;myapp-proxy
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;subsets&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;- &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;addresses&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;  - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;ip&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;2.3.4.5k &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# App2&amp;#39;s address
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;ports&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;  - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;port&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;8080 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# App2&amp;#39;s service port
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;apiVersion&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;v1
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;---
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;kind&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;Service
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;metadata&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;name&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;myapp-proxy
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;spec&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;type&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;LoadBalancer
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;loadBalancerSourceRanges&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;  - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;1.2.3.4&#x2F;32&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# App1&amp;#39;s address
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;ports&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;  - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;protocol&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;TCP
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;port&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;80 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Redirect traffic hitting 80 to the app&amp;#39;s service port
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;targetPort&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;8080
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;apiVersion&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;v1
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;---
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;kind&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;Ingress
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;metadata&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;name&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;restaurant-proxy
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;spec&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;rules&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;  - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;host&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;myapp-proxy.somehost.net
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;http&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;paths&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;path&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;&#x2F;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;backend&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;          &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;serviceName&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;myapp-proxy
+&lt;&#x2F;span&gt;&lt;span&gt;          &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;servicePort&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;80
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;apiVersion&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;extensions&#x2F;v1beta1
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;endpoints&quot;&gt;Endpoints&lt;&#x2F;h2&gt;
+&lt;p&gt;Endpoints are the Kubernetes abstraction for IPs+Ports running the same application.
+It&#x27;s how you group together N instances of an app into one pool.&lt;&#x2F;p&gt;
+&lt;p&gt;Under the hood Endpoints get created as a pre-requisite for every Service you deploy.
+You don&#x27;t usually need to deal with these directly as they are created implicitly whenever a Deployment gets applied.&lt;&#x2F;p&gt;
+&lt;p&gt;By manually creating an endpoint we have imported our non-kubernetes app into Kubernetes.
+That means we can do Kubernetes things with it like expose it via a Service or even put it behind an Ingress Pretty neat!&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;service&quot;&gt;Service&lt;&#x2F;h2&gt;
+&lt;p&gt;Services are how we expose an endpoint to the world.
+Most cloud providers will give you a public IP address for a service and load balance across all of that service&#x27;s endpoints.&lt;&#x2F;p&gt;
+&lt;p&gt;This is as far as we need to proxy traffic between our two Apps.
+App1 makes a request to whatever IP Kubernetes gets for the &lt;code&gt;myapp-proxy&lt;&#x2F;code&gt; Service and relays it to the &lt;code&gt;myapp-proxy&lt;&#x2F;code&gt; endpoint, which ultimately routes the traffic to App2.
+What&#x27;s really cool is that the endpoint that &lt;strong&gt;is&lt;&#x2F;strong&gt; App2 can be an self-hosted Virtual Machine, as long as the IP doesn&#x27;t change this proxy will continue to work.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;ingress&quot;&gt;Ingress&lt;&#x2F;h2&gt;
+&lt;p&gt;Ingresses are my favorite part of Kubernetes.
+They&#x27;re very convenient, incredibly powerful, and they work like... over half the time.&lt;&#x2F;p&gt;
+&lt;p&gt;While not strictly necessary, this Ingress gives us some nice-to-haves.&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Gives us an easy to manage host name via something like &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;kubernetes-incubator&#x2F;external-dns&quot;&gt;External DNS&lt;&#x2F;a&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;Could be extended to terminate SSL, again &quot;for free&quot;, with something like &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;jetstack&#x2F;cert-manager&quot;&gt;Cert Manager&lt;&#x2F;a&gt;.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;So that&#x27;s how we use Kubernetes to manage services (lower-case &#x27;s&#x27;) which aren&#x27;t running in Pods.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Dynamic Attributes in Chef</title>
+        <published>2018-06-23T00:00:00+00:00</published>
+        <updated>2018-06-23T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/chef-dynamic-attributes/"/>
+        <id>/chef-dynamic-attributes/</id>
+        
+        <content type="html" xml:base="/chef-dynamic-attributes/">&lt;h2 id=&quot;problem&quot;&gt;Problem&lt;&#x2F;h2&gt;
+&lt;p&gt;You are trying to set a node attribute in a resource block but it isn&#x27;t working.&lt;&#x2F;p&gt;
+&lt;p&gt;For example you have the following code:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;ruby&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-ruby &quot;&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span&gt;ruby_block &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;foo&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;  block &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# some ruby
+&lt;&#x2F;span&gt;&lt;span&gt;    node.override[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;var&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;value&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;  action &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;:run
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;if&lt;&#x2F;span&gt;&lt;span&gt; node[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;var&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;value&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;  notifies &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;:run&lt;&#x2F;span&gt;&lt;span&gt;, some_resource[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;name&lt;&#x2F;span&gt;&lt;span&gt;]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;else
+&lt;&#x2F;span&gt;&lt;span&gt;  notifies &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;:run&lt;&#x2F;span&gt;&lt;span&gt;, other_resource[whatever]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Even though you&#x27;re setting &lt;code&gt;node[&#x27;var&#x27;]&lt;&#x2F;code&gt;, &lt;code&gt;other_resource[whatever]&lt;&#x2F;code&gt; is getting notified to &lt;code&gt;:run&lt;&#x2F;code&gt;.
+What gives?&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;solution&quot;&gt;Solution&lt;&#x2F;h2&gt;
+&lt;p&gt;To jump ahead, because you&#x27;re skimming this post for the answer, you&#x27;re going to want to do something like this:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;diff&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-diff &quot;&gt;&lt;code class=&quot;language-diff&quot; data-lang=&quot;diff&quot;&gt;&lt;span&gt;# go-go-gadget diffs
+&lt;&#x2F;span&gt;&lt;span&gt;# Chef Version 13.5.8
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  ruby_block &amp;#39;foo&amp;#39; do
+&lt;&#x2F;span&gt;&lt;span&gt;    block do
+&lt;&#x2F;span&gt;&lt;span&gt;      # some ruby
+&lt;&#x2F;span&gt;&lt;span&gt;      node.override[&amp;#39;var&amp;#39;] = &amp;#39;value&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;    end
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;-   action :run
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;+   action :nothing
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;- end
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;+ end.run_action(:run)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;if node[&amp;#39;var&amp;#39;] == &amp;#39;value&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;  notifies :run, some_resource[name]
+&lt;&#x2F;span&gt;&lt;span&gt;else
+&lt;&#x2F;span&gt;&lt;span&gt;  notifies :run, other_resource[whatever]
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Basically you want to execute the &lt;code&gt;ruby_block&lt;&#x2F;code&gt; that sets your attribute &lt;strong&gt;now&lt;&#x2F;strong&gt; so the rest of your code can consume the value either later in the compilation phase or during the execution phase of the Chef run.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;how-why-did-that-work&quot;&gt;How&#x2F;why did that work?&lt;&#x2F;h2&gt;
+&lt;p&gt;If you&#x27;ve read his far you&#x27;re actually reading.
+Welcome to the post!
+Let&#x27;s begin.&lt;&#x2F;p&gt;
+&lt;p&gt;Let&#x27;s dig into &lt;em&gt;exactly&lt;&#x2F;em&gt; what my problem was, because sometimes examples aren&#x27;t good enough.
+You know... for fun.&lt;&#x2F;p&gt;
+&lt;p&gt;I was trying to trigger an application upgrade based on the current installed version.
+I was &lt;em&gt;not&lt;&#x2F;em&gt; installing a package-manager-managed package&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#1&quot;&gt;1&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt; so I couldn&#x27;t just pin the version a &lt;code&gt;yum&lt;&#x2F;code&gt; resource, I had to do this kludge of a solution.&lt;&#x2F;p&gt;
+&lt;p&gt;So for me &lt;code&gt;some_resource[name]&lt;&#x2F;code&gt; was downloading the latest version of the app (a &lt;code&gt;.tar.gz2&lt;&#x2F;code&gt; file from GitHub) and &lt;code&gt;other_resource[whatever]&lt;&#x2F;code&gt; was a no-op. The as part of the package download I unconditionally trigger a &lt;code&gt;:delayed&lt;&#x2F;code&gt; service restart.
+Chef was &#x27;upgrading&#x27; and restarting my app every thirty minutes which broke core functionality.&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#2&quot;&gt;2&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;shit-i-tried-before-stumbling-upon-the-solution&quot;&gt;Shit I tried before stumbling upon the solution&lt;&#x2F;h2&gt;
+&lt;p&gt;I tried a bunch of things, but they can all kinda be summed up in this:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;diff&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-diff &quot;&gt;&lt;code class=&quot;language-diff&quot; data-lang=&quot;diff&quot;&gt;&lt;span&gt;# yay more diffs
+&lt;&#x2F;span&gt;&lt;span&gt;  ruby_block &amp;#39;foo&amp;#39; do
+&lt;&#x2F;span&gt;&lt;span&gt;    block do
+&lt;&#x2F;span&gt;&lt;span&gt;      # some ruby
+&lt;&#x2F;span&gt;&lt;span&gt;      node.override[&amp;#39;var&amp;#39;] = &amp;#39;value&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;    end
+&lt;&#x2F;span&gt;&lt;span&gt;    notifies :create, &amp;#39;tar[my-app]&amp;#39;, :immediately # Triggers tar[my-app] to run now
+&lt;&#x2F;span&gt;&lt;span&gt;  end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;- if node[&amp;#39;var&amp;#39;] == &amp;#39;value&amp;#39;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;-   notify :run, some_resource[name]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;- else
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;-   notify :run, other_resource[whatever]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#f92672;&quot;&gt;- end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  tar &amp;#39;my-app&amp;#39; do
+&lt;&#x2F;span&gt;&lt;span&gt;    action  :nothing # Unless triggered this does nothing
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a6e22e;&quot;&gt;+   only_if { node[&amp;#39;var&amp;#39;] == &amp;#39;value&amp;#39; } # This should also do nothing if this isn&amp;#39;t true
+&lt;&#x2F;span&gt;&lt;span&gt;    # The rest of the resource block
+&lt;&#x2F;span&gt;&lt;span&gt;  end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Which ultimately didn&#x27;t work either.&lt;&#x2F;p&gt;
+&lt;p&gt;I... I have no idea why this didn&#x27;t work.&lt;&#x2F;p&gt;
+&lt;p&gt;Something something Chef is complicated.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;why-the-solution-works-and-the-other-stuff-didn-t&quot;&gt;Why the solution works (and the other stuff didn&#x27;t)&lt;&#x2F;h2&gt;
+&lt;p&gt;The reason my ultimate solution &lt;em&gt;did&lt;&#x2F;em&gt; work is best summed up by this quote from the &lt;a href=&quot;https:&#x2F;&#x2F;docs.chef.io&#x2F;resource_common.html#run-action&quot;&gt;Chef Docs&lt;&#x2F;a&gt;:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Use &lt;code&gt;.run_action(:some_action)&lt;&#x2F;code&gt; at the end of a resource block to run
+the specified action during the compile phase.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;My original code (read: broken code) was running the &lt;code&gt;if&lt;&#x2F;code&gt; block during the compilation phase (happens earlier) and running the &lt;code&gt;ruby_block&lt;&#x2F;code&gt; in the execution phase (happens later).
+By telling it to run my &lt;code&gt;ruby_block&lt;&#x2F;code&gt; during the compilation phase we were ensuring it happened before the &lt;code&gt;if&lt;&#x2F;code&gt; block, and in a way running it like you would &#x27;expect&#x27; a script to run.&lt;&#x2F;p&gt;
+&lt;p&gt;It ain&#x27;t idiomatic but it gets the job done.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;errata&quot;&gt;Errata&lt;&#x2F;h2&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;1&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;1&lt;&#x2F;sup&gt;
+&lt;p&gt;Say that three times fast.&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;2&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;2&lt;&#x2F;sup&gt;
+&lt;p&gt;The service was in question was Prometheus.
+When Chef ran every 30 minutes, it killed the Prometheus process and thus killed all of our pending alerts.
+TLDR we didn&#x27;t get any alerts that took more than 30 minutes to trigger We also &lt;em&gt;kept&lt;&#x2F;em&gt; getting alerts that should taken a few hours to re-notify.&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Travel travel travel...</title>
+        <published>2015-09-03T00:00:00+00:00</published>
+        <updated>2015-09-03T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/2015-09-03/"/>
+        <id>/2015-09-03/</id>
+        
+        <content type="html" xml:base="/2015-09-03/">&lt;h2 id=&quot;travel-travel-travel&quot;&gt;Travel Travel Travel&lt;&#x2F;h2&gt;
+&lt;p&gt;Travel travel travel travel travel travel travel travel travel travel
+travel travel travel travel travel travel travel travel travel travel
+travel travel. travel. Travel travel travel travel travel travel travel
+travel travel travel travel travel travel travel travel travel travel
+travel travel travel travel.&lt;&#x2F;p&gt;
+&lt;p&gt;Travel travel travel travel travel travel travel travel travel travel
+travel travel travel travel travel travel travel travel travel travel
+travel travel. travel. Travel travel travel travel travel travel travel
+travel travel travel travel travel travel travel travel travel travel
+travel travel travel travel travel travel travel travel travel travel
+travel travel travel travel travel. travel. Travel travel travel travel
+travel travel travel travel travel travel travel travel travel travel
+travel travel travel travel travel travel travel. travel travel travel
+travel travel travel travel travel travel travel travel.&lt;&#x2F;p&gt;
+&lt;p&gt;Travel travel travel travel travel travel. Travel travel travel travel
+travel travel travel. Travel travel travel travel travel travel travel
+travel travel.&lt;&#x2F;p&gt;
+&lt;p&gt;Sleep.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>A Personal Day in Prague: (Almost) Just Pictures</title>
+        <published>2015-09-02T00:00:00+00:00</published>
+        <updated>2015-09-02T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/2015-09-02/"/>
+        <id>/2015-09-02/</id>
+        
+        <content type="html" xml:base="/2015-09-02/">&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;prague-charles-bridge.jpg&quot; alt=&quot;Charles Bridge.&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;prague-pilot-statute.jpg&quot; alt=&quot;Pilot Statue&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;prague-view.jpg&quot; alt=&quot;View of Prague with some trees in the way.&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;I went on a hike, found a great view at the top of a hill.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;prague-oldtown.jpg&quot; alt=&quot;Oldtown Prague&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;prague-panorama-with-bridge.jpg&quot; alt=&quot;Panorama with bridge&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;prague-creative-spelling.jpg&quot; alt=&quot;Starbucks Coffee&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&#x27;Eli&#x27;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;prague-stunning-sunset.jpg&quot; alt=&quot;Stunning sunset&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;I swear it&#x27;s not because I&#x27;m lazy and don&#x27;t want to write.
+The pictures just capture it better.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Write the Docs Day 2</title>
+        <published>2015-09-01T00:00:00+00:00</published>
+        <updated>2015-09-01T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/2015-09-01/"/>
+        <id>/2015-09-01/</id>
+        
+        <content type="html" xml:base="/2015-09-01/">&lt;p&gt;Just like yesterday, I spent most of today enjoying some wonderful talks as well as stressing out -- I mean totally not stressing out -- about my own talk.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;wtd-day-2.jpg&quot; alt=&quot;write the Docs Staff Picture&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;The Write the Docs Staff saying thanks.&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;The first talk of the day was titled &quot;Judas Priest Ate My Scrum Master&quot;, which has almost nothing to do with Judas Priest or eating or scrum masters; instead it talked about things that are well known issues and a lot of laws (&lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Brooks%E2%80%99_law&quot;&gt;Brooks&#x27; Law&lt;&#x2F;a&gt;, &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Lehman&amp;#x27;s_laws_of_software_evolution&quot;&gt;Lehmann&#x27;s Laws&lt;&#x2F;a&gt;, &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Pareto_principle&quot;&gt;Pareto Principle&lt;&#x2F;a&gt;, &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Conway&amp;#x27;s_law&quot;&gt;Conway&#x27;s Law&lt;&#x2F;a&gt;, etc) that nobody talks about that much but can be super helpful to consider when working in an industry.&lt;&#x2F;li&gt;
+&lt;li&gt;The second talk covered different types of user interfaces and what to consider when writing error messages, troubleshooting pages, product tours.
+It was something I hadn&#x27;t considered having primarily written command line tools with pretty limited and well established interface
+guidelines.&lt;&#x2F;li&gt;
+&lt;li&gt;Then I gave a talk.
+It was a talk. I&#x27;ll post a video of it once those get put up online and you can decide if it was good or bad.&lt;&#x2F;li&gt;
+&lt;li&gt;The talk after mine was a nice history lesson and wanted the audience to reflect on what documentations can learn from documentation practices of the past.
+The TLDR on that one is that it used to suck to write technical docs even more than it sucks now.&lt;&#x2F;li&gt;
+&lt;li&gt;Then there were a bunch of lightning talks.
+One talk from a twitter employee (there&#x27;s a fun name for them I&#x27;m sure) mentioned that gathering metrics are is important because without metrics everything you do is just guess and check.&lt;&#x2F;li&gt;
+&lt;li&gt;The next talk &quot;MacGyvering your docs&quot; brought up the fact that the best documentation toolchain will (should?) only help existing developers.
+A better toolchain won&#x27;t attract new devs.
+That was something I think a lot of projects can lose sight of.&lt;&#x2F;li&gt;
+&lt;li&gt;The talk after that covered a team of scientists studying clouds (water clouds not internet clouds) using computer simulations.
+They wrote and documented a piece of software and they ended up publishing their program&#x27;s documentation in a scientific journal.
+It&#x27;s already been sited and everything.
+I hadn&#x27;t even considered that as a possibility (publishing docs as a scientific paper).&lt;&#x2F;li&gt;
+&lt;li&gt;The next two talks were pretty short (15 minute) talks about putting the data where the users need it and an introduction to screen-casting.
+The first was good for documenting things like an API and the second was good if I ever need to make a screen-cast.
+I doubt that will happen, but you never know!&lt;&#x2F;li&gt;
+&lt;li&gt;The last talk &quot;All roads might not lead to docs&quot; held too main takeaways for me: The quote &lt;em&gt;The Purpose of this document is ________&lt;&#x2F;em&gt; and the &lt;a href=&quot;http:&#x2F;&#x2F;voiceandtone.com&#x2F;&quot;&gt;mailchimp voice &amp;amp; tone guide&lt;&#x2F;a&gt;, which is a very good document I suggest you read it (the title is pretty self explanatory I think).&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;For a full list of talks given at the conference, check out the &lt;a href=&quot;http:&#x2F;&#x2F;www.writethedocs.org&#x2F;conf&#x2F;eu&#x2F;2015&#x2F;schedule&#x2F;&quot;&gt;event&#x27;s schedule&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;The after party ended up happening at two venues since we got pre-maturely kicked out of the first one; we made the best of it and I got to talk to Anna Jaruga (the cloud research scientist) as well as a &lt;a href=&quot;https:&#x2F;&#x2F;developer.mozilla.org&#x2F;en-US&#x2F;&quot;&gt;Mozilla Development Network&lt;&#x2F;a&gt; writer, both very interesting people.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Write the Docs Day 1</title>
+        <published>2015-08-31T00:00:00+00:00</published>
+        <updated>2015-08-31T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/2015-08-31/"/>
+        <id>/2015-08-31/</id>
+        
+        <content type="html" xml:base="/2015-08-31/">&lt;p&gt;I spent most of today enjoying the Write the Docs talks and (air
+conditioned) venue. I took some notes.&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;The keynote about the imposter syndrome was very relatable.
+The coping mechanism of framing goals in &quot;I want to do...&quot; instead of &quot;I want to be...&quot; seems like it could be effective.
+I liked the quote &quot;Make better mistakes tomorrow&quot;.&lt;&#x2F;li&gt;
+&lt;li&gt;The second talk about naming things was very good and got me to think about the structure of documentation metadata (using labels vs taxonomy vs thesaurus, etc).
+This will be useful someday I&#x27;m sure.&lt;&#x2F;li&gt;
+&lt;li&gt;The third talk about [emojii] and the use of emoji was [emojii].
+I never considered using them before, but I will going forward.&lt;&#x2F;li&gt;
+&lt;li&gt;The fourth talk mentioned using &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Selenium_%28software%29?wprov=sfia1&quot;&gt;Selenium&lt;&#x2F;a&gt; to test docs, that just makes sense.
+It&#x27;s so obvious I wish it was easier.&lt;&#x2F;li&gt;
+&lt;li&gt;The API Docs talk mentioned that you should give your user the data they will be working with as a top level priority instead of an after
+thought.
+This will definitely be a priority for me.
+I already try to give plenty of examples (since I speak example natively), but I&#x27;ll be more Conscience of it.&lt;&#x2F;li&gt;
+&lt;li&gt;The Design Docs with Disability in Mind was interesting.
+The big takeaway for me was keeping the elderly in mind.&lt;&#x2F;li&gt;
+&lt;li&gt;The meta talk about crafting a presentation was delivered very well and mentioned adding contrast slide decks... I should have listened to
+this advice...&lt;&#x2F;li&gt;
+&lt;li&gt;The second to the last talk of the day covered the plethora of rules we place on documentation.
+Having just recently helped established some style guides for the OSL docs I think we did a good job of giving some leeway to the writers.
+The extreme example of &#x27;Limited rules docs&#x27; (e.g., the Python Documentation) does not really work well for the reader in my experience.&lt;&#x2F;li&gt;
+&lt;li&gt;The final talk by some &lt;a href=&quot;https:&#x2F;&#x2F;developer.mozilla.org&#x2F;en-US&#x2F;&quot;&gt;MDN&lt;&#x2F;a&gt; writers equated docs to a garden. The metaphor worked surprisingly well.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;For a full list of the talks and their descriptions, visit the &lt;a href=&quot;http:&#x2F;&#x2F;www.writethedocs.org&#x2F;conf&#x2F;eu&#x2F;2015&#x2F;schedule&#x2F;&quot;&gt;event&#x27;s schedule&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Day 1 was pretty emojii. We ended the night with emojii at a venue called The Pub.
+Many conversations and laughs were had.
+I like this crowd.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Prague Day 1</title>
+        <published>2015-08-30T00:00:00+00:00</published>
+        <updated>2015-08-30T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/2015-08-30/"/>
+        <id>/2015-08-30/</id>
+        
+        <content type="html" xml:base="/2015-08-30/">&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;prague-city-center.jpg&quot; alt=&quot;Prague city center&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;I went on a wonderful &lt;a href=&quot;http:&#x2F;&#x2F;www.writethedocs.org&#x2F;conf&#x2F;eu&#x2F;2015&#x2F;#events&quot;&gt;city tour&lt;&#x2F;a&gt; of Prague provided by Write The Docs.
+We crossed some bridges, saw some castles, and experienced many wonderful parts of the city.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;prague-gelato.jpg&quot; alt=&quot;My dumb face and a delicious gelato.&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;Here&#x27;s me in front of a church eating some gelato.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;After the tour I was very hungry and tagged along with some folks from my tour group on a journey to get food.
+We went to a restaurant that brought us beer on a model train.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;prague-beer-train.jpg&quot; alt=&quot;Choo choo. Here comes the beer train.&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;This is the train that brought us beer.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Here are some picture I took of the buildings in the city.
+I like the architecture a lot.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;prague-city-center.jpg&quot; alt=&quot;Classic architecture in the Prague city center.&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;prague-street.jpg&quot; alt=&quot;Even the small regular old streets in Prague are breathtaking.&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;They are so cool.&lt;&#x2F;em&gt;
+&lt;em&gt;I haven&#x27;t found the words to describe why, but the asthetics please me.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;After the tour and food there was a &lt;em&gt;Write the Docs Conference Reception&lt;&#x2F;em&gt; (aka meet &amp;amp; greet) where I got to hang out with many of the attendees of the conference.
+There was food and fabulous people.&lt;&#x2F;p&gt;
+&lt;p&gt;I did not have a hard time falling asleep that night.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>To Prague!</title>
+        <published>2015-08-29T00:00:00+00:00</published>
+        <updated>2015-08-29T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/2015-08-29/"/>
+        <id>/2015-08-29/</id>
+        
+        <content type="html" xml:base="/2015-08-29/">&lt;h2 id=&quot;i-strongly-dislike-travel&quot;&gt;I Strongly Dislike Travel&lt;&#x2F;h2&gt;
+&lt;p&gt;I would say I hate travel, but that level of hyperbole is literally the worst thing on the planet...&lt;&#x2F;p&gt;
+&lt;p&gt;My strong dislike for travel comes mostly from my personal inability to trust the systems that will get me to where I am going.
+If I have a flight in one week and I have to take a bus or train to the airport, I will spend the entire week running through my head
+&quot;When is my flight?
+Umm days, yeesh hours, and ack minutes.
+How am I getting there?
+The oh God bus leaving at some time, somewhere bound.
+Once you get there you will go through security which will take between 5 minutes and 2 hours.
+Budget your time appropriately.
+Any of these systems can fail and based on experience they have&quot;
+over and over and over.
+The stress is compounded when people don&#x27;t always speak your language and you forgot to eat a proper meal the morning of.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;That&lt;&#x2F;em&gt; is why I am 3 hours early to my flight from Amsterdam to Prague.
+I regret nothing.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;currency-is-weird&quot;&gt;Currency is Weird&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;prague-conversion-rate.jpg&quot; alt=&quot;1 USD = 24.17 Czech Republic Koruna&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;It is going to take me forever to remember &lt;em&gt;25 here monies is about 1 home monies&lt;&#x2F;em&gt;.
+Everything is gonna feel really expensive I bet...&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;i-made-it-to-prague&quot;&gt;I Made it to Prague&lt;&#x2F;h2&gt;
+&lt;p&gt;I made it to Prague just fine. They have a cool train system.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;prague-mustek-stop.jpg&quot; alt=&quot;The MUSTEK stop in the Prague underground transit system. Very Soviet-era design.&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Way cooler than the underground train systems I&#x27;m used to...&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>A very long bike ride</title>
+        <published>2015-08-28T00:00:00+00:00</published>
+        <updated>2015-08-28T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/2015-08-28/"/>
+        <id>/2015-08-28/</id>
+        
+        <content type="html" xml:base="/2015-08-28/">&lt;h2 id=&quot;my-butt-hurts&quot;&gt;My Butt Hurts...&lt;&#x2F;h2&gt;
+&lt;p&gt;Today I went on an awesome bike ride all the way to Haarlem (15km west of Amsterdam).
+I didn&#x27;t actually do anything there; I just went, picked up snacks, and headed back.
+I&#x27;m 99% sure I missed out on an awesome Haarlem exclusive cultural experience, but if was really more about the journey (I originally set out to bike to the coast and Haarlem was my compromise to that).&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;amsterdam-huge-park.jpg&quot; alt=&quot;I don&amp;#39;t recall where this park is exactly. I remember i twas east of the city center, many kilometers&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;amsterdam-huge-park-2.jpg&quot; alt=&quot;Another view of the park, this time with a play structure&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;I found a very neat park near the Western edge of Amsterdam; I ended up spending an hour or so there having a picnic.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Dilapidated&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;amsterdam-dilapidated-building.jpg&quot; alt=&quot;An old and dilapiddated building. It&amp;#39;s hard to tell the building original purpose...&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;This was a cool abandoned building I found.&lt;&#x2F;em&gt;
+&lt;em&gt;I like abandoned buildings.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;amsterdam-travelers-trash-can.jpg&quot; alt=&quot;A large ice-cream cone shaped trashcan at a 45 degree angle for cyclists to dispose of trash into.&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;I also found this awesome trash can for people riding bikes.&lt;&#x2F;em&gt;
+&lt;em&gt;It&#x27;s genius.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;amsterdam-ponies.jpg&quot; alt=&quot;Ponies!&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;PONIES&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;After the bike ride I was very tired.
+I slept a lot.
+And yet not enough...&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;small-and-large-appreciations&quot;&gt;Small (and Large) Appreciations&lt;&#x2F;h2&gt;
+&lt;p&gt;Here is a list of some of the traits of Amsterdam (and what I have experienced of the Netherlands at large) which I appreciate.&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;They have signs that tell you you&#x27;re going the wrong direction.&lt;&#x2F;li&gt;
+&lt;li&gt;You can bike to another city and be on bike paths the whole time!&lt;&#x2F;li&gt;
+&lt;li&gt;Bikes are easy to use and aren&#x27;t shoe-horned in as a second class mode of transportation.&lt;&#x2F;li&gt;
+&lt;li&gt;The trains are so quiet. Why can&#x27;t America have quiet trains?&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;This list will probably grow as I remember things.
+All in all I like the city and the country.
+You should visit if you haven&#x27;t already.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Van Vough museum</title>
+        <published>2015-08-27T00:00:00+00:00</published>
+        <updated>2015-08-27T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/2015-08-27/"/>
+        <id>/2015-08-27/</id>
+        
+        <content type="html" xml:base="/2015-08-27/">&lt;p&gt;TodayI visited the Van Gough museum.
+I tried to get in using my mom&#x27;s Amsterdam Museum Pass, but it didn&#x27;t fly there like it did at the Rijks.&lt;&#x2F;p&gt;
+&lt;p&gt;It was pretty fun, but the entire experience felt very artificial and plastic.
+The paintings were great to see in person, but everything around the pieces felt a little tacky.
+My opinion will likely change about it, but I did not enjoy the Van Gough museum nearly as much as I enjoyed the Rijks Museum, despite my love for Van Gough and his works.&lt;&#x2F;p&gt;
+&lt;p&gt;I spent the rest of the day walking around and cashed in early.
+Jetlag + lots of walking = ready for bed by 3pm.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>The Rijks museum and travel tips</title>
+        <published>2015-08-26T00:00:00+00:00</published>
+        <updated>2015-08-26T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/2015-08-26/"/>
+        <id>/2015-08-26/</id>
+        
+        <content type="html" xml:base="/2015-08-26/">&lt;h2 id=&quot;the-rijks-museum&quot;&gt;The Rijks Museum&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;amsterdam-canal.jpg&quot; alt=&quot;A panorama of an Amsterdam canal&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;I&#x27;m not sure which street I took this panorama on, but I think it looks awesome.&lt;&#x2F;em&gt;
+&lt;em&gt;It captures the Amsterdam canal street pretty well.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Today I went to the Rijks Museum and had a bit of a culture overload.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;amsterdam-milk-maid.jpg&quot; alt=&quot;Chilling with the milk maid.&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Everybody got selfies with Van Gough, so I got a selfie The Milkmaid.
+I realize in retrospect that it doesn&#x27;t work as well.&lt;&#x2F;p&gt;
+&lt;p&gt;In other news, this is my face when I realized the bathroom stalls go from floor to ceiling.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;amsterdam-all-the-way.jpg&quot; alt=&quot;Surprise and joy&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;Yes, this photo was taken in the bathroom stall.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;And this is a classy restaurant I found with classy lamps.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;amsterdam-cute-lamp.jpg&quot; alt=&quot;A lamp with a cute switch&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;They were closed, otherwise I would have gone in.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;some-travel-tips&quot;&gt;Some Travel Tips&lt;&#x2F;h2&gt;
+&lt;p&gt;Although I have not completed my trip, I have some tips to share with you about travel.&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Always bring a &#x27;Go Bag&#x27; when you go out for the day.
+Fill it with snacks and necessities and leave plenty of room for memorabilia you get while out and about.&lt;&#x2F;li&gt;
+&lt;li&gt;Try something new before defaulting to your comfort zone.
+This is true for food as well as experiences.&lt;&#x2F;li&gt;
+&lt;li&gt;Always being plenty of snacks and water.
+You will regret it if you don&#x27;t.&lt;&#x2F;li&gt;
+&lt;li&gt;Be patient.
+You invested a lot to get here, make it count.&lt;&#x2F;li&gt;
+&lt;li&gt;At a museum, take a picture of the plackard after taking a picture of the piece so you don&#x27;t forget what it&#x27;s called.&lt;&#x2F;li&gt;
+&lt;li&gt;Don&#x27;t be afraid to sit in a café and just read for a bit.
+Sometimes that&#x27;s as culturally diversifying as a day in a museum or city tour.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>To Amsterdam!</title>
+        <published>2015-08-25T00:00:00+00:00</published>
+        <updated>2015-08-25T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/2015-08-24-2015-08-25/"/>
+        <id>/2015-08-24-2015-08-25/</id>
+        
+        <content type="html" xml:base="/2015-08-24-2015-08-25/">&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;amsterdam-view.jpg&quot; alt=&quot;A view of amsterdam&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;pdx-ams&quot;&gt;PDX -&amp;gt; AMS&lt;&#x2F;h2&gt;
+&lt;p&gt;The flight was uneventful.
+It was the longest one I&#x27;ve ever been on, which is always a rough milestone to overcome, but actually one of the
+better flights I&#x27;ve taken.
+TIL Delta&#x27;s service does not suck.&lt;&#x2F;p&gt;
+&lt;p&gt;I usually sleep the entire way to &amp;lt;insert location here&amp;gt;, but I managed to stay productive (coding, reading, writing) for the majority of flight.
+I must say, it was nice to have my own personal screen to catch up on Last Week Tonight.
+I&#x27;ve wanted to watch that show for ages...&lt;&#x2F;p&gt;
+&lt;p&gt;[&lt;em&gt;Lazy bliss not pictured&lt;&#x2F;em&gt;]&lt;&#x2F;p&gt;
+&lt;p&gt;So good.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;day-0-part-1&quot;&gt;Day 0: Part 1&lt;&#x2F;h2&gt;
+&lt;p&gt;So I wrote down some thoughts about Amsterdam thus far:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;People keep using fake made up words. What&#x27;s up with that?&lt;&#x2F;li&gt;
+&lt;li&gt;The roads are tiny but people keep driving on them.
+It looks like chaos but I haven&#x27;t seen an accident yet.
+I&#x27;m kinda impressed.
+People aren&#x27;t even yelling at each other about almost getting hit.&lt;&#x2F;li&gt;
+&lt;li&gt;The toilet paper squares are actually rectangles.
+It might just be the toilet paper at the place I am staying.
+Either way, I can&#x27;t deal with this aspect ratio change. I might not be able to poop in Amsterdam.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;COFFEE COFFEE COFFEE COFFEE COFFEE COFFEE COFFEE COFFEE COFFEE&lt;&#x2F;strong&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;The trains are so quiet.
+I didn&#x27;t want to get off...&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;BIKES BIKES BIKES BIKES BIKES BIKES BIKES BIKES BIKES BIKES&lt;&#x2F;strong&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Here&#x27;s some pictures I took:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;amsterdam-view.jpg&quot; alt=&quot;Mostly trees and sky.&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;The view from the location I am staying at.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;amsterdam-park-panorama.jpg&quot; alt=&quot;Panorama of an amsterdam park&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;A panorama from the park outside of where I am staying.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;amsterdam-goats.jpg&quot; alt=&quot;Goats!&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;Some goats I found.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Aaaaaaaand naptime.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;day-0-part-2&quot;&gt;Day 0: Part 2&lt;&#x2F;h2&gt;
+&lt;p&gt;I finished today by going to the Red Light District. There were a lot of half naked ladies in windows.
+They kept winking at me. I&#x27;m pretty sure they liked me; it&#x27;s not like they &lt;em&gt;definitely&lt;&#x2F;em&gt; have a monetary incentive to get my attention or anything.&lt;&#x2F;p&gt;
+&lt;p&gt;I ended up finding a bar and enjoying a Belgian White Beer.
+It tasted &lt;a href=&quot;https:&#x2F;&#x2F;xkcd.com&#x2F;1534&#x2F;&quot;&gt;surprisingly good&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;amsterdam-beer.jpg&quot; alt=&quot;A belgium white beer&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;So this is what it feels like to drink in a bar... neat.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Packed and Ready to Fly</title>
+        <published>2015-08-23T00:00:00+00:00</published>
+        <updated>2015-08-23T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/2015-08-23/"/>
+        <id>/2015-08-23/</id>
+        
+        <content type="html" xml:base="/2015-08-23/">&lt;h2 id=&quot;all-packed&quot;&gt;All Packed&lt;&#x2F;h2&gt;
+&lt;p&gt;So I&#x27;m all packed up and ready to go.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;europe-2015&#x2F;packed.jpg&quot; alt=&quot;Three weeks of supplies neatly displayed on a pink bed&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Left:&lt;&#x2F;strong&gt; Chargers, electronics, entertainment, toiletries, water bottle, wallet, etc.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Center:&lt;&#x2F;strong&gt; The bag, the &lt;em&gt;Write the Docs&lt;&#x2F;em&gt; shirt I&#x27;ll be wearing.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Right:&lt;&#x2F;strong&gt; Clothing. Gameboy SP at the top.&lt;&#x2F;p&gt;
+&lt;p&gt;Not the &lt;em&gt;perfect&lt;&#x2F;em&gt; bag of things to bring to Europe, but certainly solid and most of it practical.
+I&#x27;m packing an extra bag for all of the trinkets I&#x27;ll bring back.&lt;&#x2F;p&gt;
+&lt;p&gt;Let me know if you want anything (if you know how to contact me we&#x27;re close enough for you to ask.)&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Dominos are setup</title>
+        <published>2015-08-02T00:00:00+00:00</published>
+        <updated>2015-08-02T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/2015-08-02/"/>
+        <id>/2015-08-02/</id>
+        
+        <content type="html" xml:base="/2015-08-02/">&lt;p&gt;All of my travel is booked, plane tickets are bought, and vacation time gotten.&lt;&#x2F;p&gt;
+&lt;p&gt;The only thing left to do now is to write the talk. Easy-peasy.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>About the blog (this is a test)</title>
+        <published>2015-08-01T00:00:00+00:00</published>
+        <updated>2015-08-01T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/2015-08-01/"/>
+        <id>/2015-08-01/</id>
+        
+        <content type="html" xml:base="/2015-08-01/">&lt;p&gt;This blog was created in preparation for my trip to Europe in about 3 weeks.
+I wanted to see how difficult it would be to make a blog that could be updated on the go, version controlled with git, and would not require me to log into a laptop or server to make changes.&lt;&#x2F;p&gt;
+&lt;p&gt;I ended up using PageUp (link in the footer), along with Github Gists (also linked in the footer) to make a mostly useful platform.
+New changes are pushed to Github, my personal server pulls those changes every 10 minutes, and this page is rebuilt pretty painlessly.&lt;&#x2F;p&gt;
+&lt;p&gt;Best of all: with a git client on my phone I can make updates anywhere that has a signal and I don&#x27;t need to bust my laptop out.
+I wrote this post while I was on the toilet!&lt;&#x2F;p&gt;
+&lt;p&gt;It wasn&#x27;t as easy as using an established platform like Twitter, but just like with everything I try to make, I put something together I would want to use and interact with.
+If a friend started a liveblog for a specific event I would follow it over their Twitter feed any day.
+Plus I don&#x27;t have to deal with the character limit of Twitter.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

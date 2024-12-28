@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="shortcut icon" href="&#x2F;favicon.ico"><title>Write the Docs Day 2 | elijah.run</title>
+  <meta name="title" content="Write the Docs Day 2">
+<meta name="description" content="A blog about tech, media, and art">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="alternate" type="application/atom+xml" title="elijah.run" href="/atom.xml">
+  <style>
+    :root {
+    --width: 586px;
+    --font-main: Verdana, sans-serif;
+    --font-secondary: "Times New Roman", serif;
+    --font-scale: 1.1em;
+    --background-color: #fff;
+    --heading-color: #222;
+    --text-color: #444;
+    --link-color: #3273dc;
+    --visited-color: #8b6fcb;
+    --blockquote-color: #222;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background-color: #01242e;
+      --heading-color: #eee;
+      --text-color: #ddd;
+      --link-color: #8cc2dd;
+      --visited-color: #8b6fcb;
+      --blockquote-color: #ccc;
+    }
+  }
+
+  body {
+    font-family: var(--font-secondary);
+    font-size: var(--font-scale);
+    margin: auto;
+    padding: 20px;
+    max-width: var(--width);
+    text-align: left;
+    background-color: var(--background-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: var(--text-color);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-main);
+    color: var(--heading-color);
+  }
+
+  a {
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  nav a {
+    margin-right: 8px;
+  }
+
+  nav span.active {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  strong,
+  b {
+    color: var(--heading-color);
+  }
+
+  button {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  main {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px dashed;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  pre code {
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 0.875rem;
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: monospace;
+    padding: 2px;
+    border-radius: 3px;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: var(--code-color);
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px 0;
+    text-align: center;
+  }
+
+  .title:hover {
+    text-decoration: none;
+  }
+
+  .title h1 {
+    font-size: 1.5em;
+  }
+
+  .inline {
+    width: auto !important;
+  }
+
+  .highlight,
+  .code {
+    padding: 1px 15px;
+    background-color: var(--code-background-color);
+    color: var(--code-color);
+    border-radius: 3px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    overflow-x: auto;
+  }
+
+  /* blog post list */
+  ul.posts {
+    list-style-type: none;
+    padding: unset;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  ul.posts li {
+    line-height: 1;
+    margin: 0;
+  }
+
+  ul.posts li time {
+    margin-left: 0px;
+    font-size: 12px;
+  }
+
+  ul.posts li a:visited {
+    color: var(--visited-color);
+  }
+
+  li.post {
+    padding: 0px 0px 10px 0px;
+  }
+
+  span.tags {
+    font-size: smaller;
+  }
+
+  /* table of contents */
+  details ul {
+    list-style-type: circle;
+  }
+
+  </style>
+</head>
+<body>
+  <header>
+  <a href="/" class="title">
+    <h1>elijah.run</h1>
+  </a>
+  <nav aria-label="site">
+      <a href="/">(🏠 elijah.run)</a>
+      <a href="https:&#x2F;&#x2F;games.elijah.run">(🕹️ games)</a>
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;pop">(🐙 github 🐱)</a>
+      <a href="/Elijah Voigt.pdf">(👔 resume)</a>
+  </nav>
+</header>
+<h1>Write the Docs Day 2</h1>
+      <p>
+        <i>
+          <time datetime="2015-09-01T00:00:00+00:00" pubdate>Tue 01 Sep 2015</time>
+        </i>
+      </p>
+  <main>
+    <p>Just like yesterday, I spent most of today enjoying some wonderful talks as well as stressing out -- I mean totally not stressing out -- about my own talk.</p>
+<p><img src="/images/europe-2015/wtd-day-2.jpg" alt="write the Docs Staff Picture" /></p>
+<p>The Write the Docs Staff saying thanks.</p>
+<ul>
+<li>The first talk of the day was titled "Judas Priest Ate My Scrum Master", which has almost nothing to do with Judas Priest or eating or scrum masters; instead it talked about things that are well known issues and a lot of laws (<a href="https://en.wikipedia.org/wiki/Brooks%E2%80%99_law">Brooks' Law</a>, <a href="https://en.wikipedia.org/wiki/Lehman&#x27;s_laws_of_software_evolution">Lehmann's Laws</a>, <a href="https://en.wikipedia.org/wiki/Pareto_principle">Pareto Principle</a>, <a href="https://en.wikipedia.org/wiki/Conway&#x27;s_law">Conway's Law</a>, etc) that nobody talks about that much but can be super helpful to consider when working in an industry.</li>
+<li>The second talk covered different types of user interfaces and what to consider when writing error messages, troubleshooting pages, product tours.
+It was something I hadn't considered having primarily written command line tools with pretty limited and well established interface
+guidelines.</li>
+<li>Then I gave a talk.
+It was a talk. I'll post a video of it once those get put up online and you can decide if it was good or bad.</li>
+<li>The talk after mine was a nice history lesson and wanted the audience to reflect on what documentations can learn from documentation practices of the past.
+The TLDR on that one is that it used to suck to write technical docs even more than it sucks now.</li>
+<li>Then there were a bunch of lightning talks.
+One talk from a twitter employee (there's a fun name for them I'm sure) mentioned that gathering metrics are is important because without metrics everything you do is just guess and check.</li>
+<li>The next talk "MacGyvering your docs" brought up the fact that the best documentation toolchain will (should?) only help existing developers.
+A better toolchain won't attract new devs.
+That was something I think a lot of projects can lose sight of.</li>
+<li>The talk after that covered a team of scientists studying clouds (water clouds not internet clouds) using computer simulations.
+They wrote and documented a piece of software and they ended up publishing their program's documentation in a scientific journal.
+It's already been sited and everything.
+I hadn't even considered that as a possibility (publishing docs as a scientific paper).</li>
+<li>The next two talks were pretty short (15 minute) talks about putting the data where the users need it and an introduction to screen-casting.
+The first was good for documenting things like an API and the second was good if I ever need to make a screen-cast.
+I doubt that will happen, but you never know!</li>
+<li>The last talk "All roads might not lead to docs" held too main takeaways for me: The quote <em>The Purpose of this document is ________</em> and the <a href="http://voiceandtone.com/">mailchimp voice &amp; tone guide</a>, which is a very good document I suggest you read it (the title is pretty self explanatory I think).</li>
+</ul>
+<p>For a full list of talks given at the conference, check out the <a href="http://www.writethedocs.org/conf/eu/2015/schedule/">event's schedule</a>.</p>
+<p>The after party ended up happening at two venues since we got pre-maturely kicked out of the first one; we made the best of it and I got to talk to Anna Jaruga (the cloud research scientist) as well as a <a href="https://developer.mozilla.org/en-US/">Mozilla Development Network</a> writer, both very interesting people.</p>
+
+  </main>
+  <p>
+        Tags:
+          <a href="/tags/europe-2015/">#europe 2015</a>
+          <a href="/tags/travel/">#travel</a>
+          <a href="/tags/archive/">#archive</a>
+  </p>
+<footer>
+  Made with <a href="https://www.getzola.org/">Zola</a>;
+  theme inspired by <a href="https://codeberg.org/alanpearce/zola-bearblog">Zola ʕ•ᴥ•ʔ Bear</a>.
+</footer>
+</body>
+</html>

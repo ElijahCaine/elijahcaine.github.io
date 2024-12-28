@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="shortcut icon" href="&#x2F;favicon.ico"><title>Independent Crypto Course syllabus | elijah.run</title>
+  <meta name="title" content="Independent Crypto Course syllabus">
+<meta name="description" content="A blog about tech, media, and art">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="alternate" type="application/atom+xml" title="elijah.run" href="/atom.xml">
+  <style>
+    :root {
+    --width: 586px;
+    --font-main: Verdana, sans-serif;
+    --font-secondary: "Times New Roman", serif;
+    --font-scale: 1.1em;
+    --background-color: #fff;
+    --heading-color: #222;
+    --text-color: #444;
+    --link-color: #3273dc;
+    --visited-color: #8b6fcb;
+    --blockquote-color: #222;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background-color: #01242e;
+      --heading-color: #eee;
+      --text-color: #ddd;
+      --link-color: #8cc2dd;
+      --visited-color: #8b6fcb;
+      --blockquote-color: #ccc;
+    }
+  }
+
+  body {
+    font-family: var(--font-secondary);
+    font-size: var(--font-scale);
+    margin: auto;
+    padding: 20px;
+    max-width: var(--width);
+    text-align: left;
+    background-color: var(--background-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: var(--text-color);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-main);
+    color: var(--heading-color);
+  }
+
+  a {
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  nav a {
+    margin-right: 8px;
+  }
+
+  nav span.active {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  strong,
+  b {
+    color: var(--heading-color);
+  }
+
+  button {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  main {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px dashed;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  pre code {
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 0.875rem;
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: monospace;
+    padding: 2px;
+    border-radius: 3px;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: var(--code-color);
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px 0;
+    text-align: center;
+  }
+
+  .title:hover {
+    text-decoration: none;
+  }
+
+  .title h1 {
+    font-size: 1.5em;
+  }
+
+  .inline {
+    width: auto !important;
+  }
+
+  .highlight,
+  .code {
+    padding: 1px 15px;
+    background-color: var(--code-background-color);
+    color: var(--code-color);
+    border-radius: 3px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    overflow-x: auto;
+  }
+
+  /* blog post list */
+  ul.posts {
+    list-style-type: none;
+    padding: unset;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  ul.posts li {
+    line-height: 1;
+    margin: 0;
+  }
+
+  ul.posts li time {
+    margin-left: 0px;
+    font-size: 12px;
+  }
+
+  ul.posts li a:visited {
+    color: var(--visited-color);
+  }
+
+  li.post {
+    padding: 0px 0px 10px 0px;
+  }
+
+  span.tags {
+    font-size: smaller;
+  }
+
+  /* table of contents */
+  details ul {
+    list-style-type: circle;
+  }
+
+  </style>
+</head>
+<body>
+  <header>
+  <a href="/" class="title">
+    <h1>elijah.run</h1>
+  </a>
+  <nav aria-label="site">
+      <a href="/">(🏠 elijah.run)</a>
+      <a href="https:&#x2F;&#x2F;games.elijah.run">(🕹️ games)</a>
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;pop">(🐙 github 🐱)</a>
+      <a href="/Elijah Voigt.pdf">(👔 resume)</a>
+  </nav>
+</header>
+<h1>Independent Crypto Course syllabus</h1>
+      <p>
+        <i>
+          <time datetime="2017-07-10T00:00:00+00:00" pubdate>Mon 10 Jul 2017</time>
+        </i>
+      </p>
+    <details open>
+      <summary>Table of contents</summary>
+    <ul>
+        <li>
+          <a href="/independent-crypto/#elliptic-curve-cryptography">Elliptic Curve Cryptography</a>
+        </li>
+        <li>
+          <a href="/independent-crypto/#memory-hard-functions">Memory-hard functions</a>
+        </li>
+        <li>
+          <a href="/independent-crypto/#garbled-circuits">Garbled circuits</a>
+        </li>
+        <li>
+          <a href="/independent-crypto/#independent-study">Independent study</a>
+        </li>
+        <li>
+          <a href="/independent-crypto/#additional-resources">Additional resources</a>
+        </li>
+    </ul>
+    </details>
+  <main>
+    <span class="note">
+    <span class="note-title">
+        Note
+    </span>
+
+    <span class="note-body">
+        &lt;p&gt;This is a part of a series of blog posts I wrote for an Independent Study on cryptography at Oregon State University.
+To read all of the posts, check out the &#x27;Independent Crypto&#x27; tag.
+{% end() %}&lt;&#x2F;p&gt;
+&lt;p&gt;{% warning() %}
+This syllabus was written by an Oregon State University undergraduate student and not by an Oregon State University staff member.
+This should explain any irregularities in the structure and substance of the document.&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<p>The purpose of this course ("Independent Crypto") is to give students an opportunity to dive deeper into interesting topics of Cryptography.</p>
+<p>By the end of this course you should <em>grok</em> the following topics:</p>
+<ul>
+<li>Elliptic curve cryptography</li>
+<li>Memory hard functions</li>
+<li>Garbled circuits</li>
+<li>An topic of your choosing (get creative!)</li>
+</ul>
+<p>Each of these should take about 40 hours of work to complete.
+An overview of what that means is outlined below.</p>
+<span class="note">
+    <span class="note-title">
+        Note
+    </span>
+
+    <span class="note-body">
+        &lt;p&gt;This course is designed to be a 4 credit hour independent study.&lt;&#x2F;p&gt;
+&lt;p&gt;As is standard Oregon State University policy, this corresponds with 160
+hours of work over a 10 week period.
+Plan accordingly.&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<hr />
+<p>Each topic ought to take about 40 hours of work to complete over the course of a 10 week term.
+If you schedule your time well this will be a piece of cake at just 16 hours per week.
+That's 2.28 hours per day, 3.2 hours per week-day, or 16 hours the day before your check-in is due!</p>
+<p>The basic structure is as follows:</p>
+<ol>
+<li>Research a topic.
+Read papers, watch informative videos, ask questions and learn as much as you can about a given topic.</li>
+<li>Maintain an <em>annotated bibliography</em>.
+This should include materials found while studying a given topic, a summary of each of the materials, and a final summary of the topic as a whole.</li>
+<li>Meet weekly with the mentoring professor.</li>
+<li>Repeat.</li>
+<li>???</li>
+<li>Profit.</li>
+</ol>
+<p>The end goal, in addition to learning about a breadth of topics in modern security, is to produce an annotated bibliography.
+This will exercise the student's ability to read and process academic topics, journals, and videos.</p>
+<p>Of course if you are particularly passionate about a topic you are encouraged to go further: implementing things of interest, investigating new questions, and generally 'digging deeper' as you gain interest in different topics.</p>
+<p>The following topics do not <em>need</em> to be completed in order, however doing so will result in an optimal 'difficulty curve' as the kids say.
+The kids do still say that right?</p>
+<span class="note">
+    <span class="note-title">
+        Note
+    </span>
+
+    <span class="note-body">
+        &lt;p&gt;Included are a few resources grabbed in a quick internet search.
+These are meant to be starting places for each topic, generating questions and providing external resources.
+You will need to find additional resources for each topic.&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<h2 id="elliptic-curve-cryptography">Elliptic Curve Cryptography</h2>
+<p>Weeks 0-2 will be dedicated to Elliptic Curve Cryptography.</p>
+<h3 id="kickoff-resources">Kickoff Resources</h3>
+<ul>
+<li>A (relatively easy to understand) primer on Elliptic Curve Cryptography: <a href="https://arstechnica.com/security/2013/10/a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography/">https://arstechnica.com/security/2013/10/a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography/</a></li>
+<li>Elliptic Curve Cryptography in Practice: <a href="https://eprint.iacr.org/2013/734.pdf">https://eprint.iacr.org/2013/734.pdf</a></li>
+<li>Elliptic Curve Cryptography, a gentle introduction: <a href="http://andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/">http://andrea.corbellini.name/2015/05/17/elliptic-curve-cryptography-a-gentle-introduction/</a></li>
+</ul>
+<h3 id="kickoff-questions">Kickoff Questions</h3>
+<ul>
+<li>What are elliptic curves?</li>
+<li>How do elliptic curves relate to cryptography?</li>
+<li>How are Elliptic Curve Cryptography functions different from similar ones like RSA?</li>
+</ul>
+<h2 id="memory-hard-functions">Memory-hard functions</h2>
+<p>Weeks 3 and 4 of the course should be dedicated to the topic of Memory Hard Functions.</p>
+<h3 id="kickoff-resources-1">Kickoff Resources</h3>
+<ul>
+<li>Memory-hard functions and tradeoff cryptanalysis with applications to password hashing, cryptocurrencies, and white-box cryptography: <a href="https://www.cryptolux.org/images/d/d1/Tradeoff-slides.pdf">https://www.cryptolux.org/images/d/d1/Tradeoff-slides.pdf</a></li>
+<li>Strict Memory Hard Hashing Functions: <a href="http://www.hashcash.org/papers/memohash.pdf">http://www.hashcash.org/papers/memohash.pdf</a></li>
+</ul>
+<h3 id="kickoff-questions-1">Kickoff Questions</h3>
+<ul>
+<li>What are Memory-hard functions?</li>
+<li>What purposes are Memory-hard functions used for?</li>
+<li>What are some examples of Memory-hard functions and how do they work?</li>
+</ul>
+<h2 id="garbled-circuits">Garbled circuits</h2>
+<p>Weeks 5-7 should be dedicated to garbled circuits.</p>
+<h3 id="kickoff-resources-2">Kickoff Resources</h3>
+<ul>
+<li>Garbled Circuits: <a href="https://youtu.be/TxCu1L_tzlU">https://youtu.be/TxCu1L_tzlU</a></li>
+<li>Foundations of Garbled Circuits: <a href="https://eprint.iacr.org/2012/265.pdf">https://eprint.iacr.org/2012/265.pdf</a></li>
+<li>Faster Secure Two-Party Computation Using Garbled Circuits: <a href="https://www.usenix.org/legacy/event/sec11/tech/full_papers/Huang.pdf">https://www.usenix.org/legacy/event/sec11/tech/full_papers/Huang.pdf</a></li>
+<li>SFE: Yao’s Garbled Circuit: <a href="https://courses.engr.illinois.edu/cs598man/fa2009/slides/ac-f09-lect16-yao.pdf">https://courses.engr.illinois.edu/cs598man/fa2009/slides/ac-f09-lect16-yao.pdf</a> (bonus points if you find the talk for these slides).</li>
+<li>Garbled Circuts, Cryptowiki, <a href="http://cryptowiki.net/index.php?title=Garbled_circuits">http://cryptowiki.net/index.php?title=Garbled_circuits</a> (probably don't cite this one in a paper)</li>
+<li>Amortizing Garbled Circuits: <a href="https://eprint.iacr.org/2015/081.pdf">https://eprint.iacr.org/2015/081.pdf</a></li>
+</ul>
+<h2 id="independent-study">Independent study</h2>
+<p>In the last seven or so weeks you've learned a lot.
+You've read papers, watch informative lectures, and had insightful conversations with peers and mentors.
+Many of these probably sparked your attention in a particular topic.
+Use these last few weeks to investigate one of those sparks that you've been itching to learn more about.</p>
+<p>If you truly feel uninspired you can use this time to learn about Private Set Intersection.</p>
+<h3 id="kickoff-resources-for-private-set-intersection">Kickoff Resources for Private Set Intersection</h3>
+<ul>
+<li>BIU Winter School on Cryptography on Youtube.</li>
+<li>CSCI E-127, Introduction to Cryptography <a href="http://cm.dce.harvard.edu/2014/01/14301/publicationListing.shtml">http://cm.dce.harvard.edu/2014/01/14301/publicationListing.shtml</a></li>
+</ul>
+<h3 id="generic-kickoff-questions">Generic Kickoff Questions</h3>
+<ul>
+<li>What topic are you investigating?</li>
+<li>How does this relate to Cryptography?</li>
+<li>How would you explain this topic to your friends or parents?</li>
+<li>Why is this topic important?</li>
+<li>What interests you about this topic?</li>
+</ul>
+<h2 id="additional-resources">Additional resources</h2>
+<p>OSU Professor <a href="http://web.engr.oregonstate.edu/~rosulekm/">Mike Rosulek</a> volunteered the following additional resources:</p>
+<ul>
+<li>Scrypt is maximally memory-hard, <a href="http://www.cs.bu.edu/fac/reyzin/papers/BostonCryptoDayTalk-Leo.pptx">http://www.cs.bu.edu/fac/reyzin/papers/BostonCryptoDayTalk-Leo.pptx</a></li>
+<li>Practical Graphs for Optimal Side-Channel Resistant Memory-Hard Functions, <a href="https://eprint.iacr.org/2017/443.pdf">https://eprint.iacr.org/2017/443.pdf</a></li>
+<li>Efficiently Computing Data Independent Memory Hard Functions, <a href="https://youtu.be/ujpvPtn_N5Y">https://youtu.be/ujpvPtn_N5Y</a></li>
+<li>Memory hard Functions and Password Hashing, <a href="https://youtu.be/9yX4v89m5oo">https://youtu.be/9yX4v89m5oo</a></li>
+<li>Towards a Theory of Data-Independent Memory Hard Functions, <a href="https://youtu.be/YtfVLzUkwME">https://youtu.be/YtfVLzUkwME</a></li>
+<li>Depth-Robust Graphs and Their Cumulative Memory Complexity, <a href="https://eprint.iacr.org/2016/875.pdf">https://eprint.iacr.org/2016/875.pdf</a></li>
+<li>Practical Garbled Circuit Optimizations, <a href="http://web.engr.oregonstate.edu/~rosulekm/pubs/gc-survey-talk.pdf">http://web.engr.oregonstate.edu/~rosulekm/pubs/gc-survey-talk.pdf</a></li>
+<li>Pratical Garbled Circuit Optimizations, <a href="https://youtu.be/FTxh908u9y8">https://youtu.be/FTxh908u9y8</a></li>
+<li>Cache-timing attacks on AES, <a href="http://cr.yp.to/antiforgery/cachetiming-20050414.pdf">http://cr.yp.to/antiforgery/cachetiming-20050414.pdf</a></li>
+<li>Lucky Thirteen attack on TLS CBC, <a href="https://www.imperialviolet.org/2013/02/04/luckythirteen.html">https://www.imperialviolet.org/2013/02/04/luckythirteen.html</a></li>
+</ul>
+
+  </main>
+  <p>
+        Tags:
+          <a href="/tags/independent-crypto/">#independent crypto</a>
+  </p>
+<footer>
+  Made with <a href="https://www.getzola.org/">Zola</a>;
+  theme inspired by <a href="https://codeberg.org/alanpearce/zola-bearblog">Zola ʕ•ᴥ•ʔ Bear</a>.
+</footer>
+</body>
+</html>

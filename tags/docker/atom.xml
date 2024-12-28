@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>elijah.run - docker</title>
+    <subtitle>A blog about tech, media, and art</subtitle>
+    <link rel="self" type="application/atom+xml" href="/tags/docker/atom.xml"/>
+    <link rel="alternate" type="text/html" href="/"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2016-03-05T00:00:00+00:00</updated>
+    <id>/tags/docker/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Running Firefox in Docker</title>
+        <published>2016-03-05T00:00:00+00:00</published>
+        <updated>2016-03-05T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/running-firefox-in-docker/"/>
+        <id>/running-firefox-in-docker/</id>
+        
+        <content type="html" xml:base="/running-firefox-in-docker/">&lt;p&gt;Turns out you can run Firefox in Docker.
+It&#x27;s actually pretty easy:&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;code&quot;&gt;Code&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;strong&gt;From&lt;&#x2F;strong&gt; &lt;a href=&quot;https:&#x2F;&#x2F;gist.github.com&#x2F;ElijahCaine&#x2F;29e7e829341d58abe370&quot;&gt;my github
+gist&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;script src=&quot;https:&#x2F;&#x2F;gist.github.com&#x2F;ElijahCaine&#x2F;29e7e829341d58abe370.js&quot;&gt;&lt;&#x2F;script&gt;
+&lt;p&gt;Installation instructions (on Linux):&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;# install docker and start the docker daemon
+&lt;&#x2F;span&gt;&lt;span&gt;$ git clone https:&#x2F;&#x2F;gist.github.com&#x2F;29e7e829341d58abe370.git docker-firefox
+&lt;&#x2F;span&gt;&lt;span&gt;$ ln docker-firefox&#x2F;ff-docker &#x2F;some&#x2F;path&#x2F;for&#x2F;binaries
+&lt;&#x2F;span&gt;&lt;span&gt;$ ff-docker -b  # -b pulls &amp;amp; builds container, etc used for first time startup.
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;notes&quot;&gt;Notes&lt;&#x2F;h2&gt;
+&lt;p&gt;I attempted to use &lt;a href=&quot;http:&#x2F;&#x2F;alpinelinux.org&#x2F;&quot;&gt;Alpine Linux&lt;&#x2F;a&gt; as a
+proof-of-usability, since it&#x27;s the hip new kid on the containerization
+block&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#1&quot;&gt;1&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;, but as it turns out Alpine&#x27;s Firefox package is pretty
+fucked&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#2&quot;&gt;2&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;I use &lt;a href=&quot;https:&#x2F;&#x2F;wiki.archlinux.org&#x2F;index.php&#x2F;Dmenu&quot;&gt;dmenu&lt;&#x2F;a&gt;, this means I
+can run &lt;code&gt;ff-docker&lt;&#x2F;code&gt; from my desktop without opening a terminal,
+effectively making it a super-private-yet-convenient drop-in for
+Firefox. Pretty neat right?&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;&#x2F;h2&gt;
+&lt;p&gt;This was pretty simple but effective in terms of giving me the option to
+have more privacy. I can see it being extended to add even more
+security; e.g., routing all of the traffic in the container through a
+VPN would be easy enough. Food for thought [citation needed].&lt;&#x2F;p&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;1&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;1&lt;&#x2F;sup&gt;
+&lt;p&gt;5mb containers sounds pretty nice to me.
+&lt;a href=&quot;http:&#x2F;&#x2F;gliderlabs.viewdocs.io&#x2F;docker-alpine&#x2F;&quot;&gt;http:&#x2F;&#x2F;gliderlabs.viewdocs.io&#x2F;docker-alpine&#x2F;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;2&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;2&lt;&#x2F;sup&gt;
+&lt;p&gt;I get a segfault every time I try to start Firefox. More info
+here: &lt;a href=&quot;https:&#x2F;&#x2F;bugzilla.mozilla.org&#x2F;show_bug.cgi?id=724227#c11&quot;&gt;https:&#x2F;&#x2F;bugzilla.mozilla.org&#x2F;show_bug.cgi?id=724227#c11&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Covertly Installing Packages with Docker</title>
+        <published>2015-10-07T00:00:00+00:00</published>
+        <updated>2015-10-07T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/covertly-install-packages-with-docker/"/>
+        <id>/covertly-install-packages-with-docker/</id>
+        
+        <content type="html" xml:base="/covertly-install-packages-with-docker/">&lt;p&gt;&lt;a href=&quot;&#x2F;covertly-install-packages-with-docker&#x2F;#the-deets-dockerfile-and-commands&quot;&gt;Jump to the codey bits&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;the-problem-workstations&quot;&gt;The Problem: Workstations&lt;&#x2F;h2&gt;
+&lt;p&gt;At the OSL I use workstations which are provisioned by
+&lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Chef_%28software%29&quot;&gt;Chef&lt;&#x2F;a&gt; to look more
+or less identical (packages are the same and global config files are
+consistent from machine to machine). This is nice because it allows
+everybody at the lab to jump from workstation to workstation without
+dreading the inevitable setup that usually comes with going to a new
+computer.&lt;&#x2F;p&gt;
+&lt;p&gt;The only downside here is that to install a package you have to make a
+pull request to a GitHub Repository in which you modify a JSON file.
+This is almost always for my own good, but as a dev I am prone to
+avoiding things that the admins say are good for me (like broccoli,
+milk, and consistent workstation environments).&lt;&#x2F;p&gt;
+&lt;p&gt;For instance, yesterday I wanted to use
+&lt;a href=&quot;http:&#x2F;&#x2F;rg3.github.io&#x2F;youtube-dl&#x2F;&quot;&gt;youtube-dl&lt;&#x2F;a&gt; to grab a video I was
+watching on repeat*. I could have made a pull request to add the
+package, waited until 30 after for the workstations to refresh, used the
+package, and went about my day. This would have been the correct and
+bureaucratic way to do things.&lt;&#x2F;p&gt;
+&lt;p&gt;I &lt;em&gt;could&lt;&#x2F;em&gt; have, and probably &lt;em&gt;should&lt;&#x2F;em&gt; have, done that... but I didn&#x27;t.&lt;&#x2F;p&gt;
+&lt;p&gt;* firefox kept crashing, I wasn&#x27;t just stealing music for the sake of
+it.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;enter-docker&quot;&gt;Enter: Docker&lt;&#x2F;h2&gt;
+&lt;p&gt;In this case the solution to the &#x27;problem&#x27; was
+&lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Docker_%28software%29&quot;&gt;Docker&lt;&#x2F;a&gt;. I wrote a
+Dockerfile which provisioned a container to have &lt;code&gt;youtube-dl&lt;&#x2F;code&gt; installed,
+spun up the container with a shared directory (&lt;code&gt;$PWD:&#x2F;home&#x2F;&lt;&#x2F;code&gt;), and
+executed the youtube-dl command. The .mp4 video was downloaded to my
+current working directory and I was able to play it with my media player
+of choice, all without installing &lt;code&gt;youtube-dl&lt;&#x2F;code&gt; locally.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;the-deets-dockerfile-and-commands&quot;&gt;The Deets: Dockerfile and Commands&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;code&gt;Dockerfile&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;FROM ubuntu:latest
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;RUN apt-get -y update
+&lt;&#x2F;span&gt;&lt;span&gt;RUN apt-get -y upgrade
+&lt;&#x2F;span&gt;&lt;span&gt;RUN apt-get -y install python-pip
+&lt;&#x2F;span&gt;&lt;span&gt;RUN pip install youtube-dl
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;WORKDIR &#x2F;home
+&lt;&#x2F;span&gt;&lt;span&gt;RUN alias youtube-dl=&amp;#39;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;youtube-dl&amp;#39;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;If you are in the directory containing the above Dockerfile, build the
+container with:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;$ docker build -t yt-dl .
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;and run it with:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;$ docker run -v $PWD:&#x2F;home&#x2F; yt-dl youtube-dl &amp;lt;YOUTUBE-VID-URL&amp;gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This will download any url&#x27;s video into the current working directory.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;pro-tip-add-an-alias&quot;&gt;Pro-Tip: Add an &lt;code&gt;Alias&lt;&#x2F;code&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;Add the following content to your &lt;code&gt;~&#x2F;.bashrc&lt;&#x2F;code&gt; file and then run
+&lt;code&gt;source ~&#x2F;.bashrc&lt;&#x2F;code&gt; to get rid the of long Docker bits of the above
+command.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;export &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;$VID_DIR&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;&#x2F;path&#x2F;to&#x2F;downloaded&#x2F;videos&#x2F;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;alias &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8cdaff;&quot;&gt;yt-dl&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;docker run -v $VID_DIR:&#x2F;home&#x2F; yt-dl youtube-dl&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;wait-this-is-overly-complicated&quot;&gt;Wait This is Overly Complicated&lt;&#x2F;h2&gt;
+&lt;p&gt;You&#x27;re probably thinking: &quot;Hey, couldn&#x27;t you have just run
+&lt;code&gt;pip install --user youtube-dl&lt;&#x2F;code&gt;?&lt;&#x2F;p&gt;
+&lt;p&gt;Yes. I could have. But that wouldn&#x27;t be fun and wouldn&#x27;t have given me
+an excuse to write a blog, post now would it Ms. Smarty Pantz.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;&lt;strong&gt;drink the coolaid. come to the docker side.&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="shortcut icon" href="&#x2F;favicon.ico"><title>Covertly Installing Packages with Docker | elijah.run</title>
+  <meta name="title" content="Covertly Installing Packages with Docker">
+<meta name="description" content="A blog about tech, media, and art">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="alternate" type="application/atom+xml" title="elijah.run" href="/atom.xml">
+  <style>
+    :root {
+    --width: 586px;
+    --font-main: Verdana, sans-serif;
+    --font-secondary: "Times New Roman", serif;
+    --font-scale: 1.1em;
+    --background-color: #fff;
+    --heading-color: #222;
+    --text-color: #444;
+    --link-color: #3273dc;
+    --visited-color: #8b6fcb;
+    --blockquote-color: #222;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background-color: #01242e;
+      --heading-color: #eee;
+      --text-color: #ddd;
+      --link-color: #8cc2dd;
+      --visited-color: #8b6fcb;
+      --blockquote-color: #ccc;
+    }
+  }
+
+  body {
+    font-family: var(--font-secondary);
+    font-size: var(--font-scale);
+    margin: auto;
+    padding: 20px;
+    max-width: var(--width);
+    text-align: left;
+    background-color: var(--background-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: var(--text-color);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-main);
+    color: var(--heading-color);
+  }
+
+  a {
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  nav a {
+    margin-right: 8px;
+  }
+
+  nav span.active {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  strong,
+  b {
+    color: var(--heading-color);
+  }
+
+  button {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  main {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px dashed;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  pre code {
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 0.875rem;
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: monospace;
+    padding: 2px;
+    border-radius: 3px;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: var(--code-color);
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px 0;
+    text-align: center;
+  }
+
+  .title:hover {
+    text-decoration: none;
+  }
+
+  .title h1 {
+    font-size: 1.5em;
+  }
+
+  .inline {
+    width: auto !important;
+  }
+
+  .highlight,
+  .code {
+    padding: 1px 15px;
+    background-color: var(--code-background-color);
+    color: var(--code-color);
+    border-radius: 3px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    overflow-x: auto;
+  }
+
+  /* blog post list */
+  ul.posts {
+    list-style-type: none;
+    padding: unset;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  ul.posts li {
+    line-height: 1;
+    margin: 0;
+  }
+
+  ul.posts li time {
+    margin-left: 0px;
+    font-size: 12px;
+  }
+
+  ul.posts li a:visited {
+    color: var(--visited-color);
+  }
+
+  li.post {
+    padding: 0px 0px 10px 0px;
+  }
+
+  span.tags {
+    font-size: smaller;
+  }
+
+  /* table of contents */
+  details ul {
+    list-style-type: circle;
+  }
+
+  </style>
+</head>
+<body>
+  <header>
+  <a href="/" class="title">
+    <h1>elijah.run</h1>
+  </a>
+  <nav aria-label="site">
+      <a href="/">(🏠 elijah.run)</a>
+      <a href="https:&#x2F;&#x2F;games.elijah.run">(🕹️ games)</a>
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;pop">(🐙 github 🐱)</a>
+      <a href="/Elijah Voigt.pdf">(👔 resume)</a>
+  </nav>
+</header>
+<h1>Covertly Installing Packages with Docker</h1>
+      <p>
+        <i>
+          <time datetime="2015-10-07T00:00:00+00:00" pubdate>Wed 07 Oct 2015</time>
+        </i>
+      </p>
+    <details open>
+      <summary>Table of contents</summary>
+    <ul>
+        <li>
+          <a href="/covertly-install-packages-with-docker/#the-problem-workstations">The Problem: Workstations</a>
+        </li>
+        <li>
+          <a href="/covertly-install-packages-with-docker/#enter-docker">Enter: Docker</a>
+        </li>
+        <li>
+          <a href="/covertly-install-packages-with-docker/#the-deets-dockerfile-and-commands">The Deets: Dockerfile and Commands</a>
+        </li>
+        <li>
+          <a href="/covertly-install-packages-with-docker/#pro-tip-add-an-alias">Pro-Tip: Add an Alias</a>
+        </li>
+        <li>
+          <a href="/covertly-install-packages-with-docker/#wait-this-is-overly-complicated">Wait This is Overly Complicated</a>
+        </li>
+    </ul>
+    </details>
+  <main>
+    <p><a href="/covertly-install-packages-with-docker/#the-deets-dockerfile-and-commands">Jump to the codey bits</a></p>
+<h2 id="the-problem-workstations">The Problem: Workstations</h2>
+<p>At the OSL I use workstations which are provisioned by
+<a href="https://en.wikipedia.org/wiki/Chef_%28software%29">Chef</a> to look more
+or less identical (packages are the same and global config files are
+consistent from machine to machine). This is nice because it allows
+everybody at the lab to jump from workstation to workstation without
+dreading the inevitable setup that usually comes with going to a new
+computer.</p>
+<p>The only downside here is that to install a package you have to make a
+pull request to a GitHub Repository in which you modify a JSON file.
+This is almost always for my own good, but as a dev I am prone to
+avoiding things that the admins say are good for me (like broccoli,
+milk, and consistent workstation environments).</p>
+<p>For instance, yesterday I wanted to use
+<a href="http://rg3.github.io/youtube-dl/">youtube-dl</a> to grab a video I was
+watching on repeat*. I could have made a pull request to add the
+package, waited until 30 after for the workstations to refresh, used the
+package, and went about my day. This would have been the correct and
+bureaucratic way to do things.</p>
+<p>I <em>could</em> have, and probably <em>should</em> have, done that... but I didn't.</p>
+<p>* firefox kept crashing, I wasn't just stealing music for the sake of
+it.</p>
+<h2 id="enter-docker">Enter: Docker</h2>
+<p>In this case the solution to the 'problem' was
+<a href="https://en.wikipedia.org/wiki/Docker_%28software%29">Docker</a>. I wrote a
+Dockerfile which provisioned a container to have <code>youtube-dl</code> installed,
+spun up the container with a shared directory (<code>$PWD:/home/</code>), and
+executed the youtube-dl command. The .mp4 video was downloaded to my
+current working directory and I was able to play it with my media player
+of choice, all without installing <code>youtube-dl</code> locally.</p>
+<h2 id="the-deets-dockerfile-and-commands">The Deets: Dockerfile and Commands</h2>
+<p><code>Dockerfile</code></p>
+<pre data-lang="txt" style="background-color:#191919;color:#f8f8f2;" class="language-txt "><code class="language-txt" data-lang="txt"><span>FROM ubuntu:latest
+</span><span>
+</span><span>RUN apt-get -y update
+</span><span>RUN apt-get -y upgrade
+</span><span>RUN apt-get -y install python-pip
+</span><span>RUN pip install youtube-dl
+</span><span>
+</span><span>WORKDIR /home
+</span><span>RUN alias youtube-dl=&#39;/usr/local/bin/youtube-dl&#39;
+</span></code></pre>
+<p>If you are in the directory containing the above Dockerfile, build the
+container with:</p>
+<pre data-lang="txt" style="background-color:#191919;color:#f8f8f2;" class="language-txt "><code class="language-txt" data-lang="txt"><span>$ docker build -t yt-dl .
+</span></code></pre>
+<p>and run it with:</p>
+<pre data-lang="txt" style="background-color:#191919;color:#f8f8f2;" class="language-txt "><code class="language-txt" data-lang="txt"><span>$ docker run -v $PWD:/home/ yt-dl youtube-dl &lt;YOUTUBE-VID-URL&gt;
+</span></code></pre>
+<p>This will download any url's video into the current working directory.</p>
+<h2 id="pro-tip-add-an-alias">Pro-Tip: Add an <code>Alias</code></h2>
+<p>Add the following content to your <code>~/.bashrc</code> file and then run
+<code>source ~/.bashrc</code> to get rid the of long Docker bits of the above
+command.</p>
+<pre data-lang="bash" style="background-color:#191919;color:#f8f8f2;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#ff5e5e;">export </span><span style="color:#e9fdac;">$VID_DIR</span><span style="color:#ff5e5e;">=</span><span style="color:#fbe3bf;">/path/to/downloaded/videos/
+</span><span style="color:#6699cc;">alias </span><span style="color:#8cdaff;">yt-dl</span><span style="color:#ff5e5e;">=</span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">docker run -v $VID_DIR:/home/ yt-dl youtube-dl</span><span style="color:#ffffff;">&#39;
+</span></code></pre>
+<h2 id="wait-this-is-overly-complicated">Wait This is Overly Complicated</h2>
+<p>You're probably thinking: "Hey, couldn't you have just run
+<code>pip install --user youtube-dl</code>?</p>
+<p>Yes. I could have. But that wouldn't be fun and wouldn't have given me
+an excuse to write a blog, post now would it Ms. Smarty Pantz.</p>
+<hr />
+<p><strong>drink the coolaid. come to the docker side.</strong></p>
+
+  </main>
+  <p>
+        Tags:
+          <a href="/tags/docker/">#docker</a>
+  </p>
+<footer>
+  Made with <a href="https://www.getzola.org/">Zola</a>;
+  theme inspired by <a href="https://codeberg.org/alanpearce/zola-bearblog">Zola ʕ•ᴥ•ʔ Bear</a>.
+</footer>
+</body>
+</html>

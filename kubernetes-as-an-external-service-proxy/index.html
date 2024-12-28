@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="shortcut icon" href="&#x2F;favicon.ico"><title>Kubernetes as an external service proxy | elijah.run</title>
+  <meta name="title" content="Kubernetes as an external service proxy">
+<meta name="description" content="A blog about tech, media, and art">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="alternate" type="application/atom+xml" title="elijah.run" href="/atom.xml">
+  <style>
+    :root {
+    --width: 586px;
+    --font-main: Verdana, sans-serif;
+    --font-secondary: "Times New Roman", serif;
+    --font-scale: 1.1em;
+    --background-color: #fff;
+    --heading-color: #222;
+    --text-color: #444;
+    --link-color: #3273dc;
+    --visited-color: #8b6fcb;
+    --blockquote-color: #222;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background-color: #01242e;
+      --heading-color: #eee;
+      --text-color: #ddd;
+      --link-color: #8cc2dd;
+      --visited-color: #8b6fcb;
+      --blockquote-color: #ccc;
+    }
+  }
+
+  body {
+    font-family: var(--font-secondary);
+    font-size: var(--font-scale);
+    margin: auto;
+    padding: 20px;
+    max-width: var(--width);
+    text-align: left;
+    background-color: var(--background-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: var(--text-color);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-main);
+    color: var(--heading-color);
+  }
+
+  a {
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  nav a {
+    margin-right: 8px;
+  }
+
+  nav span.active {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  strong,
+  b {
+    color: var(--heading-color);
+  }
+
+  button {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  main {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px dashed;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  pre code {
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 0.875rem;
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: monospace;
+    padding: 2px;
+    border-radius: 3px;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: var(--code-color);
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px 0;
+    text-align: center;
+  }
+
+  .title:hover {
+    text-decoration: none;
+  }
+
+  .title h1 {
+    font-size: 1.5em;
+  }
+
+  .inline {
+    width: auto !important;
+  }
+
+  .highlight,
+  .code {
+    padding: 1px 15px;
+    background-color: var(--code-background-color);
+    color: var(--code-color);
+    border-radius: 3px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    overflow-x: auto;
+  }
+
+  /* blog post list */
+  ul.posts {
+    list-style-type: none;
+    padding: unset;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  ul.posts li {
+    line-height: 1;
+    margin: 0;
+  }
+
+  ul.posts li time {
+    margin-left: 0px;
+    font-size: 12px;
+  }
+
+  ul.posts li a:visited {
+    color: var(--visited-color);
+  }
+
+  li.post {
+    padding: 0px 0px 10px 0px;
+  }
+
+  span.tags {
+    font-size: smaller;
+  }
+
+  /* table of contents */
+  details ul {
+    list-style-type: circle;
+  }
+
+  </style>
+</head>
+<body>
+  <header>
+  <a href="/" class="title">
+    <h1>elijah.run</h1>
+  </a>
+  <nav aria-label="site">
+      <a href="/">(🏠 elijah.run)</a>
+      <a href="https:&#x2F;&#x2F;games.elijah.run">(🕹️ games)</a>
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;pop">(🐙 github 🐱)</a>
+      <a href="/Elijah Voigt.pdf">(👔 resume)</a>
+  </nav>
+</header>
+<h1>Kubernetes as an external service proxy</h1>
+      <p>
+        <i>
+          <time datetime="2018-10-13T00:00:00+00:00" pubdate>Sat 13 Oct 2018</time>
+        </i>
+      </p>
+    <details open>
+      <summary>Table of contents</summary>
+    <ul>
+        <li>
+          <a href="/kubernetes-as-an-external-service-proxy/#endpoints">Endpoints</a>
+        </li>
+        <li>
+          <a href="/kubernetes-as-an-external-service-proxy/#service">Service</a>
+        </li>
+        <li>
+          <a href="/kubernetes-as-an-external-service-proxy/#ingress">Ingress</a>
+        </li>
+    </ul>
+    </details>
+  <main>
+    <p>Say you have a firewall restriction that creates the following situation:</p>
+<ol>
+<li>App1 cannot communicate directly with App2.</li>
+<li>App1 and App2 can both talk to a Kubernets cluster.</li>
+<li>Neither app is hosted on the Kubernetes cluster.</li>
+<li>How can you get messages between App1 and App2?</li>
+</ol>
+<p>The way the problem is stated makes it pretty obvious that the solution <em>involves</em> using a Kubernetes cluster, but how exactly?</p>
+<p>The naive solution might be to spin up a container which acts as a proxy; Nginx comes to mind.
+This would definitely work, but I am exceedingly lazy and don't want to learn how to configure Nginx.
+In fact, the solution I came to doesn't involve running any new pods!</p>
+<p>Here's the code.
+Below I'll explain what's happening here and why it works.</p>
+<pre data-lang="yaml" style="background-color:#191919;color:#f8f8f2;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#ff5e5e;">kind</span><span>: </span><span style="color:#fbe3bf;">Endpoints
+</span><span style="color:#ff5e5e;">metadata</span><span>:
+</span><span>  </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">myapp-proxy
+</span><span style="color:#ff5e5e;">subsets</span><span>:
+</span><span>- </span><span style="color:#ff5e5e;">addresses</span><span>:
+</span><span>  - </span><span style="color:#ff5e5e;">ip</span><span>: </span><span style="color:#fbe3bf;">2.3.4.5k </span><span style="color:#6d6d6d;"># App2&#39;s address
+</span><span>  </span><span style="color:#ff5e5e;">ports</span><span>:
+</span><span>  - </span><span style="color:#ff5e5e;">port</span><span>: </span><span style="color:#fdb082;">8080 </span><span style="color:#6d6d6d;"># App2&#39;s service port
+</span><span style="color:#ff5e5e;">apiVersion</span><span>: </span><span style="color:#fbe3bf;">v1
+</span><span>
+</span><span>---
+</span><span>
+</span><span style="color:#ff5e5e;">kind</span><span>: </span><span style="color:#fbe3bf;">Service
+</span><span style="color:#ff5e5e;">metadata</span><span>:
+</span><span>  </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">myapp-proxy
+</span><span style="color:#ff5e5e;">spec</span><span>:
+</span><span>  </span><span style="color:#ff5e5e;">type</span><span>: </span><span style="color:#fbe3bf;">LoadBalancer
+</span><span>  </span><span style="color:#ff5e5e;">loadBalancerSourceRanges</span><span>:
+</span><span>  - </span><span style="color:#ffffff;">&quot;</span><span style="color:#fbe3bf;">1.2.3.4/32</span><span style="color:#ffffff;">&quot; </span><span style="color:#6d6d6d;"># App1&#39;s address
+</span><span>  </span><span style="color:#ff5e5e;">ports</span><span>:
+</span><span>  - </span><span style="color:#ff5e5e;">protocol</span><span>: </span><span style="color:#fbe3bf;">TCP
+</span><span>    </span><span style="color:#ff5e5e;">port</span><span>: </span><span style="color:#fdb082;">80 </span><span style="color:#6d6d6d;"># Redirect traffic hitting 80 to the app&#39;s service port
+</span><span>    </span><span style="color:#ff5e5e;">targetPort</span><span>: </span><span style="color:#fdb082;">8080
+</span><span style="color:#ff5e5e;">apiVersion</span><span>: </span><span style="color:#fbe3bf;">v1
+</span><span>
+</span><span>---
+</span><span>
+</span><span style="color:#ff5e5e;">kind</span><span>: </span><span style="color:#fbe3bf;">Ingress
+</span><span style="color:#ff5e5e;">metadata</span><span>:
+</span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">restaurant-proxy
+</span><span style="color:#ff5e5e;">spec</span><span>:
+</span><span style="color:#ff5e5e;">rules</span><span>:
+</span><span>  - </span><span style="color:#ff5e5e;">host</span><span>: </span><span style="color:#fbe3bf;">myapp-proxy.somehost.net
+</span><span>  </span><span style="color:#ff5e5e;">http</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">paths</span><span>:
+</span><span>    - </span><span style="color:#ff5e5e;">path</span><span>: </span><span style="color:#fbe3bf;">/
+</span><span>        </span><span style="color:#ff5e5e;">backend</span><span>:
+</span><span>          </span><span style="color:#ff5e5e;">serviceName</span><span>: </span><span style="color:#fbe3bf;">myapp-proxy
+</span><span>          </span><span style="color:#ff5e5e;">servicePort</span><span>: </span><span style="color:#fdb082;">80
+</span><span style="color:#ff5e5e;">apiVersion</span><span>: </span><span style="color:#fbe3bf;">extensions/v1beta1
+</span></code></pre>
+<h2 id="endpoints">Endpoints</h2>
+<p>Endpoints are the Kubernetes abstraction for IPs+Ports running the same application.
+It's how you group together N instances of an app into one pool.</p>
+<p>Under the hood Endpoints get created as a pre-requisite for every Service you deploy.
+You don't usually need to deal with these directly as they are created implicitly whenever a Deployment gets applied.</p>
+<p>By manually creating an endpoint we have imported our non-kubernetes app into Kubernetes.
+That means we can do Kubernetes things with it like expose it via a Service or even put it behind an Ingress Pretty neat!</p>
+<h2 id="service">Service</h2>
+<p>Services are how we expose an endpoint to the world.
+Most cloud providers will give you a public IP address for a service and load balance across all of that service's endpoints.</p>
+<p>This is as far as we need to proxy traffic between our two Apps.
+App1 makes a request to whatever IP Kubernetes gets for the <code>myapp-proxy</code> Service and relays it to the <code>myapp-proxy</code> endpoint, which ultimately routes the traffic to App2.
+What's really cool is that the endpoint that <strong>is</strong> App2 can be an self-hosted Virtual Machine, as long as the IP doesn't change this proxy will continue to work.</p>
+<h2 id="ingress">Ingress</h2>
+<p>Ingresses are my favorite part of Kubernetes.
+They're very convenient, incredibly powerful, and they work like... over half the time.</p>
+<p>While not strictly necessary, this Ingress gives us some nice-to-haves.</p>
+<ul>
+<li>Gives us an easy to manage host name via something like <a href="https://github.com/kubernetes-incubator/external-dns">External DNS</a>.</li>
+<li>Could be extended to terminate SSL, again "for free", with something like <a href="https://github.com/jetstack/cert-manager">Cert Manager</a>.</li>
+</ul>
+<p>So that's how we use Kubernetes to manage services (lower-case 's') which aren't running in Pods.</p>
+
+  </main>
+  <p>
+        Tags:
+          <a href="/tags/europe-2015/">#europe 2015</a>
+          <a href="/tags/travel/">#travel</a>
+          <a href="/tags/archive/">#archive</a>
+  </p>
+<footer>
+  Made with <a href="https://www.getzola.org/">Zola</a>;
+  theme inspired by <a href="https://codeberg.org/alanpearce/zola-bearblog">Zola ʕ•ᴥ•ʔ Bear</a>.
+</footer>
+</body>
+</html>

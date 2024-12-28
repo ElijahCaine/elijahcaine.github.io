@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>elijah.run - development</title>
+    <subtitle>A blog about tech, media, and art</subtitle>
+    <link rel="self" type="application/atom+xml" href="/tags/development/atom.xml"/>
+    <link rel="alternate" type="text/html" href="/"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2016-03-25T00:00:00+00:00</updated>
+    <id>/tags/development/atom.xml</id>
+    <entry xml:lang="en">
+        <title>How to develop a site for the web</title>
+        <published>2016-03-25T00:00:00+00:00</published>
+        <updated>2016-03-25T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/how-to-develop-a-site-for-the-web/"/>
+        <id>/how-to-develop-a-site-for-the-web/</id>
+        
+        <content type="html" xml:base="/how-to-develop-a-site-for-the-web/">&lt;span class=&quot;note&quot;&gt;
+    &lt;span class=&quot;note-title&quot;&gt;
+        Note
+    &lt;&#x2F;span&gt;
+
+    &lt;span class=&quot;note-body&quot;&gt;
+        &amp;lt;p&amp;gt;This post does not deal with the basics of HTML, CSS, or Javascript, but
+rather a simple and often overlooked part of the web-dev toolchain.&amp;lt;&amp;#x2F;p&amp;gt;
+&amp;lt;p&amp;gt;If you would like help with the basics of HTML, CSS, and Javascript I
+suggest &amp;lt;a href=&amp;quot;https:&amp;#x2F;&amp;#x2F;codecademy.com&amp;#x2F;learn&amp;#x2F;make-a-website&amp;quot;&amp;gt;Codecademy&amp;lt;&amp;#x2F;a&amp;gt;.&amp;lt;&amp;#x2F;p&amp;gt;
+
+    &lt;&#x2F;span&gt;
+&lt;&#x2F;span&gt;
+&lt;p&gt;Web Development, especially the front-endy stuff, is a great way to
+understand how computers &lt;em&gt;think&lt;&#x2F;em&gt; and can be a wonderful foray into
+computer programming. Anybody that&#x27;s made a website probably remembers
+their first time:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Open up a text editor.&lt;&#x2F;li&gt;
+&lt;li&gt;Type something like the following in:&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;pre data-lang=&quot;html&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-html &quot;&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;h1&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;Hello world!&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;h1&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;p&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;This is so cool!&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;h1&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;ol start=&quot;3&quot;&gt;
+&lt;li&gt;&lt;code&gt;Save As index.html&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;Right click and open the file in your browser.&lt;&#x2F;li&gt;
+&lt;li&gt;Marvel at what you&#x27;ve created and hack away at it all night long.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;And there you go! You&#x27;ve got a website made and ready to roll. It&#x27;s not
+on a server, and you can&#x27;t tell your friends to go to it from &lt;em&gt;their&lt;&#x2F;em&gt;
+computer --but those are just technicalities. You can still celebrate
+doing a thing &lt;em&gt;like a boss&lt;&#x2F;em&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Unfortunately, when you test your website by viewing local files you&#x27;re
+missing out on a lot of advantages and quirks that you get when you host
+a website on a &lt;em&gt;real server&lt;&#x2F;em&gt; using something like &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Web_server&quot;&gt;Apache or
+Nginx&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;For instance, when you run check your website by clicking through
+&lt;code&gt;file&#x2F;&#x2F;&#x2F;home&#x2F;username&#x2F;project&#x2F;files.html&lt;&#x2F;code&gt; all of your hyperlinks that
+should point to &lt;code&gt;http:&#x2F;&#x2F;mywebsite.ext&#x2F;somepage&#x2F;&lt;&#x2F;code&gt; will take you to
+&lt;code&gt;file:&#x2F;&#x2F;&#x2F;&#x2F;somepage&lt;&#x2F;code&gt; when they should take you to
+&lt;code&gt;file:&#x2F;&#x2F;&#x2F;home&#x2F;username&#x2F;projects&#x2F;myawesomesite&#x2F;somepage&#x2F;index.html&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;run-a-development-server-it-s-easy&quot;&gt;Run A Development Server (it&#x27;s easy!)&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;the-short-answer&quot;&gt;The Short Answer&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;strong&gt;Use Python!&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;$ python2 -m SimpleHTTPServer
+&lt;&#x2F;span&gt;&lt;span&gt;Serving HTTP on 0.0.0.0 port 8000 ...
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;the-longer-answer&quot;&gt;The Longer Answer&lt;&#x2F;h3&gt;
+&lt;p&gt;You can run your own local webserver to serve files &lt;em&gt;locally&lt;&#x2F;em&gt;.
+This gets you all of the developmental advantages of running a webserver without having to rent or run a server in the cloud.
+The best part is that it&#x27;s very easy to run a development web server.&lt;&#x2F;p&gt;
+&lt;p&gt;Here&#x27;s how:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;python.org&#x2F;downloads&#x2F;&quot;&gt;Install Python&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Navigate to &lt;code&gt;your-awesome-website&lt;&#x2F;code&gt; directory&#x2F;folder.&lt;&#x2F;li&gt;
+&lt;li&gt;Run &lt;code&gt;python -m SimpleHTTPServer&lt;&#x2F;code&gt; if you installed &lt;code&gt;python2&lt;&#x2F;code&gt; or run &lt;code&gt;python -m http.server&lt;&#x2F;code&gt; if you installed &lt;code&gt;python3&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;span class=&quot;note&quot;&gt;
+    &lt;span class=&quot;note-title&quot;&gt;
+        Note
+    &lt;&#x2F;span&gt;
+
+    &lt;span class=&quot;note-body&quot;&gt;
+        &amp;lt;p&amp;gt;These instructions assume you are doing things in a Unix environment (OSX or Linux) thought the commandline.
+If you are using Windows you should check out this &amp;lt;a href=&amp;quot;http:&amp;#x2F;&amp;#x2F;stackoverflow.com&amp;#x2F;questions&amp;#x2F;17351016&amp;#x2F;set-up-python-simplehttpserver-on-windows&amp;quot;&amp;gt;stack overflow post&amp;lt;&amp;#x2F;a&amp;gt; for Windows-specific help.&amp;lt;&amp;#x2F;p&amp;gt;
+
+    &lt;&#x2F;span&gt;
+&lt;&#x2F;span&gt;
+&lt;p&gt;Then in your web browser go to the address &lt;code&gt;http:&#x2F;&#x2F;localhost:8000&lt;&#x2F;code&gt; and
+bam! &lt;strong&gt;Your&lt;&#x2F;strong&gt; Website.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;gifs&#x2F;high-five.gif&quot; alt=&quot;High Five.gif&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

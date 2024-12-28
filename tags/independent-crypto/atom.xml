@@ -1,0 +1,1548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>elijah.run - independent crypto</title>
+    <subtitle>A blog about tech, media, and art</subtitle>
+    <link rel="self" type="application/atom+xml" href="/tags/independent-crypto/atom.xml"/>
+    <link rel="alternate" type="text/html" href="/"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2017-11-27T00:00:00+00:00</updated>
+    <id>/tags/independent-crypto/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Independent Crypto Conclusion</title>
+        <published>2017-11-27T00:00:00+00:00</published>
+        <updated>2017-11-27T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/independent-crypto-conclusion/"/>
+        <id>/independent-crypto-conclusion/</id>
+        
+        <content type="html" xml:base="/independent-crypto-conclusion/">&lt;span class=&quot;note&quot;&gt;
+    &lt;span class=&quot;note-title&quot;&gt;
+        Note
+    &lt;&#x2F;span&gt;
+
+    &lt;span class=&quot;note-body&quot;&gt;
+        &amp;lt;p&amp;gt;This is a part of a series of blog posts I wrote for an Independent Study on cryptography at Oregon State University.
+To read all of the posts, check out the &amp;#x27;Independent Crypto&amp;#x27; tag.&amp;lt;&amp;#x2F;p&amp;gt;
+
+    &lt;&#x2F;span&gt;
+&lt;&#x2F;span&gt;
+&lt;p&gt;Wait, is it over already? It feels like we just started! Those 10 weeks always fly by, and this term was no exception.&lt;&#x2F;p&gt;
+&lt;p&gt;Independent Crypto has been a thrill, an honor, and of course immensely educational.
+It&#x27;s been a blast to say the least.
+The weekly check-ins with my mentor &lt;a href=&quot;http:&#x2F;&#x2F;web.engr.oregonstate.edu&#x2F;~rosulekm&#x2F;&quot;&gt;Mike Rosulek&lt;&#x2F;a&gt;, forcing myself to engage with academic papers and online lectures, and finally having complex topics like Garbled Circuits and Elliptic Curves &quot;make sense&quot;, it was all very enjoyable.
+I am very fortunate to have been given the opportunity to both create this course and take it.
+Excited as I was before it began, it turned out even better than I could have hoped.&lt;&#x2F;p&gt;
+&lt;p&gt;Let&#x27;s reflect on the some of the things we learned...&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;elliptic-curve-cryptography&quot;&gt;Elliptic Curve Cryptography&lt;&#x2F;h2&gt;
+&lt;p&gt;We learned that Elliptic Curves look like this:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;independent-crypto&#x2F;ecc-1.png&quot; alt=&quot;A straight forward ECC.&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;and this:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;independent-crypto&#x2F;ecc-3.png&quot; alt=&quot;ECC with the line L illustrated&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;We also learned that you can implement a version of the Diffie-hellman key exchange protocol by &quot;adding&quot; points on an Elliptic Curve over a finite field.&lt;&#x2F;p&gt;
+&lt;p&gt;We also learned that despite how weird Elliptic Curve Cryptography sounds when you describe it, it can be used in very secure and efficient crypto.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;memory-hard-functions&quot;&gt;Memory Hard Functions&lt;&#x2F;h2&gt;
+&lt;p&gt;We learned that Memory Hard Functions (MHFs) are a solution to the arms race that is hash-cracking hardware.
+Importantly, it relies on the fact that while there are specialized hashing processors, there is no specialized RAM for the same task (or any task really).&lt;&#x2F;p&gt;
+&lt;p&gt;The goal of an MHF is to make it as hard (or harder) for an adversary to compute a given hash as it was for you, assuming you&#x27;re running on non-specialized hardware and they have specialized hash-cracking hardware.&lt;&#x2F;p&gt;
+&lt;p&gt;We learned that there are two types of MHF&#x27;s: data-dependent and data-independent.
+Data-dependent MFHs (dMHFs) have predictable memory usage patterns so they may be susceptible to cache-timing attacks.
+Data-independent MHFs (iMHFs) are not susceptible to this attack as their memory patterns are not predictable.
+While there are dMHFs in the wild, like scrypt which performs exceptionally well, there are not any any proven iMHFs in use.&lt;&#x2F;p&gt;
+&lt;p&gt;We also learned that this is what it looks like to &quot;Pebble an iMHF Directed Acyclic Graph&quot;:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;independent-crypto&#x2F;dag-animated.gif&quot; alt=&quot;Animated DAG traversal.&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;We also learned that the way to attack an iMHF is by performing a breadth-first search on the graph, then once you hit a wall, fill in the
+necessary nodes (pebbles) until you can compute the next node.
+Much of the active research into iMHFs is in figuring out the best graphs, or types of graphs, to combat these kinds of feather&#x2F;balloon attacks.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;garbled-circuits&quot;&gt;Garbled Circuits&lt;&#x2F;h2&gt;
+&lt;p&gt;We learned that Garbled Circuits are a way of achieved two-party secure function evaluation.&lt;&#x2F;p&gt;
+&lt;p&gt;Alice and Bob agree on a circuit (program) to garble.
+One party encrypts the circuit by encrypting each logic-gate.
+Both parties obfuscate their inputs and evaluate the garbled circuit.
+This gives both parties the result of the original program without either party knowing the exact inputs.&lt;&#x2F;p&gt;
+&lt;p&gt;This isn&#x27;t a fool-proof security measure.
+Sometimes it is good to ask the party garbling said circuits to create a few extras.
+The evaluating party opens some of them to make sure they&#x27;re on the up-and-up.
+The other party evaluates the remaining circuits and verifies that the outputs are consistent.&lt;&#x2F;p&gt;
+&lt;p&gt;We also learned that this game is surprisingly fun for only having &lt;strong&gt;four levels&lt;&#x2F;strong&gt;.&lt;&#x2F;p&gt;
+&lt;iframe src=&quot;&#x2F;garbled-circuits-game.html&quot; height=&quot;400px&quot; width=&quot;100%&quot;&gt;&lt;&#x2F;iframe&gt;
+&lt;p&gt;Permalink: &lt;a href=&quot;http:&#x2F;&#x2F;elijah.run&#x2F;garbled-circuits-game.html&quot;&gt;http:&#x2F;&#x2F;elijah.run&#x2F;garbled-circuits-game.html&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;remote-timing-attacks&quot;&gt;Remote Timing Attacks&lt;&#x2F;h2&gt;
+&lt;p&gt;And now for something completely different!
+We broke from the math and theory to focus on a problem involving real tangible bits!&lt;&#x2F;p&gt;
+&lt;p&gt;Based on response timing differences an adversary can sometimes determine private information &lt;strong&gt;like your OpenSSL Private Keys&lt;&#x2F;strong&gt;.
+This is scary, but the problem has mostly been fixed and now there are standards the crypto community follows to write code which is secure against these attacks.&lt;&#x2F;p&gt;
+&lt;p&gt;If you&#x27;re writing crypto and you know what you&#x27;re doing, make sure you&#x27;re using the defacto constant-time libraries for bit-wise comparisons, mathematical operations, and pretty much anything involving secrets.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;miscellaneous&quot;&gt;Miscellaneous&lt;&#x2F;h2&gt;
+&lt;p&gt;I personally gained a lot from this course.
+I wrote annotated bibliographies, read academic papers, implemented a remote timing attack, and made a fun little game which was totally relevant and 100% not just an excuse to play around making games.&lt;&#x2F;p&gt;
+&lt;p&gt;Despite sinking hours into this course I barely scratched the surface of every topic.
+I&#x27;ve got &lt;em&gt;loads&lt;&#x2F;em&gt; more I could cover if I was inclined to do so.
+I&#x27;m not saying I&#x27;m &lt;em&gt;going&lt;&#x2F;em&gt; to get a graduate degree, but if it&#x27;s anything like this I&#x27;d be up for it.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Remote Timing Attacks</title>
+        <published>2017-11-20T00:00:00+00:00</published>
+        <updated>2017-11-20T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/remote-timing-attacks/"/>
+        <id>/remote-timing-attacks/</id>
+        
+        <content type="html" xml:base="/remote-timing-attacks/">&lt;span class=&quot;note&quot;&gt;
+    &lt;span class=&quot;note-title&quot;&gt;
+        Note
+    &lt;&#x2F;span&gt;
+
+    &lt;span class=&quot;note-body&quot;&gt;
+        &amp;lt;p&amp;gt;This is a part of a series of blog posts I wrote for an Independent
+Study on cryptography at Oregon State University. To read all of the
+posts, check out the &amp;#x27;Independent Crypto&amp;#x27; tag.&amp;lt;&amp;#x2F;p&amp;gt;
+
+    &lt;&#x2F;span&gt;
+&lt;&#x2F;span&gt;
+&lt;p&gt;Fade in.&lt;&#x2F;p&gt;
+&lt;p&gt;It is 2002.&lt;&#x2F;p&gt;
+&lt;p&gt;You are a Linux system administrator.
+You and thousands of other admins are running OpenSSL on you battle tested Linux servers.
+You trust that your data is transfered securely from host to host because... why wouldn&#x27;t it be?!
+OpenSSL makes things secure.
+Duh.&lt;&#x2F;p&gt;
+&lt;p&gt;A few months into running that server you figure out that your private keys have been compromised!
+They were stolen somehow but you can&#x27;t figure out what happened.
+You check the logs to see if somebody hacked into your system, but nothing obvious catches your eye.&lt;&#x2F;p&gt;
+&lt;p&gt;Combing through the logs you do see an IP address that tried (and failed) hundreds of thousands of times to authenticate with your OpenSSL server. It attempted authentication over and over and failed relentlessly until suddenly, after about two days, it stopped.
+Weird.&lt;&#x2F;p&gt;
+&lt;p&gt;A year later you read an academic paper from Stanford.&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#1&quot;&gt;1&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;
+It clicks.
+You&#x27;ve you&#x27;ve been Remote Timing Attacked!&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;definition&quot;&gt;Definition&lt;&#x2F;h2&gt;
+&lt;p&gt;Remote Timing Attacks are a special brand of Side Channel Attack where adversaries use differences in response times to determine private information.
+Creepy I know.&lt;&#x2F;p&gt;
+&lt;p&gt;A lot of code and Statistics&lt;sup&gt;TM&lt;&#x2F;sup&gt; goes into figuring out secret information based on this, but let&#x27;s start small.
+Take the following comparison which lives in a hypothetical SSL library:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;length&lt;&#x2F;span&gt;&lt;span&gt;(recieved_key) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;!= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;PRIVATE_KEY_LENGTH&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;KeyLengthError
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;recieved_key &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span&gt;expected_key:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;Thing
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;else&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;UnknownKeyError
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This might seem innocent enough but as it turns out this leaks information!
+The &lt;code&gt;==&lt;&#x2F;code&gt; operator does not &lt;em&gt;always&lt;&#x2F;em&gt; take the same amount of time to return a response.
+In fact, this operator tends to compare two inputs bit-by-bit.
+When it finds a difference it short-circuits and returns True or False.
+If &lt;code&gt;recieved_key&lt;&#x2F;code&gt; shares the first N bits with &lt;code&gt;expected_key&lt;&#x2F;code&gt;, the program will return slightly sooner than if they only shared the first N-1 bits.&lt;&#x2F;p&gt;
+&lt;p&gt;What&#x27;s the timing difference if it&#x27;s just returning one or two cycles earlier; does it really matter?
+As it turns out, there is &lt;em&gt;enough&lt;&#x2F;em&gt; of a difference to break security and enable an adversary to decrypt entire private keys!&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#2&quot;&gt;2&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;
+This is put well by an article on chosenplaintext.ca:&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#3&quot;&gt;3&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Now, it may not seem significant that an attacker can see how many bytes of their key were a match, but it can actually be &lt;strong&gt;fatal&lt;&#x2F;strong&gt; to security.
+The attacker can crack the first byte of the key by trying all 256 possibilities, and observing which one caused the comparison to take longer.
+Now, armed with the first byte, they can do the same with the second byte, and the third, and so on, until they have recovered the entire key.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;With a lot of patience an adversary can recover secret information from an OpenSSL processes on the same host OS, an OpenSSL processes on a Virtual Machine on the same host OS, and even an OpenSSL on a separate host processes across a network.
+It gets harder (read: more time consuming) to hack the farther away adversary, but they&#x27;re all possible with sufficient patience, compute power, and Statistics&lt;sup&gt;TM&lt;&#x2F;sup&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;oh-god-fix-it-please&quot;&gt;Oh god fix it please&lt;&#x2F;h2&gt;
+&lt;p&gt;Clam down!
+We&#x27;ve come a long way since 2003 when this was proven to be a viable attack.
+Most SSL libraries have fixed this vulnerability so you&#x27;re fine as long as you updated in the past decade.&lt;&#x2F;p&gt;
+&lt;p&gt;If you &lt;em&gt;haven&#x27;t&lt;&#x2F;em&gt; updated in the past decade... burn that server.
+Even the silicon atoms are compromised. It&#x27;s not even worth trying a fresh install.
+The thing is just too far gone, start fresh.
+Goodnight, sweet prince.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;constant-time-algorithms&quot;&gt;Constant-time Algorithms&lt;&#x2F;h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;How did the crypto libraries solve this problem?&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Constant-time Algorithms&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Oh fancy, tell me more.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Constant-time Algorithms are a way of implementing an algorithm in a way that always takes the same amount of time to compute regardless of the input.&lt;&#x2F;p&gt;
+&lt;p&gt;Specifically, these perform in constant-time while processing &lt;em&gt;secret&lt;&#x2F;em&gt; information.
+This distinction means processing a secret key &lt;em&gt;always&lt;&#x2F;em&gt; takes N cycles while checking that a configuration file is correctly formatted might take a M cycles or maybe M+5.&lt;&#x2F;p&gt;
+&lt;p&gt;There are a lot of coding practices to be aware of in crypto which help us to avoid leaking information for Remote Timing Attacks.
+Let&#x27;s go over a few.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;limit-conditionals-on-secrets&quot;&gt;Limit conditionals on secrets&lt;&#x2F;h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Avoid conditioning on secret information to avoid (among other things)
+CPU branch predictions.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Take this code for example:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;usually_true:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;do_usual_thing&lt;&#x2F;span&gt;&lt;span&gt;() &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Path A
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;else&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;do_weird_thing&lt;&#x2F;span&gt;&lt;span&gt;() &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Path B
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The CPU eventually will recognize that Path A is going to happen more than Path B so it will try to optimize for that path, making the &quot;usual thing&quot; faster.
+This makes sense from a CPU designer standpoint&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#4&quot;&gt;4&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;, but it leaks information about which branch is being taken.
+When the &quot;unusual thing&quot; happens the CPU has to backpedal before continuing, which takes a notable amount of time.
+This backpedaling gives an adversary enough information to craft an attack the path they&#x27;re on and extrapolate secret information based on that path-awareness.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;This type of attack (conditioning on private information) is explored in the Constant Time Algorithm example and Remote Timing Attack demo near the end of the post.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;division-multiplication-tricky-stuff&quot;&gt;Division&#x2F;Multiplication: tricky stuff&lt;&#x2F;h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Multiplication is not always constant-time.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Take this piece of code.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;t1_a = current_time
+&lt;&#x2F;span&gt;&lt;span&gt;small_number_a * small_number_b
+&lt;&#x2F;span&gt;&lt;span&gt;t2_a = current_time
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;t1_b = current_time
+&lt;&#x2F;span&gt;&lt;span&gt;big_number_a * big_number_b
+&lt;&#x2F;span&gt;&lt;span&gt;t2_b = current_time
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;assert(t2_a - t1_a == t2_b - t1_b)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Believe it or not, even though the first and second blocks are just multiplying two numbers together they can take different amounts of time depending on your CPU and compiler.&lt;&#x2F;p&gt;
+&lt;p&gt;This is triggered by some CPUs just not being equipped to handle large numbers, so they have to perform the large number multiplication in software.
+Other CPUs optimize for small numbers since those get handled more frequently than large numbers.
+These are pretty old hardware limitations, and the issue has mostly been resolved in newer 64-bit CPUs.
+That said... you know... still something to lookout for.&lt;&#x2F;p&gt;
+&lt;p&gt;The same goes for division. Many CPUs don&#x27;t have hardware support for division so the compiler needs to handle the operation in software.&lt;&#x2F;p&gt;
+&lt;p&gt;TLDR: the same piece of code which is constant-time on one architecture (X86_64) might not be constant-time on another piece of hardware (x86_32 for example).&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#5&quot;&gt;5&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;compilers-and-undefined-behavior&quot;&gt;Compilers and undefined behavior&lt;&#x2F;h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Watch out for compiler&#x27;s &quot;undefined behavior&quot;.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;The C programming language, and &lt;em&gt;most&lt;&#x2F;em&gt; programming languages, have a formal specification of some kind.
+This formal specification gives the programmer a good idea about what their code will do when they compile and run it.&lt;&#x2F;p&gt;
+&lt;p&gt;For example if I wrote the following C:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;font-style:italic;color:#fbdfb5;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8cdaff;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;10 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;20
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;it &lt;em&gt;should&lt;&#x2F;em&gt; run and return &lt;code&gt;30&lt;&#x2F;code&gt;, because the specification tells us that the &lt;code&gt;+&lt;&#x2F;code&gt; operator adds two numbers and &lt;code&gt;return&lt;&#x2F;code&gt; returns a given value from a function.
+It also says that &lt;code&gt;main&lt;&#x2F;code&gt; returns a given integer as the exit status.&lt;&#x2F;p&gt;
+&lt;p&gt;If I ran that code and it returned &lt;code&gt;-1&lt;&#x2F;code&gt; I&#x27;d be very confused; that breaks specification!
+Compiler authors know this and follow the specification of the C language very carefully to make sure specified inputs produce specified outputs.&lt;&#x2F;p&gt;
+&lt;p&gt;But what about behavior the specification &lt;em&gt;doesn&#x27;t&lt;&#x2F;em&gt; mention?&lt;&#x2F;p&gt;
+&lt;p&gt;Take for instance this:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;c&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span style=&quot;font-style:italic;color:#fbdfb5;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8cdaff;&quot;&gt;main&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;fprintf&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;%d&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;214748300 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;* &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;214745000&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This might not be explicitly covered by the specification because it&#x27;s pretty weird.
+214748300 and 214745000 are close to the signed integer maximum, so when multiplied together what happens?
+Will the program print an unsigned integer value of 4611686014132420609 or does it return a signed integer which has overflowed but is still signed?&lt;&#x2F;p&gt;
+&lt;p&gt;This kind headache is called Undefined Behavior and it basically means the compiler, or rather the compiler&#x27;s authors, &lt;em&gt;choose&lt;&#x2F;em&gt; which behavior they think is best because the language spec didn&#x27;t say what should happen.&lt;&#x2F;p&gt;
+&lt;p&gt;Another side effect hinted at is that while you can be confident what the end behavior of your code will be you can&#x27;t predict how that behavior is achieved.
+This didn&#x27;t used to be an issue when C compilers were just 1:1 mapping your C loops and functions to sane assembly.
+Fortunately compilers have gotten much better at producing fast and efficient executables.
+&lt;strong&gt;Unfortunately&lt;&#x2F;strong&gt;, we aren&#x27;t easily able to predict the runtime of our code because our compilers are liable to pour some black-magic voodoo on any and all binaries it produces.&lt;&#x2F;p&gt;
+&lt;p&gt;These points are condensed really well by the BearSSL website:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The C programming language is defined to run in an abstract machine under the &quot;as if&quot; rule, so the compiler is free to translate your code in any sequence of instructions that yield the expected result, with execution time not being part of the observable elements that must be preserved.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Even though we know that a function will always &lt;em&gt;work&lt;&#x2F;em&gt;, the C language (and compiler spec) doesn&#x27;t care about &lt;em&gt;how&lt;&#x2F;em&gt; it gets done.&lt;&#x2F;p&gt;
+&lt;p&gt;When you&#x27;re trying to write crypto code this can feel like you&#x27;re a parent telling your kid to clean their room.
+They&#x27;ll make it look clean, but they just shoved everything under the bed.
+Technically they did what you wanted, the room looks cleaner, but they missed the point.
+Something about building character in constant-time.&lt;&#x2F;p&gt;
+&lt;p&gt;So what do we do? We need to trick the compiler.&lt;&#x2F;p&gt;
+&lt;p&gt;There are a handful of tricks to&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#6&quot;&gt;6&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt; to get the compiler to (a) avoid
+unknown behavior and (b) enforce a specific assembly output.
+These are tricks include:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Using a bit-wise operations instead of the equivalent mathematical operation.&lt;&#x2F;li&gt;
+&lt;li&gt;Mark important &lt;em&gt;secret&lt;&#x2F;em&gt; variables as volatile.&lt;&#x2F;li&gt;
+&lt;li&gt;Manually zero out important &lt;em&gt;secret filled&lt;&#x2F;em&gt; memory.&lt;&#x2F;li&gt;
+&lt;li&gt;Use multiple sources of entropy; as many as you can get your hands on.&lt;&#x2F;li&gt;
+&lt;li&gt;Read the output assembly and become a Jedi.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;These are very high-level solutions to some of the problems, solutions I&#x27;m only going to hand-wavily describe, but honestly that&#x27;s because I don&#x27;t really grok the solutions and don&#x27;t want to lead you astray.
+Check out the end of this post for further reading by really smart people that get paid to do this stuff.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;why-can-t-i-just&quot;&gt;&quot;Why can&#x27;t I just...&quot;&lt;&#x2F;h2&gt;
+&lt;p&gt;Just &lt;em&gt;wait&lt;&#x2F;em&gt;? If only.&lt;&#x2F;p&gt;
+&lt;p&gt;So the first thought I had (and every other crypto novice has) is something like this:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;do time sensitive operation
+&lt;&#x2F;span&gt;&lt;span&gt;sleep N seconds
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This doesn&#x27;t work because this just shifts the amount of time it takes to do an operation, literally &lt;em&gt;just&lt;&#x2F;em&gt; making your crypto take longer.
+Then the &lt;em&gt;second&lt;&#x2F;em&gt; thought I and every other crypto novice has is something like:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;record start time
+&lt;&#x2F;span&gt;&lt;span&gt;do time sensitive operation
+&lt;&#x2F;span&gt;&lt;span&gt;record end time
+&lt;&#x2F;span&gt;&lt;span&gt;sleep (expected time - elapsed time) seconds
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This is &lt;em&gt;better&lt;&#x2F;em&gt; but you&#x27;ll never &lt;em&gt;nail&lt;&#x2F;em&gt; the expected time.
+It&#x27;ll either be too long or too short This means that either some amount of information is leaked, when &lt;code&gt;expected time&lt;&#x2F;code&gt; is too short, or the crypto is needlessly slow, which is just a silly compromise.&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#7&quot;&gt;7&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;We &lt;em&gt;can&lt;&#x2F;em&gt; make it algorithmically secure without this &lt;code&gt;sleep&lt;&#x2F;code&gt; hack, so we &lt;em&gt;will&lt;&#x2F;em&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;practical-solutions-to-timing-attacks&quot;&gt;Practical Solutions to Timing Attacks&lt;&#x2F;h2&gt;
+&lt;p&gt;If you&#x27;re implementing crypto, STOP.&lt;&#x2F;p&gt;
+&lt;p&gt;If you&#x27;re implementing crypto and you know what you&#x27;re doing, your language of choice &lt;em&gt;probably&lt;&#x2F;em&gt; has a constant-time library which implements some primitives that you can take advantage of for simple tasks like comparisons. Those can be found at the end of this post in Errata. &lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#CTLibs&quot;&gt;8&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;After looking into constant-time-ifying your code, do some reading and testing!
+There have been a lot of developments in analyzing program constant-time-ness and much of this work is Open Source!
+These are implemented using a lot of Statistics&lt;sup&gt;TM&lt;&#x2F;sup&gt;, code inspection, and even Valgrind.[^8][^9]&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#10&quot;&gt;9&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;
+If you&#x27;re really concerned that &lt;em&gt;Your Crypto Library&lt;&#x2F;em&gt; isn&#x27;t secure against Remote Timing Attacks, take one of those tools on a test drive and see what happens.
+It&#x27;s pretty likely that you&#x27;ll find a &lt;em&gt;notable&lt;&#x2F;em&gt; timing difference based on different inputs and you&#x27;ll probably need to make changes for your library to be secure against timing attacks.&lt;&#x2F;p&gt;
+&lt;p&gt;It&#x27;s for the greater good. Because of your contributions the crypto community is even stronger.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;a-crazy-idea-constant-time-language-spec&quot;&gt;A crazy idea: constant time language spec&lt;&#x2F;h3&gt;
+&lt;p&gt;My crazy idea, for my &lt;em&gt;very&lt;&#x2F;em&gt; hypothetical grad-school studies would be to implement a Constant-time &lt;em&gt;compiler&lt;&#x2F;em&gt; and&#x2F;or &lt;em&gt;language&lt;&#x2F;em&gt;.
+This would perform transformations to your code in an attempt to make it constant-time or warning you when your code isn&#x27;t going to run in constant-time when it ought to.&lt;&#x2F;p&gt;
+&lt;p&gt;Of course this would take a very long time, and honestly I haven&#x27;t thought it through entirely, but I imagine something like this:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;regular code
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;ct {
+&lt;&#x2F;span&gt;&lt;span&gt;    thing that needs to be constant-time.
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;regular code
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Where you tell the compiler &quot;This needs to be constant-time&quot;.
+The compiler does it&#x27;s best to convert loops and statements into constant-time and when it&#x27;s done it tells you if it was able to convert your code into constant-time execution or not.&lt;&#x2F;p&gt;
+&lt;p&gt;It&#x27;s probably overkill; you don&#x27;t usually just willy-nilly write constant-time code.
+That said, just like C and Python help produce less error prone code than writing straight Assembly, so too might a constant-time language help produce code that hits less of the tricky pitfalls of implementing Constant-time algorithms.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;constant-time-algorithm-example&quot;&gt;Constant-time Algorithm example&lt;&#x2F;h2&gt;
+&lt;p&gt;Take our code block from the beginning, the one that did the leaky comparison.
+That takes different amounts of time when processing a given key against a known private key.
+How would we write &lt;em&gt;that&lt;&#x2F;em&gt; in constant-time?&lt;&#x2F;p&gt;
+&lt;p&gt;Something like this:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Short circuit based on user input, does not leak private information
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;length&lt;&#x2F;span&gt;&lt;span&gt;(recieved_key) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;!= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;PRIVATE_KEY_LENGTH&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;KeyLengthError
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;recvied_bits  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;bits&lt;&#x2F;span&gt;&lt;span&gt;(recieved_key) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Taken to be constant-time
+&lt;&#x2F;span&gt;&lt;span&gt;expected_bits &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;bits&lt;&#x2F;span&gt;&lt;span&gt;(expected_key) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Taken to be constant-time
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;ret &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;Thing
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;i &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;in &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;range&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;PRIVATE_KEY_LENGTH&lt;&#x2F;span&gt;&lt;span&gt;):
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;recieved_bits[i] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;!= &lt;&#x2F;span&gt;&lt;span&gt;expected_bits[i]:
+&lt;&#x2F;span&gt;&lt;span&gt;        ret &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;KeyLengthError &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# This sets the output, but the loop does not break
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;ret
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This is similar to our original code but it does a few things differently:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;We convert our keys to a variable which can be operated on bit-wise.&lt;&#x2F;li&gt;
+&lt;li&gt;We manually compare each bit of the inputs. This is what the &lt;code&gt;==&lt;&#x2F;code&gt; operator does, but instead of returning when we get a difference we essentially set a switch. &lt;code&gt;ret = Error&lt;&#x2F;code&gt; from &lt;code&gt;ret = Thing&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;Outside of the loop we return our response after processing all of our bits.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;Behaviorally this is almost identical to our original code, but it does not return earlier or later depending on the user&#x27;s input.&lt;&#x2F;p&gt;
+&lt;p&gt;Yet another implementation avoids the direct comparison:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Short circuit based on user input, does not leak private information
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;length&lt;&#x2F;span&gt;&lt;span&gt;(recieved_key) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;!= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;PRIVATE_KEY_LENGTH&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;KeyLengthError
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;recvied_bits  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;bits&lt;&#x2F;span&gt;&lt;span&gt;(recieved_key) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Taken to be constant-time
+&lt;&#x2F;span&gt;&lt;span&gt;expected_bits &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;bits&lt;&#x2F;span&gt;&lt;span&gt;(expected_key) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Taken to be constant-time
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;matching_bits &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;0
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;_ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;in &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;range&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;PRIVATE_KEY_LENGTH&lt;&#x2F;span&gt;&lt;span&gt;):
+&lt;&#x2F;span&gt;&lt;span&gt;    matching_bits &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;+= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;xor&lt;&#x2F;span&gt;&lt;span&gt;(recieved_bits[i], expected_bits[i]))
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;matching_bits &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;PRIVATE_KEY_LENGTH&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;thing
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;else&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;KeyLengthError
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;remote-timing-attack-demo&quot;&gt;Remote Timing Attack demo&lt;&#x2F;h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Examples are fine, but what about a demo!
+You said this was a real threat!&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;True, I did say that... so we&#x27;ll do a small demonstration.&lt;&#x2F;p&gt;
+&lt;p&gt;Below is a bit of Python code that checks a user&#x27;s input against some hard-coded secret.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# secret.py
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;from &lt;&#x2F;span&gt;&lt;span&gt;time &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;import &lt;&#x2F;span&gt;&lt;span&gt;sleep &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Used to exaggerate time difference.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;from &lt;&#x2F;span&gt;&lt;span&gt;sys &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;import &lt;&#x2F;span&gt;&lt;span&gt;argv   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Used to read user input.
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#ff5e5e;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8cdaff;&quot;&gt;is_equal&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fc9354;&quot;&gt;a&lt;&#x2F;span&gt;&lt;span&gt;,&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fc9354;&quot;&gt;b&lt;&#x2F;span&gt;&lt;span&gt;):
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;&amp;quot;&amp;quot;&amp;quot;Custom `==` operator&amp;quot;&amp;quot;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Fail if the strings aren&amp;#39;t the right length
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;len&lt;&#x2F;span&gt;&lt;span&gt;(a) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;!= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;len&lt;&#x2F;span&gt;&lt;span&gt;(b):
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff8942;&quot;&gt;False
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;i &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;in &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;range&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;len&lt;&#x2F;span&gt;&lt;span&gt;(a)):
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Short-circuit if the strings don&amp;#39;t match
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;a[i] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;!= &lt;&#x2F;span&gt;&lt;span&gt;b[i]:
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff8942;&quot;&gt;False
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;sleep&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;0.15&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# This exaggerates it just enough for our purposes
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff8942;&quot;&gt;True
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Hard-coded secret globals FOR DEMONSTRATIONS ONLY
+&lt;&#x2F;span&gt;&lt;span&gt;secret &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;l33t&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# This is python for &amp;quot;If someone uses you as a script, do this&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;__name__ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;__main__&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;try&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# The user got it right!
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;is_equal&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;str&lt;&#x2F;span&gt;&lt;span&gt;(argv[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;]), secret):
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;You got the secret!&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# The user got it wrong
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;else&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;Try again!&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# The user forgot to enter a guess.
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;except &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;IndexError&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;Usage: python secret.py yourguess&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;\n&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39; &lt;&#x2F;span&gt;&lt;span&gt;\
+&lt;&#x2F;span&gt;&lt;span&gt;             &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;The secret may consist of characters in [a-z0-9] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;\
+&lt;&#x2F;span&gt;&lt;span&gt;             &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;and is &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;{}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt; characters long.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;format&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;len&lt;&#x2F;span&gt;&lt;span&gt;(secret)))
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The thing that makes the above code particularly useful for our purposes is that it exaggerates the time it takes to evaluate the &lt;code&gt;is_equal&lt;&#x2F;code&gt; function.
+Think of this as the &#x27;backpedaling&#x27; the CPU does... turned up to 11. Most important &lt;em&gt;for the author&lt;&#x2F;em&gt; we don&#x27;t need to use Statistics&lt;sup&gt;TM&lt;&#x2F;sup&gt; to figure the secret, evaluating each input multiple times and collecting&#x2F;processing that timing data, it already takes about one magnitude longer to evaluate a matching letter than it does to evaluate a non-matching letter.&lt;&#x2F;p&gt;
+&lt;p&gt;Next we&#x27;ve got the attack code.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# attack.py
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;from &lt;&#x2F;span&gt;&lt;span&gt;time &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;import &lt;&#x2F;span&gt;&lt;span&gt;time &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Used to get a timing difference.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;from &lt;&#x2F;span&gt;&lt;span&gt;string &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;import &lt;&#x2F;span&gt;&lt;span&gt;ascii_lowercase &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# All lowercase characters
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;from &lt;&#x2F;span&gt;&lt;span&gt;string &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;import &lt;&#x2F;span&gt;&lt;span&gt;digits &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# All digits as strings
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;from &lt;&#x2F;span&gt;&lt;span&gt;subprocess &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;import &lt;&#x2F;span&gt;&lt;span&gt;call &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# used to exec a secret.py
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;from &lt;&#x2F;span&gt;&lt;span&gt;os &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;import &lt;&#x2F;span&gt;&lt;span&gt;devnull  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Suppress output of secret.py
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;current     &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;list&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;aaaa&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;)  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Initial guess
+&lt;&#x2F;span&gt;&lt;span&gt;characters  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;ascii_lowercase&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;+&lt;&#x2F;span&gt;&lt;span&gt;digits &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# All possible characters in the secret
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# We know the string is the same length as our initial guess
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;i &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;in &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;range&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;len&lt;&#x2F;span&gt;&lt;span&gt;(current)):
+&lt;&#x2F;span&gt;&lt;span&gt;    guess_times &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;[] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Keep track of execution times
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;x &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;in &lt;&#x2F;span&gt;&lt;span&gt;characters:
+&lt;&#x2F;span&gt;&lt;span&gt;        current[i] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;x &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Swap the current letter with the current guess
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Uncomment the following line for fun debug output
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# print(&amp;#39;Making guess {}&amp;#39;.format(&amp;#39;&amp;#39;.join(current)))
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Execute `secret.py` and time it
+&lt;&#x2F;span&gt;&lt;span&gt;        start &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;time&lt;&#x2F;span&gt;&lt;span&gt;()
+&lt;&#x2F;span&gt;&lt;span&gt;        a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;call&lt;&#x2F;span&gt;&lt;span&gt;([&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;python&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;secret.py&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;join&lt;&#x2F;span&gt;&lt;span&gt;(current)], &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fc9354;&quot;&gt;stdout&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;open&lt;&#x2F;span&gt;&lt;span&gt;(devnull, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;wb&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;))
+&lt;&#x2F;span&gt;&lt;span&gt;        end   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;time&lt;&#x2F;span&gt;&lt;span&gt;()
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Add that time to the list
+&lt;&#x2F;span&gt;&lt;span&gt;        guess_times.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;append&lt;&#x2F;span&gt;&lt;span&gt;(end&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span&gt;start)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Uncomment the following line for fun debug output
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# print(&amp;#39;max {} min {}&amp;#39;.format(max(guess_times), min(guess_times)))
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# This is a hackey-looking way of getting the outlier time.
+&lt;&#x2F;span&gt;&lt;span&gt;    current[i] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;characters[guess_times.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;index&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;max&lt;&#x2F;span&gt;&lt;span&gt;(guess_times))]
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;character &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;{}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt; is &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;{}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;format&lt;&#x2F;span&gt;&lt;span&gt;(i, current[i]))
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Uncomment the following line for fun debug output
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# print(guess_times.index(max(guess_times)))
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;Final guess is &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;{}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;format&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;join&lt;&#x2F;span&gt;&lt;span&gt;(current)))
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;It&#x27;s a bit convoluted in parts but if you stare at it for a while and read the enlightening comments you should see why this gets the right answer.&lt;&#x2F;p&gt;
+&lt;p&gt;I encourage you to copy that code into two files, &lt;code&gt;secret.py&lt;&#x2F;code&gt; and &lt;code&gt;attack.py&lt;&#x2F;code&gt; and run it like so:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;$ time python attack.py
+&lt;&#x2F;span&gt;&lt;span&gt;character 0 is l
+&lt;&#x2F;span&gt;&lt;span&gt;character 1 is 3
+&lt;&#x2F;span&gt;&lt;span&gt;character 2 is 3
+&lt;&#x2F;span&gt;&lt;span&gt;character 3 is t
+&lt;&#x2F;span&gt;&lt;span&gt;Final guess is l33t
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;real  0m35.176s
+&lt;&#x2F;span&gt;&lt;span&gt;user  0m1.300s
+&lt;&#x2F;span&gt;&lt;span&gt;sys 0m0.485s
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;$ python secret.py l33t
+&lt;&#x2F;span&gt;&lt;span&gt;You got the secret!
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;You&#x27;ll need a working Python installation and probably a shell of some kind.
+I&#x27;m on CentOS Linux but any *nix system will &lt;em&gt;probably&lt;&#x2F;em&gt; work.
+With some fiddling you can probably get it to work on Windows ;-)&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This isn&#x27;t a real threat! You exaggerated the problem!&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Hush now.
+It demonstrates the principles of the attack.
+Besides, the post is over.
+We&#x27;ve only got time for the conclusion and then you&#x27;re off to bed.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;constant-time-blogpost&quot;&gt;Constant-time blogpost&lt;&#x2F;h2&gt;
+&lt;p&gt;This topic has been a break from the theory&#x2F;math-heavy term thus far.
+Honestly I&#x27;m jazzed about it.&lt;&#x2F;p&gt;
+&lt;p&gt;We learned that something as small as a comparison (a &lt;em&gt;comparison&lt;&#x2F;em&gt;!) can leak information to an adversary.
+Your algorithm might be secure, but if you&#x27;re not careful you can leak information in the most menial code.&lt;&#x2F;p&gt;
+&lt;p&gt;This isn&#x27;t a lost cause.
+We don&#x27;t need to throw this &lt;em&gt;security&lt;&#x2F;em&gt; thing out the window.
+If we&#x27;re aware of the gotchas we can craft code that solves these problems.
+It&#x27;s hard work but the peace of mind should make it worth it.&lt;&#x2F;p&gt;
+&lt;p&gt;Learning about this seemingly obscure (&lt;em&gt;terrifying&lt;&#x2F;em&gt;) exploit in algorithmically secure code is just the kind of headache I enjoy in Computer Science.
+Although I don&#x27;t feel like I did Remote Timing Attacks justice, I could probably spend weeks on it, I had to call it quits.
+I could keep working on this for &lt;em&gt;another 10 weeks&lt;&#x2F;em&gt;, but it&#x27;s over.
+Just walk away.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;annotated-bibliography&quot;&gt;Annotated Bibliography&lt;&#x2F;h2&gt;
+&lt;p&gt;BearSSL[^11]&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#12&quot;&gt;10&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;
+: BearSSL is a project which aims to make an architecture-independent constant-time implementation of various Crypto Libraries, largely mirroring compatibility with OpenSSL and related Open Source crypro libraries.
+Not only is the project interesting but a handful of blogposts and analysis are posted on the website covering topics like how to implement RSA in constant-time to the compatibility of various CPU models with assumptions about constant-time operations (e.g., multiplication).&lt;&#x2F;p&gt;
+&lt;p&gt;Remote Timing Attacks are Practical&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#13&quot;&gt;11&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;
+: This paper was very easy to read for an academic article and covered the creation of various timing attacks in practical conditions (e.g., hacking an RSA private key across a network).&lt;&#x2F;p&gt;
+&lt;p&gt;Beginner focused blogs[^14]&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#15&quot;&gt;12&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;
+: These were two blogposts which laid out what timing attack, why they were viable, and how you can avoid them.
+Protip: never assume a library you&#x27;re using is constant-time.&lt;&#x2F;p&gt;
+&lt;p&gt;Adam Langley&#x27;s blog[^16]&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#17&quot;&gt;13&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;
+: Adam Langley has great Intermediate-level blogposts about the Lucky13 attack and analyzing code for constant-time execution.
+These aren&#x27;t for the weak of heart, but are much more accessible than a lot of academic articles on similar topics.&lt;&#x2F;p&gt;
+&lt;p&gt;CryptoCoding.net Coding Rules&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#18&quot;&gt;14&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;
+: This wiki outlines some common pitfalls when writing constant-time code and how to avoid it.
+It assumes you&#x27;re writing C code, but many of the principles carry to more exotic languages.&lt;&#x2F;p&gt;
+&lt;p&gt;Constant Time Testing Papers[^19]&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#20&quot;&gt;15&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;
+: These academic papers outline tools developed for studying how constant-time a program is and analyzes various programs with these tools.
+They&#x27;re a great (surprisingly recent) survey of this topic.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;errata&quot;&gt;Errata&lt;&#x2F;h2&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;CTLibs&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;8&lt;&#x2F;sup&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;golang.org&#x2F;pkg&#x2F;crypto&#x2F;subtle&#x2F;&quot;&gt;https:&#x2F;&#x2F;golang.org&#x2F;pkg&#x2F;crypto&#x2F;subtle&#x2F;&lt;&#x2F;a&gt; -
+&lt;a href=&quot;https:&#x2F;&#x2F;cryptography.io&#x2F;en&#x2F;latest&#x2F;hazmat&#x2F;primitives&#x2F;constant-time&#x2F;&quot;&gt;https:&#x2F;&#x2F;cryptography.io&#x2F;en&#x2F;latest&#x2F;hazmat&#x2F;primitives&#x2F;constant-time&#x2F;&lt;&#x2F;a&gt; -
+&lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;isislovecruft&#x2F;subtle&quot;&gt;https:&#x2F;&#x2F;github.com&#x2F;isislovecruft&#x2F;subtle&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;1&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;1&lt;&#x2F;sup&gt;
+&lt;p&gt;Remote Timing Attacks are Pratical; David Brumley, Dan Boneh;
+&lt;a href=&quot;http:&#x2F;&#x2F;crypto.stanford.edu&#x2F;~dabo&#x2F;pubs&#x2F;papers&#x2F;ssl-timing.pdf&quot;&gt;http:&#x2F;&#x2F;crypto.stanford.edu&#x2F;~dabo&#x2F;pubs&#x2F;papers&#x2F;ssl-timing.pdf&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;2&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;2&lt;&#x2F;sup&gt;
+&lt;p&gt;Remote Timing Attacks are Pratical; David Brumley, Dan Boneh;
+&lt;a href=&quot;http:&#x2F;&#x2F;crypto.stanford.edu&#x2F;~dabo&#x2F;pubs&#x2F;papers&#x2F;ssl-timing.pdf&quot;&gt;http:&#x2F;&#x2F;crypto.stanford.edu&#x2F;~dabo&#x2F;pubs&#x2F;papers&#x2F;ssl-timing.pdf&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;3&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;3&lt;&#x2F;sup&gt;
+&lt;p&gt;Chosen Plaintext: A beginner&#x27;s guide to contant-time cryptography;
+&lt;a href=&quot;https:&#x2F;&#x2F;www.chosenplaintext.ca&#x2F;articles&#x2F;beginners-guide-constant-time-cryptography.html&quot;&gt;https:&#x2F;&#x2F;www.chosenplaintext.ca&#x2F;articles&#x2F;beginners-guide-constant-time-cryptography.html&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;4&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;4&lt;&#x2F;sup&gt;
+&lt;p&gt;As Sonic the Hedgehog always says, Gotta Go Fast!&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;5&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;5&lt;&#x2F;sup&gt;
+&lt;p&gt;BearSSL: Constant Time Multiplication
+&lt;a href=&quot;https:&#x2F;&#x2F;bearssl.org&#x2F;ctmul.html&quot;&gt;https:&#x2F;&#x2F;bearssl.org&#x2F;ctmul.html&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;6&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;6&lt;&#x2F;sup&gt;
+&lt;p&gt;Cryptography Coding Standards: Coding rules;
+&lt;a href=&quot;https:&#x2F;&#x2F;cryptocoding.net&#x2F;index.php&#x2F;Coding_rules&quot;&gt;https:&#x2F;&#x2F;cryptocoding.net&#x2F;index.php&#x2F;Coding_rules&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;7&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;7&lt;&#x2F;sup&gt;
+&lt;p&gt;Chosen Plaintext: A beginner&#x27;s guide to contant-time cryptography;
+&lt;a href=&quot;https:&#x2F;&#x2F;www.chosenplaintext.ca&#x2F;articles&#x2F;beginners-guide-constant-time-cryptography.html&quot;&gt;https:&#x2F;&#x2F;www.chosenplaintext.ca&#x2F;articles&#x2F;beginners-guide-constant-time-cryptography.html&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;8&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;16&lt;&#x2F;sup&gt;
+&lt;p&gt;Dude, is my code constant-time? Oscar Reparaz, josep Balasch,
+Ingrid Vebauwhede; &lt;a href=&quot;https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2016&#x2F;1123.pdf&quot;&gt;https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2016&#x2F;1123.pdf&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;9&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;17&lt;&#x2F;sup&gt;
+&lt;p&gt;Veryfying Constnat-Time Implementations, via Usenix;
+&lt;a href=&quot;http:&#x2F;&#x2F;haslab.uminho.pt&#x2F;jba&#x2F;files&#x2F;16usenix.pdf&quot;&gt;http:&#x2F;&#x2F;haslab.uminho.pt&#x2F;jba&#x2F;files&#x2F;16usenix.pdf&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;10&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;9&lt;&#x2F;sup&gt;
+&lt;p&gt;Lucky Thirteen attack on TLS CBC Adam langley via ImperialViolet;
+&lt;a href=&quot;https:&#x2F;&#x2F;www.imperialviolet.org&#x2F;2013&#x2F;02&#x2F;04&#x2F;luckythirteen.html&quot;&gt;https:&#x2F;&#x2F;www.imperialviolet.org&#x2F;2013&#x2F;02&#x2F;04&#x2F;luckythirteen.html&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;11&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;18&lt;&#x2F;sup&gt;
+&lt;p&gt;BearSSL: Constant Time Multiplication
+&lt;a href=&quot;https:&#x2F;&#x2F;bearssl.org&#x2F;ctmul.html&quot;&gt;https:&#x2F;&#x2F;bearssl.org&#x2F;ctmul.html&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;12&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;10&lt;&#x2F;sup&gt;
+&lt;p&gt;BearSSL: Why Consant-Time Crypto?
+&lt;a href=&quot;https:&#x2F;&#x2F;bearssl.org&#x2F;constanttime.html&quot;&gt;https:&#x2F;&#x2F;bearssl.org&#x2F;constanttime.html&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;13&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;11&lt;&#x2F;sup&gt;
+&lt;p&gt;Remote Timing Attacks are Pratical; David Brumley, Dan Boneh;
+&lt;a href=&quot;http:&#x2F;&#x2F;crypto.stanford.edu&#x2F;~dabo&#x2F;pubs&#x2F;papers&#x2F;ssl-timing.pdf&quot;&gt;http:&#x2F;&#x2F;crypto.stanford.edu&#x2F;~dabo&#x2F;pubs&#x2F;papers&#x2F;ssl-timing.pdf&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;14&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;19&lt;&#x2F;sup&gt;
+&lt;p&gt;Chosen Plaintext: A beginner&#x27;s guide to contant-time
+cryptography;
+&lt;a href=&quot;https:&#x2F;&#x2F;www.chosenplaintext.ca&#x2F;articles&#x2F;beginners-guide-constant-time-cryptography.html&quot;&gt;https:&#x2F;&#x2F;www.chosenplaintext.ca&#x2F;articles&#x2F;beginners-guide-constant-time-cryptography.html&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;15&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;12&lt;&#x2F;sup&gt;
+&lt;p&gt;A Lesson In Timing Attacks (or, Don&#x27;t use
+&lt;code&gt;MessageDigest.isEquals&lt;&#x2F;code&gt;); Coda Hale;
+&lt;a href=&quot;https:&#x2F;&#x2F;codahale.com&#x2F;a-lesson-in-timing-attacks&#x2F;&quot;&gt;https:&#x2F;&#x2F;codahale.com&#x2F;a-lesson-in-timing-attacks&#x2F;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;16&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;20&lt;&#x2F;sup&gt;
+&lt;p&gt;Checking that functions are constant-time with Valgrind; Adam
+langley via ImperialViolet;
+&lt;a href=&quot;https:&#x2F;&#x2F;www.imperialviolet.org&#x2F;2010&#x2F;04&#x2F;01&#x2F;ctgrind.html&quot;&gt;https:&#x2F;&#x2F;www.imperialviolet.org&#x2F;2010&#x2F;04&#x2F;01&#x2F;ctgrind.html&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;17&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;13&lt;&#x2F;sup&gt;
+&lt;p&gt;Lucky Thirteen attack on TLS CBC Adam langley via ImperialViolet;
+&lt;a href=&quot;https:&#x2F;&#x2F;www.imperialviolet.org&#x2F;2013&#x2F;02&#x2F;04&#x2F;luckythirteen.html&quot;&gt;https:&#x2F;&#x2F;www.imperialviolet.org&#x2F;2013&#x2F;02&#x2F;04&#x2F;luckythirteen.html&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;18&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;14&lt;&#x2F;sup&gt;
+&lt;p&gt;Cryptography Coding Standards: Coding rules;
+&lt;a href=&quot;https:&#x2F;&#x2F;cryptocoding.net&#x2F;index.php&#x2F;Coding_rules&quot;&gt;https:&#x2F;&#x2F;cryptocoding.net&#x2F;index.php&#x2F;Coding_rules&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;19&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;21&lt;&#x2F;sup&gt;
+&lt;p&gt;Veryfying Constnat-Time Implementations, via Usenix;
+&lt;a href=&quot;http:&#x2F;&#x2F;haslab.uminho.pt&#x2F;jba&#x2F;files&#x2F;16usenix.pdf&quot;&gt;http:&#x2F;&#x2F;haslab.uminho.pt&#x2F;jba&#x2F;files&#x2F;16usenix.pdf&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;20&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;15&lt;&#x2F;sup&gt;
+&lt;p&gt;Dude, is my code constant-time? Oscar Reparaz, josep Balasch,
+Ingrid Vebauwhede; &lt;a href=&quot;https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2016&#x2F;1123.pdf&quot;&gt;https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2016&#x2F;1123.pdf&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Memory Hard Functions</title>
+        <published>2017-10-17T00:00:00+00:00</published>
+        <updated>2017-10-17T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/memory-hard-functions/"/>
+        <id>/memory-hard-functions/</id>
+        
+        <content type="html" xml:base="/memory-hard-functions/">&lt;span class=&quot;note&quot;&gt;
+    &lt;span class=&quot;note-title&quot;&gt;
+        Note
+    &lt;&#x2F;span&gt;
+
+    &lt;span class=&quot;note-body&quot;&gt;
+        &amp;lt;p&amp;gt;This is a part of a series of blog posts I wrote for an Independent
+Study on cryptography at Oregon State University. To read all of the
+posts, check out the &amp;#x27;Independent Crypto&amp;#x27; tag.&amp;lt;&amp;#x2F;p&amp;gt;
+
+    &lt;&#x2F;span&gt;
+&lt;&#x2F;span&gt;
+&lt;h2 id=&quot;problem-storing-passwords-is-hard&quot;&gt;Problem: storing passwords is hard&lt;&#x2F;h2&gt;
+&lt;p&gt;You&#x27;re a system administrator and -- oh no! A hacker stole your database!&lt;&#x2F;p&gt;
+&lt;p&gt;Well, not yet... but they &lt;em&gt;could&lt;&#x2F;em&gt;.
+Once you get popular enough it&#x27;s bound to happen.&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#1&quot;&gt;1&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt; Can you make sure your users data is safe &lt;strong&gt;when&lt;&#x2F;strong&gt; that happens?&lt;&#x2F;p&gt;
+&lt;p&gt;When you store passwords in a database you never store them in plain text.
+Instead, you store a &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Hash_function&quot;&gt;hash&lt;&#x2F;a&gt; of that password.
+For example:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#191919;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;Password: 12345678
+&lt;&#x2F;span&gt;&lt;span&gt;sha256sum (hash): 2634c3097f98e36865f0c572009c4ffd73316bc8b88ccfe8d196af35f46e2394
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The hash is generated when the user tries to login.
+The &lt;em&gt;hash&lt;&#x2F;em&gt; of the password the user sends at login is compared against the corresponding password hash for that user.
+If it matches that means the user sent the right password and so they are authenticated.&lt;&#x2F;p&gt;
+&lt;p&gt;What happens if the hacker pre-computes a bunch of popular passwords?
+This might sound crazy, but there are lots of people that re-use passwords, like &lt;code&gt;123456&lt;&#x2F;code&gt;.
+The hacker can pre-compute the hash for the 1,000,000 most popular passwords and more or less reverse-search for any user&#x27;s password once they have a database dump.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;solution-1-add-salt&quot;&gt;Solution 1: add salt&lt;&#x2F;h2&gt;
+&lt;p&gt;Our first naive solution to solve this problem is to make the adversary&#x27;s life harder by adding &lt;em&gt;salt&lt;&#x2F;em&gt; to our passwords.
+This is a piece of known information which is added to the password so adversaries can&#x27;t pre-compute a hash-table, they have to compute this after they have the database and figure out the salt.
+For example:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#191919;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;Password: 12345678
+&lt;&#x2F;span&gt;&lt;span&gt;Salt: cryptoHeckYeah!
+&lt;&#x2F;span&gt;&lt;span&gt;New Password: 12345678cryptoHeckYeah!
+&lt;&#x2F;span&gt;&lt;span&gt;sha256sum: 6e8a7780df48a0b687e9e272e8d082f5f4c0c3a8c43b63461c3f62618b111e9d
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Unfortunately we live in 2017 and Graphics processors and &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Application-specific_integrated_circuit&quot;&gt;ASICs&lt;&#x2F;a&gt; are cheap and can compute sha256sums &lt;strong&gt;super fast&lt;&#x2F;strong&gt; for &lt;strong&gt;really cheap&lt;&#x2F;strong&gt;.
+This means that it might be more of a pain, but the adversary can still crack a password with relative ease and efficiency because they&#x27;ve got a computer &lt;em&gt;designed&lt;&#x2F;em&gt; to generate lots of hashes.
+Curses.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;solution-2-h-h-h-x&quot;&gt;Solution 2: H(H(..H(x)..)&lt;&#x2F;h2&gt;
+&lt;p&gt;Computing a single sha256sum is easy, but what if the hacker had to compute like... 1000 sha256sums for each password!
+That sounds pretty hard... right?
+If we compute the hash of the hash of the hash (etc) it would take like... 1000x longer to compute each user&#x27;s password.
+Something like this:&lt;&#x2F;p&gt;
+&lt;pre style=&quot;background-color:#191919;color:#f8f8f2;&quot;&gt;&lt;code&gt;&lt;span&gt;p = &amp;#39;12345678cryptoHeckYeah!&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;for x in 1..1000
+&lt;&#x2F;span&gt;&lt;span&gt;  p = sha256sum( p )
+&lt;&#x2F;span&gt;&lt;span&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;return p
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;Result: 47c76630def739ede9c05fd974065b1200d4712aa2421eefb1f6b241a1ca6bea
+&lt;&#x2F;span&gt;&lt;span&gt;Time: 0m1.547s
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Unfortunately this hurts more than it helps.&lt;&#x2F;p&gt;
+&lt;p&gt;In bash on non-specialized hardware, this took about 1.6 seconds.
+On specialized hardware, written in a systems programming language, and implemented in parallel it&#x27;d be much less costly for an adversary to crack passwords hashed this way.&lt;&#x2F;p&gt;
+&lt;p&gt;Worst of all, this is &lt;em&gt;easier for an adversary to compute than it is for the the &quot;good guys&quot;&lt;&#x2F;em&gt; because the non-malicious actor is using generalized hardware and the adversary is using specialized hardware to compute the hashes.
+It&#x27;s like trying to beat a Roadster in a drag race when you&#x27;re behind the wheel of a Minivan; the Minivan (&quot;good guys&quot;) &lt;em&gt;can&#x27;t win&lt;&#x2F;em&gt; because they weren&#x27;t built for drag races.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;solution-3-memory-hard-functions&quot;&gt;Solution 3: Memory Hard Functions&lt;&#x2F;h2&gt;
+&lt;p&gt;The big problem we have is that CPUs can be specialized to crack passwords &lt;em&gt;very quickly&lt;&#x2F;em&gt;.
+No matter how fast your AWS EC2 instance is, or even that top of the line IBM server you just bought, it will &lt;em&gt;never&lt;&#x2F;em&gt; be faster than a cheap custom designed ASIC.
+At around 3000$&#x2F;box it won&#x27;t break the adversary&#x27;s bank to break into yours.&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#2&quot;&gt;2&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;While there specialized hash-cracking CPUs &lt;strong&gt;do&lt;&#x2F;strong&gt; exist, specialized hash-cracking &lt;em&gt;memory&lt;&#x2F;em&gt; does &lt;strong&gt;not&lt;&#x2F;strong&gt; exist.&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#3&quot;&gt;3&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;
+If we were to create an algorithm which depends on lots of memory, instead of lots of CPU cycles, we could &quot;level the playing field&quot;.
+This should help stop adversaries from reversing passwords as fast as they currently can.&lt;&#x2F;p&gt;
+&lt;p&gt;This theoretical hash-function is called a Memory Hard Function (MHF).
+These are difficult to perform unless you have a certain threshold of memory.
+As a result non-malicious actors can perform a hash in M seconds and it will take a malicious actor &lt;em&gt;at least&lt;&#x2F;em&gt; M seconds to perform the same hash.&lt;&#x2F;p&gt;
+&lt;span class=&quot;note&quot;&gt;
+    &lt;span class=&quot;note-title&quot;&gt;
+        Note
+    &lt;&#x2F;span&gt;
+
+    &lt;span class=&quot;note-body&quot;&gt;
+        &amp;lt;p&amp;gt;TLDR: We want a hash function that takes as long for an adversary to
+compute as it does for the &amp;quot;good guys&amp;quot; to compute. Since nobody has
+specialized hash-cracking RAM we should be able to create a hash
+function which is memory-intensive and fits our criteria. If we have a
+function that fits this we will have got a &amp;lt;em&amp;gt;Memory hard Function&amp;lt;&amp;#x2F;em&amp;gt; (MHF).&amp;lt;&amp;#x2F;p&amp;gt;
+
+    &lt;&#x2F;span&gt;
+&lt;&#x2F;span&gt;
+&lt;h2 id=&quot;scrypt-a-wild-mhf&quot;&gt;scrypt: a wild MHF&lt;&#x2F;h2&gt;
+&lt;p&gt;scrpyt is a key derivation function &lt;a href=&quot;http:&#x2F;&#x2F;www.tarsnap.com&#x2F;scrypt.html&quot;&gt;developed for the Tarsnap project&lt;&#x2F;a&gt;.
+It was designed explicitly to solve this problem and has some pretty impressive results.
+Some especially impressive results include:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;scrypt is about 2&lt;sup&gt;5&lt;&#x2F;sup&gt; times more expensive to attack for logins than bcrypt.&lt;&#x2F;li&gt;
+&lt;li&gt;scrypt is about 2&lt;sup&gt;15&lt;&#x2F;sup&gt; times more espensive to attack for logins than MD5 CRYPT.&lt;&#x2F;li&gt;
+&lt;li&gt;scrypt is about 2&lt;sup&gt;37&lt;&#x2F;sup&gt; times more expensive to attack for file encryption than MD5.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;scrypt also happens to be a MHF.
+Yay we found one!&lt;&#x2F;p&gt;
+&lt;p&gt;So... how does it work?&lt;&#x2F;p&gt;
+&lt;p&gt;Given a hash function H, an input B, and an integer N, compute:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;V&lt;sub&gt;i&lt;&#x2F;sub&gt; = H&lt;sup&gt;i&lt;&#x2F;sup&gt;(B), given 0 ≤ i &amp;lt; N,&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;and&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;X = H&lt;sup&gt;N&lt;&#x2F;sup&gt;(B)&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;then iterate&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;j &amp;lt;- Integrify(X) mod N&lt;&#x2F;li&gt;
+&lt;li&gt;X &amp;lt;- H(X ⊕ V&lt;sub&gt;j&lt;&#x2F;sub&gt;)&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;N times; and output X&lt;&#x2F;p&gt;
+&lt;p&gt;The function Integrify can be any bijection&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#4&quot;&gt;4&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt; from {0,1}&lt;sup&gt;k&lt;&#x2F;sup&gt;
+to {0...2&lt;sup&gt;k&lt;&#x2F;sup&gt; - 1}.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Breaking that down a bit:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;The function is given a different hash function (H), an input to compute the hash of (B), and a modulus (N).&lt;&#x2F;li&gt;
+&lt;li&gt;N hashes are generated with variations of H and the input B called V&lt;sub&gt;0..N&lt;&#x2F;sub&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;X is initialized with a hash value and a loop begins:
+&lt;ol&gt;
+&lt;li&gt;j is set to a psuedo-random integer mod N.&lt;&#x2F;li&gt;
+&lt;li&gt;X is set to the hash of the existing X value xor&#x27;d with one of the V values.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;Loop N times and output the final X.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;One of the biggest gripes with scrypt is that it has a very predictable runtime.
+This means that the running of the function is predictable based on the user&#x27;s input and so can be victim to a cache-timing side-channel attack.
+We won&#x27;t be able to get into what this attack means, but basically you can say &quot;scrypt is good, but not perfect&quot;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;data-independent-mhfs-imhfs&quot;&gt;Data-independent MHFs (iMHFs)&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;independent-crypto&#x2F;DAG.gif&quot; alt=&quot;A directed acyclic graph map.&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;iMHFs are supposed to solve the problem that scrypt has (side-channel attacks) by have unpredictable runtimes which still result in the same output.&lt;&#x2F;p&gt;
+&lt;p&gt;iMHFs can be thought of as Directed Acyclic Graphs (DAGs) which are traversed during runtime.&lt;&#x2F;p&gt;
+&lt;p&gt;Some specifics:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;The function depends on a random oracle H: {0,1}&lt;sup&gt;2k&lt;&#x2F;sup&gt; -&amp;gt; {0,1}&lt;sup&gt;k&lt;&#x2F;sup&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;The function provides a Directed Acyclic Graph Directed Acyclic Graph (DAG) G used to encode data-dependencies&lt;&#x2F;li&gt;
+&lt;li&gt;The initial input is a password and a salt.&lt;&#x2F;li&gt;
+&lt;li&gt;Each other node is labeled with the hash of it&#x27;s parent nodes.&lt;&#x2F;li&gt;
+&lt;li&gt;The output is the hash of the value of the last node.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;As mentioned before, a very nice feature of iMHFs is that their memory usage pattern does not depend on the user&#x27;s input (password) and so is not vulnerable to side-channel attacks.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;pebbling-a-directed-acyclic-graph-dag&quot;&gt;Pebbling a Directed Acyclic Graph (DAG)&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;independent-crypto&#x2F;dag-animated.gif&quot; alt=&quot;A directed acyclic graph traversal.&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;We can think of the process of computing the output of an iMHF as pebbling a graph where:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Computing the value of a node is to pebble it.&lt;&#x2F;li&gt;
+&lt;li&gt;There are rules about which nodes can be pebbled at any time.&lt;&#x2F;li&gt;
+&lt;li&gt;When a pebble is removed from a node it is freed from memory.&lt;&#x2F;li&gt;
+&lt;li&gt;Our goal is to pebble the last node.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Rules:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;We can only place a pebble on a node if we have pebbles on all of it&#x27;s parents nodes.&lt;&#x2F;li&gt;
+&lt;li&gt;Our goal is to get to the sink node (exit node).&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;The naive pebbling algorithm, the one the &#x27;good guy&#x27; user would utilize is as follows:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Only one pebble can be placed per time-step.&lt;&#x2F;li&gt;
+&lt;li&gt;The graph is pebbled in in topological order.&lt;&#x2F;li&gt;
+&lt;li&gt;Pebbles (calculated nodes) are never discarded until the end of the function.&lt;&#x2F;li&gt;
+&lt;li&gt;Expected cost: scales with n&lt;sup&gt;2&lt;&#x2F;sup&gt; where n is the number of nodes.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;This does take up considerable resources, but it isn&#x27;t prohibitive for users on commodity hardware.
+This means it won&#x27;t take &lt;em&gt;too long&lt;&#x2F;em&gt; to get your account authenticated.
+More importantly, it will take about as long for the bad guys to calculate a token as it took you to calculate a token, as opposed to a small fraction it would take if this was a &quot;normal&quot; hash function.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;attacks-on-imhfs&quot;&gt;Attacks on iMHFs&lt;&#x2F;h2&gt;
+&lt;p&gt;An attack is defined as when cost of calculating a hash from an iMHF is lower than via the nieve approach.&lt;&#x2F;p&gt;
+&lt;p&gt;The general idea of an iMHF attack is that it has two phases: light phase and balloon phase.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;light-phase&quot;&gt;Light Phase&lt;&#x2F;h3&gt;
+&lt;p&gt;In the light phase the algorithm races through the DAG discarding as many pebbles as possible, essentially performing a breadth first search for the end of the graph, computing nodes in parallel when possible.
+Once a node is computed and it isn&#x27;t immediately needed it is discarded.&lt;&#x2F;p&gt;
+&lt;p&gt;If the DAG were a straight line from beginning to end this would be fairly memory efficient.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;balloon-phase&quot;&gt;Balloon Phase&lt;&#x2F;h3&gt;
+&lt;p&gt;In the balloon phase the algorithm has &#x27;hit a wall&#x27; and back-computes the nodes it needs to compute the next node whose parent&#x27;s have already been discarded.
+This causes a slow-down.&lt;&#x2F;p&gt;
+&lt;p&gt;An attack described like this has the following complexity:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;E&lt;sub&gt;R&lt;&#x2F;sub&gt;(A) = O(en + √(n&lt;sup&gt;3&lt;&#x2F;sup&gt;d))&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;For small values of e and d this results in an attack as:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;E&lt;sub&gt;R&lt;&#x2F;sub&gt;(A) = O(n&lt;sup&gt;2&lt;&#x2F;sup&gt;) for e,d = O(n)&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Preventing against this type of attack is where much of the research into iMHF&#x27;s is focused.
+An ideal iMHF DAG minimize the disparity between the attackers compute time and the &quot;good guy&#x27;s&quot; compute time.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;&#x2F;h2&gt;
+&lt;p&gt;This has been a rough overview of Memory Hard functions, how they work, and how variations of MHFs differ.&lt;&#x2F;p&gt;
+&lt;p&gt;MHFs are functions which remove the advantage that adversaries have to crack passwords by depending heavily on memory.
+This reduces the adversary&#x27;s advantage if they have an ASIC or GPU processor(s) to brute-force a password crack and ought to make it very difficult (ideally &lt;em&gt;impractical&lt;&#x2F;em&gt;) for adversaries to crack a password hashed with an MHF.&lt;&#x2F;p&gt;
+&lt;p&gt;Some existing MHFs, like scrypt, are vulnerable to side-channel attacks so iMHFs have been theorized which do not have a predictable runtime and so are not vulnerable to side-channel attacks.
+No iMHFs exist yet, however many functions have been developed with get &lt;em&gt;close&lt;&#x2F;em&gt; and offer many of the benefits of iMFHs.
+Some of these include Argon2i, Catena, and Balloon hashing, which we did not cover in this post.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;annotated-bibliography&quot;&gt;Annotated Bibliography&lt;&#x2F;h2&gt;
+&lt;p&gt;Conference Presentations by Jeremiah Blocki[^5][^6]&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#7&quot;&gt;5&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt; The video presentations online by Jeremiah were a very important resource for getting a grasp on what MHFs are, and more specifically what iMHFS and how they worked.
+The three videos cited in this post cover largely the same content and present the material, including the problem, naive solution, MHF solution, iMFH solution, and possible attacks against iMHFs in about 30 minutes.
+I like to think I&#x27;m pretty good at public speaking, but this material was very complicated and presented in a very digestible format.&lt;&#x2F;p&gt;
+&lt;p&gt;I cannot stress enough how useful these videos were.
+I learned an incredible amount from these videos and referenced them for the majority of this content.&lt;&#x2F;p&gt;
+&lt;p&gt;Strict Memory Hard Hashing Functions&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#8&quot;&gt;6&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;
+This paper was very short and presented some essential knowledge to discuss the differences between MHFs and iMHFs.
+I didn&#x27;t directly use or reference this content, however it did present an easily understandable academic definition and comparison of iMHF compared to MHFs.&lt;&#x2F;p&gt;
+&lt;p&gt;Practical Graphs for Optimal Side-Channel Resistant Memory-Hard Functions&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#9&quot;&gt;7&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;
+This paper was used in the writing of this post, however it was very long and dense, so it was never directly cited.&lt;&#x2F;p&gt;
+&lt;p&gt;scrypt: A new key derivation function&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#10&quot;&gt;8&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;
+This was the soul reference for the scrypt section of this post.
+There is an academic paper published too, but the slides were simple and presented all of the same knowledge (I think) sans any proofs.&lt;&#x2F;p&gt;
+&lt;p&gt;If I feel an existential hole in my heart I might read the proofs, but in the interest of time I chose not to right now.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;errata&quot;&gt;Errata&lt;&#x2F;h2&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;1&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;1&lt;&#x2F;sup&gt;
+&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;haveibeenpwned.com&#x2F;PwnedWebsites&quot;&gt;https:&#x2F;&#x2F;haveibeenpwned.com&#x2F;PwnedWebsites&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;2&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;2&lt;&#x2F;sup&gt;
+&lt;p&gt;Antminer &quot;Bitcoin Miner&quot; &lt;a href=&quot;http:&#x2F;&#x2F;a.co&#x2F;2E20HW8&quot;&gt;http:&#x2F;&#x2F;a.co&#x2F;2E20HW8&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;3&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;3&lt;&#x2F;sup&gt;
+&lt;p&gt;Yet.&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;4&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;4&lt;&#x2F;sup&gt;
+&lt;p&gt;Bijection: A function which creates a 1-to-1 relationship between inputs and outputs.&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;5&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;9&lt;&#x2F;sup&gt;
+&lt;p&gt;Efficiently Computing Data Independent Memory Hard Functions (Video) Joël Alwen and Jeremiah Blocki, Crypto 2016, September 26, 2016, &lt;a href=&quot;https:&#x2F;&#x2F;youtu.be&#x2F;ujpvPtn_N5Y&quot;&gt;https:&#x2F;&#x2F;youtu.be&#x2F;ujpvPtn_N5Y&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;6&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;10&lt;&#x2F;sup&gt;
+&lt;p&gt;Towards a Theory of Data-Independent Memory Hard Functions (Video), Jeremiah Blocki with Joel Alwen, Krzysztof Pietrzak 2017, Real World Crypto conference, February 1, 2017, &lt;a href=&quot;https:&#x2F;&#x2F;youtu.be&#x2F;YtfVLzUkwME&quot;&gt;https:&#x2F;&#x2F;youtu.be&#x2F;YtfVLzUkwME&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;7&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;5&lt;&#x2F;sup&gt;
+&lt;p&gt;Memory Hard Functions and Password Hashings (Video), CERIAS Symposium 2017 - TechTalk, Jeremiah M. Blocki - Assistant Professor, Computer Science - Purdue University, May 1, 2017, &lt;a href=&quot;https:&#x2F;&#x2F;youtu.be&#x2F;9yX4v89m5oo&quot;&gt;https:&#x2F;&#x2F;youtu.be&#x2F;9yX4v89m5oo&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;8&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;6&lt;&#x2F;sup&gt;
+&lt;p&gt;Strict Memory Hard Hashing Functions, Sergio Demian Lerner, (Preliminary v0.3, 01-19-14), &lt;a href=&quot;http:&#x2F;&#x2F;www.hashcash.org&#x2F;papers&#x2F;memohash.pdf&quot;&gt;http:&#x2F;&#x2F;www.hashcash.org&#x2F;papers&#x2F;memohash.pdf&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;9&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;7&lt;&#x2F;sup&gt;
+&lt;p&gt;Practical Graphs for Optimal Side-Channel Resistant Memory-Hard Functions Joel Alwen, Jeremiah Blocki, Ben Harsha IACR Cryptography ePrint Archive, 2017, &lt;a href=&quot;https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2017&#x2F;443.pdf&quot;&gt;https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2017&#x2F;443.pdf&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;10&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;8&lt;&#x2F;sup&gt;
+&lt;p&gt;scrypt: A new key derivation function (variable subtitles) Colin Percival, May 9, 2009, &lt;a href=&quot;http:&#x2F;&#x2F;www.tarsnap.com&#x2F;scrypt&#x2F;scrypt-slides.pdf&quot;&gt;http:&#x2F;&#x2F;www.tarsnap.com&#x2F;scrypt&#x2F;scrypt-slides.pdf&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Garbled Circuits</title>
+        <published>2017-10-10T00:00:00+00:00</published>
+        <updated>2017-10-10T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/garbled-circuits/"/>
+        <id>/garbled-circuits/</id>
+        
+        <content type="html" xml:base="/garbled-circuits/">&lt;span class=&quot;note&quot;&gt;
+    &lt;span class=&quot;note-title&quot;&gt;
+        Note
+    &lt;&#x2F;span&gt;
+
+    &lt;span class=&quot;note-body&quot;&gt;
+        &amp;lt;p&amp;gt;This is a part of a series of blog posts I wrote for an Independent Study on cryptography at Oregon State University.
+To read all of the posts, check out the &amp;#x27;Independent Crypto&amp;#x27; tag.&amp;lt;&amp;#x2F;p&amp;gt;
+
+    &lt;&#x2F;span&gt;
+&lt;&#x2F;span&gt;
+&lt;p&gt;Let&#x27;s imagine you are a billionaire.
+You want to know if you have more money than your billionaire friend Bob, but for some reason it&#x27;s &lt;em&gt;very&lt;&#x2F;em&gt; faux pas to let anybody know how much money you have, even your good friend Bob.&lt;&#x2F;p&gt;
+&lt;p&gt;But you&#x27;re a billionaire!
+You&#x27;re not used to the phrase &quot;that isn&#x27;t possible&quot;.
+In your frustration you try to figure out if you can use some of your billions to find a solution.&lt;&#x2F;p&gt;
+&lt;p&gt;The first solution you come up with is Trusty Tina.
+You tell Tina how much you make, Bob tells Tina how much he makes, and then Tina tells both of you who makes more.&lt;&#x2F;p&gt;
+&lt;p&gt;The only problem is that Tina isn&#x27;t &lt;em&gt;that&lt;&#x2F;em&gt; trustworthy, her parent&#x27;s just named her that.
+Like... you wouldn&#x27;t trust her with your life or anything.
+You could pay her to keep your assets secret but Bob might pay her a bit more reveal your number to him.
+Tina reminds you of this so you have to pay her &lt;em&gt;more&lt;&#x2F;em&gt; to keep the secret, and eventually you have an arms-race type situation at hand.
+With your cunning accountant skills you can already tell that Tina might be more trouble than she&#x27;s worth.&lt;&#x2F;p&gt;
+&lt;p&gt;If you won&#x27;t tell Bob directly, and you can&#x27;t depend on Manipulative Tina, is there &lt;em&gt;any&lt;&#x2F;em&gt; way to determine out who has more money?&lt;&#x2F;p&gt;
+&lt;p&gt;Yes.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;2-party-secure-function-evaluation&quot;&gt;2-Party Secure Function Evaluation&lt;&#x2F;h2&gt;
+&lt;p&gt;The problem above is the Millionaires problem&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#1&quot;&gt;1&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt; and it is solved by the use of 2-party secure function evaluation (SFE).
+The general idea&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#2&quot;&gt;2&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt; is that you have a function &lt;code&gt;f&lt;&#x2F;code&gt; which takes as input &lt;code&gt;x&lt;&#x2F;code&gt; and &lt;code&gt;y&lt;&#x2F;code&gt;.
+This function is garbled by one of the two parties into &lt;code&gt;f&#x27;&lt;&#x2F;code&gt; and the inputs are garbled into &lt;code&gt;x&#x27;&lt;&#x2F;code&gt; and &lt;code&gt;y&#x27;&lt;&#x2F;code&gt; by each of the parties.
+&lt;code&gt;f&#x27;(x&#x27;, y&#x27;) == f(x,y)&lt;&#x2F;code&gt; but does not leak any of the inputs, because &lt;code&gt;x&lt;&#x2F;code&gt; and &lt;code&gt;y&lt;&#x2F;code&gt; were obfuscated.&lt;&#x2F;p&gt;
+&lt;p&gt;In other words...&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Alice and Bob agree on a function (i.e., circuit) &lt;code&gt;f(a,b)&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;Alice garbles the function (&lt;em&gt;cough&lt;&#x2F;em&gt; circuit) &lt;code&gt;f&lt;&#x2F;code&gt; and her input &lt;code&gt;a&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;Alice sends &lt;code&gt;f&#x27;&lt;&#x2F;code&gt; and &lt;code&gt;a&#x27;&lt;&#x2F;code&gt; to Bob.&lt;&#x2F;li&gt;
+&lt;li&gt;Bob gets his input &lt;code&gt;b&lt;&#x2F;code&gt; garbled into &lt;code&gt;b&#x27;&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;Bob evaluates &lt;code&gt;f&#x27;(a&#x27;, b&#x27;)&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;This reveals the result of &lt;code&gt;f(a,b)&lt;&#x2F;code&gt; to Bob, but does not reveal
+Alice&#x27;s input.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;span class=&quot;note&quot;&gt;
+    &lt;span class=&quot;note-title&quot;&gt;
+        Note
+    &lt;&#x2F;span&gt;
+
+    &lt;span class=&quot;note-body&quot;&gt;
+        &amp;lt;p&amp;gt;The first half of this post focuses on honest garbled circuit uses,
+meaning both parties are acting honestly (and don&amp;#x27;t pull any fast-ones).&amp;lt;&amp;#x2F;p&amp;gt;
+&amp;lt;p&amp;gt;The latter portion focuses on problems with that &amp;#x27;vanilla&amp;#x27; garbled
+circuit implementation and potential solutions.&amp;lt;&amp;#x2F;p&amp;gt;
+
+    &lt;&#x2F;span&gt;
+&lt;&#x2F;span&gt;
+&lt;h2 id=&quot;garbling-a-gate&quot;&gt;Garbling a gate&lt;&#x2F;h2&gt;
+&lt;p&gt;How does Alice actually... &#x27;garble&#x27; a circuit?
+It sounds kinda dirty.&lt;&#x2F;p&gt;
+&lt;p&gt;Each gate (OR, AND, XOR, etc) has two inputs.
+Stick with me.
+Each input is encrypted.
+Keeping up?
+So you need a &lt;em&gt;key&lt;&#x2F;em&gt; to use &lt;em&gt;each gate&lt;&#x2F;em&gt;.
+It gets better.
+But if you have the keys, you don&#x27;t know which key corresponds with a &lt;code&gt;1&lt;&#x2F;code&gt; or a &lt;code&gt;0&lt;&#x2F;code&gt; so you can compute a function without knowing the actual values you put in.
+Whoa.&lt;&#x2F;p&gt;
+&lt;p&gt;Let&#x27;s use the OR gate as an example.&lt;&#x2F;p&gt;
+&lt;p&gt;Remember truth-tables for OR? Here&#x27;s a reminder:&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;OR&lt;&#x2F;th&gt;&lt;th&gt;&lt;strong&gt;0&lt;&#x2F;strong&gt;&lt;&#x2F;th&gt;&lt;th&gt;&lt;strong&gt;1&lt;&#x2F;strong&gt;&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;&lt;strong&gt;0&lt;&#x2F;strong&gt;&lt;&#x2F;td&gt;&lt;td&gt;0&lt;&#x2F;td&gt;&lt;td&gt;1&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;strong&gt;1&lt;&#x2F;strong&gt;&lt;&#x2F;td&gt;&lt;td&gt;1&lt;&#x2F;td&gt;&lt;td&gt;1&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;p&gt;This table is going to be important for Alice&#x27;s part of this dance.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;alice-s-circuit-input&quot;&gt;Alice&#x27;s circuit &amp;amp; input&lt;&#x2F;h3&gt;
+&lt;p&gt;Alice definitely does the heavy lifting in this transaction.&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Alice generates 4 keys &lt;code&gt;Kx0&lt;&#x2F;code&gt;, &lt;code&gt;Kx1&lt;&#x2F;code&gt;, &lt;code&gt;Ky0&lt;&#x2F;code&gt;, and &lt;code&gt;Ky1&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;Alice creates four variables corresponding with the four values in the OR table:&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;OR&lt;&#x2F;th&gt;&lt;th&gt;0&lt;&#x2F;th&gt;&lt;th&gt;1&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;&lt;strong&gt;0&lt;&#x2F;strong&gt;&lt;&#x2F;td&gt;&lt;td&gt;&lt;code&gt;B00&lt;&#x2F;code&gt; = 0&lt;&#x2F;td&gt;&lt;td&gt;&lt;code&gt;B01&lt;&#x2F;code&gt; = 1&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;strong&gt;1&lt;&#x2F;strong&gt;&lt;&#x2F;td&gt;&lt;td&gt;&lt;code&gt;B10&lt;&#x2F;code&gt; = 1&lt;&#x2F;td&gt;&lt;td&gt;&lt;code&gt;B11&lt;&#x2F;code&gt; = 1&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;ol start=&quot;3&quot;&gt;
+&lt;li&gt;Each box is encrypted with the two keys:&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;OR&lt;&#x2F;th&gt;&lt;th&gt;0&lt;&#x2F;th&gt;&lt;th&gt;1&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;&lt;strong&gt;0&lt;&#x2F;strong&gt;&lt;&#x2F;td&gt;&lt;td&gt;`E(Kx0&lt;&#x2F;td&gt;&lt;td&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;strong&gt;1&lt;&#x2F;strong&gt;&lt;&#x2F;td&gt;&lt;td&gt;`E(Kx1&lt;&#x2F;td&gt;&lt;td&gt;&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;ol start=&quot;4&quot;&gt;
+&lt;li&gt;Alice sends these ciphertexts (unordered) to Bob.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h3 id=&quot;bob-s-input&quot;&gt;Bob&#x27;s input&lt;&#x2F;h3&gt;
+&lt;ol start=&quot;5&quot;&gt;
+&lt;li&gt;Bob gets Alice&#x27;s input, key &lt;code&gt;KxA&lt;&#x2F;code&gt;, from Alice.&lt;&#x2F;li&gt;
+&lt;li&gt;Bob uses oblivious transfer&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#3&quot;&gt;3&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt; to get his input &lt;code&gt;KyB&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;With these two keys Bob is able to process the circuit (an OR gate).&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;Bob has enough information to get one of the four possible outputs of the circuit, but doesn&#x27;t know if Alice&#x27;s input is a 1 or a 0.&lt;&#x2F;p&gt;
+&lt;p&gt;Importantly, while Bob can share the output of the circuit, he should &lt;strong&gt;not&lt;&#x2F;strong&gt; share his input. That would make using OT (step 6) obtuse.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;extending-the-garbled-gate&quot;&gt;Extending the garbled gate&lt;&#x2F;h3&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;independent-crypto&#x2F;garbled-circuit.jpg&quot; alt=&quot;Garbled circuit example diagram&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;span class=&quot;note&quot;&gt;
+    &lt;span class=&quot;note-title&quot;&gt;
+        Note
+    &lt;&#x2F;span&gt;
+
+    &lt;span class=&quot;note-body&quot;&gt;
+        &amp;lt;p&amp;gt;The UTF-8 Padlock symbol doesn&amp;#x27;t render on my browser because I seem to
+have gone back in the time to the late 90s. Being stuck in the past, we
+have to comprmise. The ⛨ symbol is meant to represent a lock and the ⚿
+represents a key.&amp;lt;&amp;#x2F;p&amp;gt;
+
+    &lt;&#x2F;span&gt;
+&lt;&#x2F;span&gt;
+&lt;p&gt;Multiple gates can be connected together to build more complicated
+circuits. One important difference is that while each intermediate
+circuit still has four cipher-texts, for the four outcomes of a
+truth-table, those decrypt to a &lt;em&gt;key&lt;&#x2F;em&gt; and not a 1 or 0. The only gates
+which decrypt to a plain-text of 0 or 1 are output gates, not the
+intermediate gates.&lt;&#x2F;p&gt;
+&lt;span class=&quot;note&quot;&gt;
+    &lt;span class=&quot;note-title&quot;&gt;
+        Note
+    &lt;&#x2F;span&gt;
+
+    &lt;span class=&quot;note-body&quot;&gt;
+        &amp;lt;p&amp;gt;&amp;lt;em&amp;gt;PSST&amp;lt;&amp;#x2F;em&amp;gt; Check out the end of this post for a &amp;lt;strong&amp;gt;GAME&amp;lt;&amp;#x2F;strong&amp;gt;!&amp;lt;&amp;#x2F;p&amp;gt;
+
+    &lt;&#x2F;span&gt;
+&lt;&#x2F;span&gt;
+&lt;h2 id=&quot;problems-with-garbled-circuits&quot;&gt;Problems with garbled circuits&lt;&#x2F;h2&gt;
+&lt;p&gt;There are a few important flaws in the &lt;em&gt;security&lt;&#x2F;em&gt; of garbled circuits as
+they have been described. The first is that although Alice and Bob agree
+on a circuit to garble there is no guarantee that the circuit one is
+evaluating (if you&#x27;re Bob) is the circuit you agreed upon.&lt;&#x2F;p&gt;
+&lt;p&gt;For example:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Alice and Bob &#x27;agree&#x27; on a function &lt;code&gt;f(a,b)&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;Alice creates her own function &lt;code&gt;g(a,b)&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;Alice garbles &lt;code&gt;g&lt;&#x2F;code&gt; and her input &lt;code&gt;a&lt;&#x2F;code&gt; and sends it to Bob as &lt;code&gt;f&#x27;&lt;&#x2F;code&gt; and &lt;code&gt;a&#x27;&lt;&#x2F;code&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;Bob evaluates &lt;code&gt;g&#x27;(a&#x27;,b&#x27;)&lt;&#x2F;code&gt; and reveals the output to Alice.
+Alice now knows something other than than Bob agreed to.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h2 id=&quot;improvements-on-garbled-circuit-security&quot;&gt;Improvements on garbled circuit security&lt;&#x2F;h2&gt;
+&lt;p&gt;To prevent the above adversarial attack we do something called &quot;Cut-and-Choose&quot;.
+This is when Bob checks Alice&#x27;s work to make sure she&#x27;s not cheating.&lt;&#x2F;p&gt;
+&lt;p&gt;Remember that Alice and Bob agreed on a given circuit.&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Alice generates M garbled circuits for the agreed upon function where M &amp;gt; 1.&lt;&#x2F;li&gt;
+&lt;li&gt;All secrets for a randomly chosen N circuits are revealed where 1 ≤ N &amp;lt; M, the circuits are &quot;opened&quot;.&lt;&#x2F;li&gt;
+&lt;li&gt;Bob selects one of the remaining M-N circuits to evaluate as outlined earlier.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;This ensures that Alice is not nefarious to some statistical certainty.
+She had control over how the circuits were garbled but she does not have control over which are revealed or evaluated.
+If she made one (or two or three...) nefarious circuits that bad behavior is &lt;em&gt;probably&lt;&#x2F;em&gt; revealed in step 2, if all the checked circuits are good Alice is &lt;em&gt;probably&lt;&#x2F;em&gt; being honest.&lt;&#x2F;p&gt;
+&lt;p&gt;This doesn&#x27;t break garbled circuits for the following reasons:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;While Alice reveals the secrets of the N circuits, she doesn&#x27;t reveal anything about her input.
+We are only un-garbling the circuit not the inputs (revealing all possible inputs, not Alice&#x27;s).&lt;&#x2F;li&gt;
+&lt;li&gt;We&#x27;re not un-garbling the M-N circuits which may be evaluated, so those are still secret.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;As M grows and N approaches M this method gets more secure at the cost of computation cycles and bandwidth in transferring the garbled circuits.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;the-free-xor-optimization&quot;&gt;The &quot;Free XOR&quot; Optimization&lt;&#x2F;h2&gt;
+&lt;p&gt;I&#x27;m definitely not a circuits person.
+You can show me a circuit diagram and I&#x27;ll say
+&quot;Yep, that&#x27;s a circuit. What&#x27;s it do?&quot;
+I couldn&#x27;t even even identify which gate is which without Wikipedia.&lt;&#x2F;p&gt;
+&lt;p&gt;I was told during my research for this post that XOR gates are very popular with garbled circuit design, and more broadly circuit design in
+general.
+This was shared to me in the form of a cryptic hint so I figured I&#x27;d investigate and share my findings here.&lt;&#x2F;p&gt;
+&lt;p&gt;As it turns out the Wikipedia page notes that this XOR optimization exists and even cites the original paper published on the topic.&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#4&quot;&gt;4&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;The jist of this optimization is that one can very efficiently garble an XOR gate such that the output of the gate is encoded as the XOR of the keys used to unlock the gate and some known global constant.
+This is in contrast with the implementations discussed in the beginning where each gate had to be decrypted with two cipher-texts and revealed another key.&lt;&#x2F;p&gt;
+&lt;p&gt;Basically using XOR, which is pretty fast, we can avoid generating four keys per gate and instead craft 1 key which is produced as the result of &#x27;unlocking&#x27; a gate.&lt;&#x2F;p&gt;
+&lt;p&gt;Put a bit more formally:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Given a gate G with input wires A and B and output wire C and a random string R, the garbled gate is obtained by XORing the garbled gates inputs C&lt;sup&gt;1&lt;&#x2F;sup&gt; = C&lt;sup&gt;0&lt;&#x2F;sup&gt; ⊕ R:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;C&lt;sup&gt;0&lt;&#x2F;sup&gt; = A&lt;sup&gt;0&lt;&#x2F;sup&gt; ⊕ B&lt;sup&gt;0&lt;&#x2F;sup&gt; = (A&lt;sup&gt;0&lt;&#x2F;sup&gt; ⊕ R ) ⊕ (B&lt;sup&gt;0&lt;&#x2F;sup&gt; ⊕ R) = A&lt;sup&gt;1&lt;&#x2F;sup&gt; ⊕ B&lt;sup&gt;1&lt;&#x2F;sup&gt;
+C&lt;sup&gt;1&lt;&#x2F;sup&gt; = C&lt;sup&gt;0&lt;&#x2F;sup&gt; ⊕ R = A&lt;sup&gt;0&lt;&#x2F;sup&gt; (B&lt;sup&gt;0&lt;&#x2F;sup&gt; ⊕ R) = A&lt;sup&gt;0&lt;&#x2F;sup&gt; ⊕ B&lt;sup&gt;1&lt;&#x2F;sup&gt; = (A&lt;sup&gt;0&lt;&#x2F;sup&gt; ⊕ R) ⊕ B&lt;sup&gt;0&lt;&#x2F;sup&gt; = A&lt;sup&gt;1&lt;&#x2F;sup&gt; ⊕ B&lt;sup&gt;0&lt;&#x2F;sup&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;span class=&quot;note&quot;&gt;
+    &lt;span class=&quot;note-title&quot;&gt;
+        Note
+    &lt;&#x2F;span&gt;
+
+    &lt;span class=&quot;note-body&quot;&gt;
+        &amp;lt;p&amp;gt;LETTER&amp;lt;sup&amp;gt;{0,1}&amp;lt;&amp;#x2F;sup&amp;gt; is short-hand for the True or False output of the
+given gate.&amp;lt;&amp;#x2F;p&amp;gt;
+
+    &lt;&#x2F;span&gt;
+&lt;&#x2F;span&gt;
+&lt;p&gt;This isn&#x27;t super intuitive, and honestly I just put those equations up there to prove that I read a paper about this.&lt;&#x2F;p&gt;
+&lt;p&gt;The main takeaway is that &#x27;free XOR&#x27; saves us computation generating and processing cryptographic keys by simply performing the XOR operation.
+This optimization is so powerful that using &lt;em&gt;mostly&lt;&#x2F;em&gt; XOR gates makes garbled circuits notably faster and more useful for secure computation.&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#5&quot;&gt;5&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;annotated-bibliography&quot;&gt;Annotated Bibliography&lt;&#x2F;h2&gt;
+&lt;p&gt;Foundations of Garbled Circuits&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#6&quot;&gt;6&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt; This is by far the most thorough academic source I have.
+If I had a better foundation in academic reading this might be the perfect paper but most of it went way over my head.
+That said the overview of each section was fairly human-readable and gave me a good rough overview for many of the topics covered in this post.&lt;&#x2F;p&gt;
+&lt;p&gt;A Brief History of Practical Garbled Circuits&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#7&quot;&gt;7&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt; This was the first source I checked out to get a feel for how difficult garbled circuits are as a topic.
+It quickly glanced at the basics of garbled circuits and then quickly went into the optimizations on garbled circuits.
+This was overwhelming, but as I started to learn more about garbled circuits and filled in the knowledge gaps it gained significant value.&lt;&#x2F;p&gt;
+&lt;p&gt;It&#x27;s a great talk about Garbled Circuits which wasn&#x27;t ideal for beginners, but did give me a good breadth of the topic and what I could dive into.&lt;&#x2F;p&gt;
+&lt;p&gt;Improved garbled Circuit: Free XOR Gates and Applications&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#8&quot;&gt;8&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;
+This paper was useful in giving me an academic preview of the XOR optimization in Garbled Circuits.
+I quickly started looking at the many other papers referenced by this one, kind of like following down the Wikipedia wormhole, but with more PDFs and less pictures.&lt;&#x2F;p&gt;
+&lt;p&gt;SFE: Yao&#x27;s Garbled Circuit&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#9&quot;&gt;9&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;
+This slide-deck was very useful as a reference for basic GCs and securing GC&#x27;s with cut-and-choose.
+It wasn&#x27;t a great initial source for this material, but it was useful &lt;em&gt;after&lt;&#x2F;em&gt; I had a basic understanding of a topic to solidify it with pretty pictures and Comic Sans.&lt;&#x2F;p&gt;
+&lt;p&gt;Mike Rosulek on Stack Exchange[^10]&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#11&quot;&gt;10&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;
+This is more of a shout-out than a citation.
+Mike Rosulek&#x27;s posts on crypto.stackexchange.com were very helpful in breaking down core concepts like what garbled circuits are and why XOR is &quot;free&quot;.
+They also provided a good list of further reading which was helpful in addition to the resources provided in the syllabus.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;errata&quot;&gt;Errata&lt;&#x2F;h2&gt;
+&lt;iframe src=&quot;&#x2F;garbled-circuits-game.html&quot; height=&quot;400px&quot; width=&quot;100%&quot;&gt;&lt;&#x2F;iframe&gt;
+&lt;span class=&quot;note&quot;&gt;
+    &lt;span class=&quot;note-title&quot;&gt;
+        Note
+    &lt;&#x2F;span&gt;
+
+    &lt;span class=&quot;note-body&quot;&gt;
+        &amp;lt;p&amp;gt;Yes, the name is a misnomer. The goal is to &amp;lt;em&amp;gt;evaluate&amp;lt;&amp;#x2F;em&amp;gt; a garbled
+circuit, but that just doesn&amp;#x27;t roll off the tongue the same.&amp;lt;&amp;#x2F;p&amp;gt;
+
+    &lt;&#x2F;span&gt;
+&lt;&#x2F;span&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;1&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;1&lt;&#x2F;sup&gt;
+&lt;p&gt;The original problem was developed in the 80&#x27;s.
+This post adjusts the scenario for inflation.&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;2&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;2&lt;&#x2F;sup&gt;
+&lt;p&gt;To completely level with you, it&#x27;s been anecdotally proven that there is at least 1 definition of Garbled Circuits for each paper on the topic.&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;3&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;3&lt;&#x2F;sup&gt;
+&lt;p&gt;Oblivious Transfer has been described to me as:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Alice sends two possible options to a box labeled OT.&lt;&#x2F;li&gt;
+&lt;li&gt;Bob sends a choice to the box labeled OT.&lt;&#x2F;li&gt;
+&lt;li&gt;Bob gets back one of the two options, without knowledge of the
+other.&lt;&#x2F;li&gt;
+&lt;li&gt;Alice does not know which option Bob got.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;This is a cryptographic primitive which is very useful for tasks like generating Bob&#x27;s input to the garbled circuit &lt;code&gt;f&#x27;&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;4&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;4&lt;&#x2F;sup&gt;
+&lt;p&gt;Improved garbled Circuit: Free XOR Gates and Applications, Written by Vladimir Kolesnikov and Thomas Shneider, Published July 2008. &lt;a href=&quot;http:&#x2F;&#x2F;www.cs.toronto.edu&#x2F;~vlad&#x2F;papers&#x2F;XOR_ICALP08.pdf&quot;&gt;http:&#x2F;&#x2F;www.cs.toronto.edu&#x2F;~vlad&#x2F;papers&#x2F;XOR_ICALP08.pdf&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;5&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;5&lt;&#x2F;sup&gt;
+&lt;p&gt;A Brief History of Practical Garbled Circuit Optimizations, Presented by Mike Rosulek, Published by the Simons Institute, June 15, 2015. &lt;a href=&quot;https:&#x2F;&#x2F;youtu.be&#x2F;FTxh908u9y8&quot;&gt;https:&#x2F;&#x2F;youtu.be&#x2F;FTxh908u9y8&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;6&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;6&lt;&#x2F;sup&gt;
+&lt;p&gt;Foundations of Garbled Circuits, Written by Mihir Bellare, Viet tung Hoang, and Phillip Rogaway, Published October, 2012. &lt;a href=&quot;https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2012&#x2F;265.pdf&quot;&gt;https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2012&#x2F;265.pdf&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;7&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;7&lt;&#x2F;sup&gt;
+&lt;p&gt;A Brief History of Practical Garbled Circuit Optimizations, Presented by Mike Rosulek, Published by the Simons Institute, June 15, 2015. &lt;a href=&quot;https:&#x2F;&#x2F;youtu.be&#x2F;FTxh908u9y8&quot;&gt;https:&#x2F;&#x2F;youtu.be&#x2F;FTxh908u9y8&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;8&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;8&lt;&#x2F;sup&gt;
+&lt;p&gt;Improved garbled Circuit: Free XOR Gates and Applications, Written by Vladimir Kolesnikov and Thomas Shneider, Published July 2008. &lt;a href=&quot;http:&#x2F;&#x2F;www.cs.toronto.edu&#x2F;~vlad&#x2F;papers&#x2F;XOR_ICALP08.pdf&quot;&gt;http:&#x2F;&#x2F;www.cs.toronto.edu&#x2F;~vlad&#x2F;papers&#x2F;XOR_ICALP08.pdf&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;9&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;9&lt;&#x2F;sup&gt;
+&lt;p&gt;SFE: Yao&#x27;s Garbled Circuit, Published by engr.illinois.edu, for the course CS 598, Fall 2009. &lt;a href=&quot;https:&#x2F;&#x2F;courses.engr.illinois.edu&#x2F;cs598man&#x2F;fa2009&#x2F;slides&#x2F;ac-f09-lect16-yao.pdf&quot;&gt;https:&#x2F;&#x2F;courses.engr.illinois.edu&#x2F;cs598man&#x2F;fa2009&#x2F;slides&#x2F;ac-f09-lect16-yao.pdf&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;10&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;11&lt;&#x2F;sup&gt;
+&lt;p&gt;What exactly is a &quot;garbled circuit&quot;? Asked by user Ella Rose, Answered by user Mikero on on July 27, 2016. &lt;a href=&quot;https:&#x2F;&#x2F;crypto.stackexchange.com&#x2F;a&#x2F;37993&quot;&gt;https:&#x2F;&#x2F;crypto.stackexchange.com&#x2F;a&#x2F;37993&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;11&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;10&lt;&#x2F;sup&gt;
+&lt;p&gt;Why XOR and NOT is free in garbled circuits Asked by user Jason, Answered by user Mikero on February 28, 2017. &lt;a href=&quot;https:&#x2F;&#x2F;crypto.stackexchange.com&#x2F;a&#x2F;44278&quot;&gt;https:&#x2F;&#x2F;crypto.stackexchange.com&#x2F;a&#x2F;44278&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Elliptic Curve Cryptography</title>
+        <published>2017-10-04T00:00:00+00:00</published>
+        <updated>2017-10-04T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/elliptic-curve-cryptography/"/>
+        <id>/elliptic-curve-cryptography/</id>
+        
+        <content type="html" xml:base="/elliptic-curve-cryptography/">&lt;span class=&quot;note&quot;&gt;
+    &lt;span class=&quot;note-title&quot;&gt;
+        Note
+    &lt;&#x2F;span&gt;
+
+    &lt;span class=&quot;note-body&quot;&gt;
+        &amp;lt;p&amp;gt;This is a part of a series of blog posts I wrote for an Independent
+Study on cryptography at Oregon State University. To read all of the
+posts, check out the &amp;#x27;Independent Crypto&amp;#x27; tag.&amp;lt;&amp;#x2F;p&amp;gt;
+
+    &lt;&#x2F;span&gt;
+&lt;&#x2F;span&gt;
+&lt;span class=&quot;warning&quot;&gt;
+    &lt;span class=&quot;warning-title&quot;&gt;
+        Warning
+    &lt;&#x2F;span&gt;
+
+    &lt;span class=&quot;warning-body&quot;&gt;
+        &amp;lt;p&amp;gt;This post is jumps around a bit. We&amp;#x27;ll start by showing how Elliptic
+Curve Cryptography works at a high level, then create a list of
+questions about how&amp;#x2F;why Elliptic Curve Cryptography works and how it is
+useful to cryptogrpahy. Once those questions are answered we will end
+with a recap. Hopefully we will zero in on what Elliptic Curves are and
+what Elliptic Curve Cryptography is.&amp;lt;&amp;#x2F;p&amp;gt;
+
+    &lt;&#x2F;span&gt;
+&lt;&#x2F;span&gt;
+&lt;h2 id=&quot;diffie-hellman-key-exchange&quot;&gt;Diffie-Hellman key exchange ++&lt;&#x2F;h2&gt;
+&lt;p&gt;You find yourself day-dreaming during a walk around campus wondering if there is an alternative cryptography system to the very popular RSA.
+You want something that has improved computational and network efficiency.
+You want smaller keys that are harder to crack.
+Could such a system exist?&lt;&#x2F;p&gt;
+&lt;p&gt;You share this fantasy with a friend, you share all of your crypto fantasies with this friend, and they tell you that Elliptic Curve Cryptography is promising and it perfectly fits your needs.
+... but how does it work?&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;diffie-hellman-key-exchange-a-recap&quot;&gt;Diffie-Hellman key exchange (a recap)&lt;&#x2F;h3&gt;
+&lt;p&gt;To create a useful crypto out of Elliptic Curves we need to implement &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Diffie%E2%80%93Hellman_key_exchange&quot;&gt;Diffie–Hellman key exchange&lt;&#x2F;a&gt; (DHKE).
+Once we have DHKE we more or less have a valid crypto system which we can build upon to encrypt and decrypt private information.&lt;&#x2F;p&gt;
+&lt;p&gt;The reader (you) is assumed to be familiar with DHKE.
+While DHKE is fairly simple, it is not unforgettable, so here is quick reminder:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Alice and Bob agree on a public modulus (p) and a base (g).&lt;&#x2F;li&gt;
+&lt;li&gt;Alice and Bob both choose secret integers (a and b).&lt;&#x2F;li&gt;
+&lt;li&gt;Alice sends Bob g&lt;sup&gt;a&lt;&#x2F;sup&gt; (mod p) (we call it A) and Bob sends Alice g&lt;sup&gt;b&lt;&#x2F;sup&gt; (mod p) (we call it B).&lt;&#x2F;li&gt;
+&lt;li&gt;Alice computes B&lt;sup&gt;a&lt;&#x2F;sup&gt; (mod p) and Bob computes A&lt;sup&gt;b&lt;&#x2F;sup&gt; (mod p).
+These are equivalent (mod p).
+This is Alice and Bob&#x27;s shared secret.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;How do we use Elliptic Curves get a similar &#x27;shared secret&#x27;?&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;elliptic-diffie-hellman-key-exchange&quot;&gt;Elliptic Diffie-Hellman key exchange&lt;&#x2F;h3&gt;
+&lt;p&gt;At a (very) high level the algorithm is as follows:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Alice and Bob agree to use a given Elliptic Curve over a finite field, E(F&lt;sub&gt;p&lt;&#x2F;sub&gt;), and a public point P ∈ E(F&lt;sub&gt;p&lt;&#x2F;sub&gt;).&lt;&#x2F;li&gt;
+&lt;li&gt;Alice chooses a secret integer n&lt;sub&gt;A&lt;&#x2F;sub&gt; and Bob choose secret integers n&lt;sub&gt;B&lt;&#x2F;sub&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;Alice computes Q&lt;sub&gt;A&lt;&#x2F;sub&gt; = n&lt;sub&gt;A&lt;&#x2F;sub&gt;P and Bob computes Q&lt;sub&gt;B&lt;&#x2F;sub&gt; = n&lt;sub&gt;B&lt;&#x2F;sub&gt;P.
+These are the &quot;Public Keys&quot;&lt;&#x2F;li&gt;
+&lt;li&gt;Alice sends Bob her public key, Bob send Alice his public key.&lt;&#x2F;li&gt;
+&lt;li&gt;Alice computes n&lt;sub&gt;A&lt;&#x2F;sub&gt;Q&lt;sub&gt;B&lt;&#x2F;sub&gt;, Bob computes n&lt;sub&gt;B&lt;&#x2F;sub&gt;Q&lt;sub&gt;A&lt;&#x2F;sub&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;The shared secret value is n&lt;sub&gt;A&lt;&#x2F;sub&gt;Q&lt;sub&gt;B&lt;&#x2F;sub&gt; = n&lt;sub&gt;A&lt;&#x2F;sub&gt;(n&lt;sub&gt;B&lt;&#x2F;sub&gt;P) = n&lt;sub&gt;B&lt;&#x2F;sub&gt;(n&lt;sub&gt;A&lt;&#x2F;sub&gt;P) = n&lt;sub&gt;B&lt;&#x2F;sub&gt;Q&lt;sub&gt;A&lt;&#x2F;sub&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;It looks similar to the given DHKE algorithm, and seems promising, but... how does it work?&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;elliptic-curves-and-elliptic-curve-cryptography-q-a&quot;&gt;Elliptic Curves and Elliptic Curve Cryptography Q&amp;amp;A&lt;&#x2F;h2&gt;
+&lt;p&gt;To answer that we are going to answer the following:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;What are Elliptic Curves?&lt;&#x2F;li&gt;
+&lt;li&gt;What does an Elliptic Curve look like?&lt;&#x2F;li&gt;
+&lt;li&gt;What does it mean to multiply P by n?&lt;&#x2F;li&gt;
+&lt;li&gt;What about a finite field?&lt;&#x2F;li&gt;
+&lt;li&gt;How are the pubic keys used? Why are these a shared secret?&lt;&#x2F;li&gt;
+&lt;li&gt;Why is Elliptic Curve Cryptography useful?&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;what-are-elliptic-curves&quot;&gt;What are Elliptic Curves?&lt;&#x2F;h3&gt;
+&lt;p&gt;A Elliptic Curve is the set of solutions to an equation of the form&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;y&lt;sup&gt;2&lt;&#x2F;sup&gt; = x&lt;sup&gt;3&lt;&#x2F;sup&gt; + AX + B&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;h3 id=&quot;what-does-an-elliptic-curve-look-like&quot;&gt;What does an Elliptic Curve look like?&lt;&#x2F;h3&gt;
+&lt;p&gt;Two examples of Elliptic Curves are as follows:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;independent-crypto&#x2F;ecc-1.png&quot; alt=&quot;A simple elliptic curve&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;and:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;independent-crypto&#x2F;ecc-2.png&quot; alt=&quot;Another simple elliptic curve&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;adding-p-and-q&quot;&gt;Adding P and Q&lt;&#x2F;h3&gt;
+&lt;p&gt;Multiplication is &lt;em&gt;just&lt;&#x2F;em&gt; repeated addition.
+Oh shoot we haven&#x27;t said how &quot;addition&quot; happens on an Elliptic Curve. Let&#x27;s do that.&lt;&#x2F;p&gt;
+&lt;p&gt;Addition is the process of drawing a line L between P and Q.
+The third point that the line L intersects is point R. When R is reflected over the X axis we call this R&#x27;.
+The result of P ⊕ Q (read: P &#x27;plus&#x27; Q) is R&#x27;.&lt;&#x2F;p&gt;
+&lt;p&gt;We can enumerate these steps as:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Take two points P and Q on the Elliptic Curve E.&lt;&#x2F;li&gt;
+&lt;li&gt;Draw a line L which passes through these two points.&lt;&#x2F;li&gt;
+&lt;li&gt;L should ultimately pass through &lt;em&gt;three&lt;&#x2F;em&gt; points: P, Q, and R.&lt;&#x2F;li&gt;
+&lt;li&gt;Multiply the Y coordinate of R by -1, this is R&#x27;.&lt;&#x2F;li&gt;
+&lt;li&gt;P ⊕ Q = R&#x27;.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;Here&#x27;s a visualization of straight forward addition.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;independent-crypto&#x2F;ecc-3.png&quot; alt=&quot;Annotated curve E with points P, Q, R, R&amp;#39; and line L labeled.&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;You might think &quot;What happens when P is tangent a point on E?&quot; In that
+case we say P = Q, so R = P ⊕ P, or R = 2P. It looks like this:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;independent-crypto&#x2F;ecc-4.png&quot; alt=&quot;Annotated curve E with points P, R, R&amp;#39; and line L labeled. P is tangent to the curve.&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Wait a second, 2P looks like n*P which was one of the questions we had!
+Don&#x27;t worry, we&#x27;ll get there soon.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;that-thing-about-finite-fields&quot;&gt;That thing about Finite Fields&lt;&#x2F;h3&gt;
+&lt;p&gt;In practice we bound the curve over a field F&lt;sub&gt;p&lt;&#x2F;sub&gt; with p ≥ 3.
+We input {1, 2, ..., p-1} as the value of X in E and select the results which are squares modulo 13.&lt;&#x2F;p&gt;
+&lt;p&gt;For example:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;E : y&lt;sup&gt;2&lt;&#x2F;sup&gt; = x&lt;sup&gt;3&lt;&#x2F;sup&gt; + 3X + 8 over F&lt;sub&gt;13&lt;&#x2F;sub&gt;
+X = 1
+1 + 3 + 8 = 12
+12 is a square (mod 13)&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Repeating this gives us the set of points in E(F&lt;sub&gt;13&lt;&#x2F;sub&gt;):&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;E(F&lt;sub&gt;13&lt;&#x2F;sub&gt;) = {O, (1,5), (1,8), (2,3), (2,10), (9,6), (9,7),
+(12,2), (12,11)}&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;In practice this bounds the graph of E and forces us to draw a strange modulus graph shown below:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;independent-crypto&#x2F;ecc-5.gif&quot; alt=&quot;Elliptic Curves illustrated where each point is a valid coordinate. There are no curves.&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;Image source: A (relatively easy to understand) primer on elliptic curve cryptography&lt;&#x2F;em&gt;&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#1&quot;&gt;1&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;multiplying-p-by-an-integer-with-the-double-and-add-algorithm&quot;&gt;Multiplying P by an integer with The Double-and-Add Algorithm&lt;&#x2F;h3&gt;
+&lt;p&gt;To &quot;multiply&quot; P by n we need to use the Double-and-Add Algorithm.
+Here&#x27;s how that looks:&lt;&#x2F;p&gt;
+&lt;ol start=&quot;0&quot;&gt;
+&lt;li&gt;Take a point P ∈ E(F&lt;sub&gt;p&lt;&#x2F;sub&gt;) and an integer n ≥ 1.&lt;&#x2F;li&gt;
+&lt;li&gt;Set Q = P and R = O.&lt;&#x2F;li&gt;
+&lt;li&gt;Loop while n &amp;gt; 0.
+3.  If n ≡ 1 (mod 2), set R = R + Q
+4.  Set Q = 2Q and n = floor(n&#x2F;2).&lt;&#x2F;li&gt;
+&lt;li&gt;Return the point R, which equals nP.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;&lt;em&gt;Recall that the algorithm for finding point 2Q was covered in the above section&lt;&#x2F;em&gt; &lt;a href=&quot;&#x2F;elliptic-curve-cryptography&#x2F;#adding-p-and-q&quot;&gt;Adding P and Q&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;what-is-the-shared-secret&quot;&gt;What &lt;em&gt;is&lt;&#x2F;em&gt; the shared secret?&lt;&#x2F;h3&gt;
+&lt;p&gt;Let&#x27;s review.
+The shared secret is the second point n&lt;sub&gt;A&lt;&#x2F;sub&gt;n&lt;sub&gt;B&lt;&#x2F;sub&gt;P, which is a point on the public curve E(F&lt;sub&gt;p&lt;&#x2F;sub&gt;).
+This point can be used to encrypt information as it is a shared secret (necessary for DHKE).
+How exactly it is used to encrypt information is left as an exercise for readers in charge of cryptographic implementation standards.&lt;&#x2F;p&gt;
+&lt;p&gt;The reason this is a shared secret is because an adversary needs to solve the following Elliptic Curve Discrete Logarithm Problem&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;nP = Q&lt;sub&gt;A&lt;&#x2F;sub&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Which is a very hard problem, as mentioned in the next section.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;an-example-of-elliptic-curve-cryptography&quot;&gt;An example of Elliptic Curve Cryptography&lt;&#x2F;h2&gt;
+&lt;p&gt;This sounds good in theory, but let&#x27;s give it a test drive.&lt;&#x2F;p&gt;
+&lt;p&gt;Alice and Bob are given the following shared information:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;p = 3851, E: y&lt;sup&gt;2&lt;&#x2F;sup&gt; = x&lt;sup&gt;3&lt;&#x2F;sup&gt; + 324X + 1287, P = (920, 303) ∈ E(F&lt;sub&gt;3851&lt;&#x2F;sub&gt;)&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Alice and Bob choose their secret integers:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;n&lt;sub&gt;A&lt;&#x2F;sub&gt; = 1194
+n&lt;sub&gt;B&lt;&#x2F;sub&gt; = 1759&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Alice and Bob then compute their public keys:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Alice computes Q&lt;sub&gt;A&lt;&#x2F;sub&gt; = 1194P = (2067, 2178) ∈ E(F&lt;sub&gt;3851&lt;&#x2F;sub&gt;)
+Bob computes Q&lt;sub&gt;B&lt;&#x2F;sub&gt; = 1759P = (3684, 3125) ∈ E(F&lt;sub&gt;3851&lt;&#x2F;sub&gt;)&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;span class=&quot;note&quot;&gt;
+    &lt;span class=&quot;note-title&quot;&gt;
+        Note
+    &lt;&#x2F;span&gt;
+
+    &lt;span class=&quot;note-body&quot;&gt;
+        &amp;lt;p&amp;gt;Remember that we use the Double-and-Add algorithm to compute
+Q&amp;lt;sub&amp;gt;A&amp;lt;&amp;#x2F;sub&amp;gt; and Q&amp;lt;sub&amp;gt;B&amp;lt;&amp;#x2F;sub&amp;gt;. This invloves iteratively computing the
+tangent line at a point, the intersection with E at that intersection,
+and reflecting that point over the X axis.&amp;lt;&amp;#x2F;p&amp;gt;
+
+    &lt;&#x2F;span&gt;
+&lt;&#x2F;span&gt;
+&lt;p&gt;Alice and Bob trade public keys and calculate their shared secret:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Alice computes n&lt;sub&gt;A&lt;&#x2F;sub&gt;Q&lt;sub&gt;B&lt;&#x2F;sub&gt; = 1194(3684, 3125) = (3347, 1242) ∈ E(F&lt;sub&gt;3851&lt;&#x2F;sub&gt;)
+Bob computes n&lt;sub&gt;B&lt;&#x2F;sub&gt;Q&lt;sub&gt;A&lt;&#x2F;sub&gt; = 1759(2067, 2178) = (3347, 1242) ∈ E(F&lt;sub&gt;3851&lt;&#x2F;sub&gt;)&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Therefore (3347, 1242) is the shared secret.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;why-elliptic-curve-cryptography-is-useful&quot;&gt;Why Elliptic Curve Cryptography is useful&lt;&#x2F;h2&gt;
+&lt;p&gt;While it is harder than simply multiplying mod p for Alice to compute her shared secret (which is the case in RSA), it is &lt;em&gt;even harder&lt;&#x2F;em&gt; for a
+malicious actor to figure out that same shared secret.
+This point is best put by the source &lt;em&gt;A (relatively easy to understand) primer on elliptic curve cryptography&lt;&#x2F;em&gt;&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#2&quot;&gt;2&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;You can compute how much energy is needed to break a cryptographic algorithm and compare that with how much water that energy could boil.
+This is a kind of a cryptographic carbon footprint. By this measure, breaking a 228-bit RSA key requires less energy than it takes to boil a teaspoon of water.
+Comparatively, breaking a 228-bit elliptic curve &amp;gt; key requires enough energy to boil all the water on earth.
+For this &amp;gt; level of security with RSA, you&#x27;d need a key with 2,380 bits.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;So an Elliptic Curve Cryptography key can be one magnitude smaller in size and offer the same level of security as RSA.&lt;&#x2F;p&gt;
+&lt;p&gt;We can put this in more concrete terms: the fastest algorithm to solve the Elliptic Curve Discrete Logarithm Problem, which Elliptic DHKE security is built upon, in E(F&lt;sub&gt;p&lt;&#x2F;sub&gt;) takes √p steps.
+This is much more difficult than the &#x27;vanilla&#x27; Discrete Logarithm Problem.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;notes-and-edge-cases&quot;&gt;Notes and edge cases&lt;&#x2F;h2&gt;
+&lt;p&gt;Elliptic Curve Cryptography, much like the rest of Cryptography, deals heavily with &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Number_theory&quot;&gt;Number Theory&lt;&#x2F;a&gt;.
+Despite my best efforts most of the nitty-gritty Number Theory in this topic went &lt;em&gt;way&lt;&#x2F;em&gt; over my head.
+As a result I didn&#x27;t include much of that kind of stuff and instead focused on the things I &lt;em&gt;could&lt;&#x2F;em&gt; share and sound smart about.&lt;&#x2F;p&gt;
+&lt;p&gt;Here are some other things about Elliptic Curve Cryptography I didn&#x27;t cover that deserve more air time:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;The Elliptic Curve chosen must meet a special set of criteria; any old Elliptic Curve won&#x27;t do.
+This was the cause of a cryptographic breach with Elliptic Curve Cryptography a few years ago that triggered doubts about Elliptic Curve Cryptography as a whole.&lt;&#x2F;li&gt;
+&lt;li&gt;Some primes cause solving the Elliptic Curve Discrete Logarithm Problem for E(F&lt;sub&gt;p&lt;&#x2F;sub&gt;) to be easier than the Discrete Logarithm Problem, these primes can be computed and should be avoided.&lt;&#x2F;li&gt;
+&lt;li&gt;If you want a deeper understanding of the theory of Elliptic Curves (addition of points on these curves, etc) you should look into &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Algebraic_geometry&quot;&gt;algebraic geometry&lt;&#x2F;a&gt;.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;annotated-bibliography&quot;&gt;Annotated Bibliography&lt;&#x2F;h2&gt;
+&lt;p&gt;An Introduction to Mathematical Cryptography&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#3&quot;&gt;3&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt; The chapter in this textbook on Elliptic Curves in Cryptography established the bedrock understanding of the topic of Elliptic Curve Cryptography.
+This ended up being the main resource for this post and offered a great median between &quot;Regular Joe&#x27;s guide to Elliptic Curve Cryptography&quot; and &quot;The graduate student&#x27;s guide to Elliptic Curve Cryptography&quot; which were my other two resources.
+It was also the source of all examples, which were very useful in gaining an intuitive understanding of the material.&lt;&#x2F;p&gt;
+&lt;p&gt;A (relatively easy to understand) primer on elliptic curve cryptography&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#4&quot;&gt;4&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt; This blog post was my &lt;em&gt;second&lt;&#x2F;em&gt; source and did a good job of taking the proofs and dense material in Intro to Math Cyrpto (above) and boiled it down to the important stuff.
+It drastically improved further readings of the original textbook and provided that great animated image of adding P ⊕ Q in E(F&lt;sub&gt;p&lt;&#x2F;sub&gt;). It didn&#x27;t cover any of the Number Theory, but explained the historical context of Elliptic Curve Cryptography, roughly how&#x2F;why it works, and did a good job of describing it&#x27;s impact in our world today.&lt;&#x2F;p&gt;
+&lt;p&gt;Cryptography: An Introduction&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#5&quot;&gt;5&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;
+This wasn&#x27;t a resource I actually &lt;em&gt;used&lt;&#x2F;em&gt;, but I did read the chapter on Elliptic Curve Cryptography (chapter 2!).
+It gave me an appreciation for the previous two sources and some exposure to the other ways Elliptic Curves can be taught.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;errata&quot;&gt;Errata&lt;&#x2F;h2&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;1&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;1&lt;&#x2F;sup&gt;
+&lt;p&gt;A (relatively easy to understand) primer on elliptic curve cryptography, October 24, 2013, Nick Sullivan, Cloudflare blog, reposted on Ars Technica, &lt;a href=&quot;https:&#x2F;&#x2F;arstechnica.com&#x2F;information-technology&#x2F;2013&#x2F;10&#x2F;a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography&#x2F;&quot;&gt;https:&#x2F;&#x2F;arstechnica.com&#x2F;information-technology&#x2F;2013&#x2F;10&#x2F;a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography&#x2F;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;2&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;2&lt;&#x2F;sup&gt;
+&lt;p&gt;A (relatively easy to understand) primer on elliptic curve cryptography, October 24, 2013, Nick Sullivan, Cloudflare blog, reposted on Ars Technica, &lt;a href=&quot;https:&#x2F;&#x2F;arstechnica.com&#x2F;information-technology&#x2F;2013&#x2F;10&#x2F;a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography&#x2F;&quot;&gt;https:&#x2F;&#x2F;arstechnica.com&#x2F;information-technology&#x2F;2013&#x2F;10&#x2F;a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography&#x2F;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;3&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;3&lt;&#x2F;sup&gt;
+&lt;p&gt;An Introduction to Mathematical Cryptography, 2008, Jeffery Hoffstein, Jill Pipher, Joseph H. Silverman, Springer Publishing, ISBN 978-0-387-77993-5&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;4&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;4&lt;&#x2F;sup&gt;
+&lt;p&gt;A (relatively easy to understand) primer on elliptic curve cryptography, October 24, 2013, Nick Sullivan, Cloudflare blog, reposted on Ars Technica, &lt;a href=&quot;https:&#x2F;&#x2F;arstechnica.com&#x2F;information-technology&#x2F;2013&#x2F;10&#x2F;a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography&#x2F;&quot;&gt;https:&#x2F;&#x2F;arstechnica.com&#x2F;information-technology&#x2F;2013&#x2F;10&#x2F;a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography&#x2F;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;5&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;5&lt;&#x2F;sup&gt;
+&lt;p&gt;Cryptography: An Introduction (Third Edition), May 19, 2016, Nigel Smart, &lt;a href=&quot;https:&#x2F;&#x2F;www.cs.umd.edu&#x2F;~waa&#x2F;414-F11&#x2F;IntroToCrypto.pdf&quot;&gt;https:&#x2F;&#x2F;www.cs.umd.edu&#x2F;~waa&#x2F;414-F11&#x2F;IntroToCrypto.pdf&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Independent Crypto Course syllabus</title>
+        <published>2017-07-10T00:00:00+00:00</published>
+        <updated>2017-07-10T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/independent-crypto/"/>
+        <id>/independent-crypto/</id>
+        
+        <content type="html" xml:base="/independent-crypto/">&lt;span class=&quot;note&quot;&gt;
+    &lt;span class=&quot;note-title&quot;&gt;
+        Note
+    &lt;&#x2F;span&gt;
+
+    &lt;span class=&quot;note-body&quot;&gt;
+        &amp;lt;p&amp;gt;This is a part of a series of blog posts I wrote for an Independent Study on cryptography at Oregon State University.
+To read all of the posts, check out the &amp;#x27;Independent Crypto&amp;#x27; tag.
+{% end() %}&amp;lt;&amp;#x2F;p&amp;gt;
+&amp;lt;p&amp;gt;{% warning() %}
+This syllabus was written by an Oregon State University undergraduate student and not by an Oregon State University staff member.
+This should explain any irregularities in the structure and substance of the document.&amp;lt;&amp;#x2F;p&amp;gt;
+
+    &lt;&#x2F;span&gt;
+&lt;&#x2F;span&gt;
+&lt;p&gt;The purpose of this course (&quot;Independent Crypto&quot;) is to give students an opportunity to dive deeper into interesting topics of Cryptography.&lt;&#x2F;p&gt;
+&lt;p&gt;By the end of this course you should &lt;em&gt;grok&lt;&#x2F;em&gt; the following topics:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Elliptic curve cryptography&lt;&#x2F;li&gt;
+&lt;li&gt;Memory hard functions&lt;&#x2F;li&gt;
+&lt;li&gt;Garbled circuits&lt;&#x2F;li&gt;
+&lt;li&gt;An topic of your choosing (get creative!)&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Each of these should take about 40 hours of work to complete.
+An overview of what that means is outlined below.&lt;&#x2F;p&gt;
+&lt;span class=&quot;note&quot;&gt;
+    &lt;span class=&quot;note-title&quot;&gt;
+        Note
+    &lt;&#x2F;span&gt;
+
+    &lt;span class=&quot;note-body&quot;&gt;
+        &amp;lt;p&amp;gt;This course is designed to be a 4 credit hour independent study.&amp;lt;&amp;#x2F;p&amp;gt;
+&amp;lt;p&amp;gt;As is standard Oregon State University policy, this corresponds with 160
+hours of work over a 10 week period.
+Plan accordingly.&amp;lt;&amp;#x2F;p&amp;gt;
+
+    &lt;&#x2F;span&gt;
+&lt;&#x2F;span&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;Each topic ought to take about 40 hours of work to complete over the course of a 10 week term.
+If you schedule your time well this will be a piece of cake at just 16 hours per week.
+That&#x27;s 2.28 hours per day, 3.2 hours per week-day, or 16 hours the day before your check-in is due!&lt;&#x2F;p&gt;
+&lt;p&gt;The basic structure is as follows:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Research a topic.
+Read papers, watch informative videos, ask questions and learn as much as you can about a given topic.&lt;&#x2F;li&gt;
+&lt;li&gt;Maintain an &lt;em&gt;annotated bibliography&lt;&#x2F;em&gt;.
+This should include materials found while studying a given topic, a summary of each of the materials, and a final summary of the topic as a whole.&lt;&#x2F;li&gt;
+&lt;li&gt;Meet weekly with the mentoring professor.&lt;&#x2F;li&gt;
+&lt;li&gt;Repeat.&lt;&#x2F;li&gt;
+&lt;li&gt;???&lt;&#x2F;li&gt;
+&lt;li&gt;Profit.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;The end goal, in addition to learning about a breadth of topics in modern security, is to produce an annotated bibliography.
+This will exercise the student&#x27;s ability to read and process academic topics, journals, and videos.&lt;&#x2F;p&gt;
+&lt;p&gt;Of course if you are particularly passionate about a topic you are encouraged to go further: implementing things of interest, investigating new questions, and generally &#x27;digging deeper&#x27; as you gain interest in different topics.&lt;&#x2F;p&gt;
+&lt;p&gt;The following topics do not &lt;em&gt;need&lt;&#x2F;em&gt; to be completed in order, however doing so will result in an optimal &#x27;difficulty curve&#x27; as the kids say.
+The kids do still say that right?&lt;&#x2F;p&gt;
+&lt;span class=&quot;note&quot;&gt;
+    &lt;span class=&quot;note-title&quot;&gt;
+        Note
+    &lt;&#x2F;span&gt;
+
+    &lt;span class=&quot;note-body&quot;&gt;
+        &amp;lt;p&amp;gt;Included are a few resources grabbed in a quick internet search.
+These are meant to be starting places for each topic, generating questions and providing external resources.
+You will need to find additional resources for each topic.&amp;lt;&amp;#x2F;p&amp;gt;
+
+    &lt;&#x2F;span&gt;
+&lt;&#x2F;span&gt;
+&lt;h2 id=&quot;elliptic-curve-cryptography&quot;&gt;Elliptic Curve Cryptography&lt;&#x2F;h2&gt;
+&lt;p&gt;Weeks 0-2 will be dedicated to Elliptic Curve Cryptography.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;kickoff-resources&quot;&gt;Kickoff Resources&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;A (relatively easy to understand) primer on Elliptic Curve Cryptography: &lt;a href=&quot;https:&#x2F;&#x2F;arstechnica.com&#x2F;security&#x2F;2013&#x2F;10&#x2F;a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography&#x2F;&quot;&gt;https:&#x2F;&#x2F;arstechnica.com&#x2F;security&#x2F;2013&#x2F;10&#x2F;a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography&#x2F;&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Elliptic Curve Cryptography in Practice: &lt;a href=&quot;https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2013&#x2F;734.pdf&quot;&gt;https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2013&#x2F;734.pdf&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Elliptic Curve Cryptography, a gentle introduction: &lt;a href=&quot;http:&#x2F;&#x2F;andrea.corbellini.name&#x2F;2015&#x2F;05&#x2F;17&#x2F;elliptic-curve-cryptography-a-gentle-introduction&#x2F;&quot;&gt;http:&#x2F;&#x2F;andrea.corbellini.name&#x2F;2015&#x2F;05&#x2F;17&#x2F;elliptic-curve-cryptography-a-gentle-introduction&#x2F;&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;kickoff-questions&quot;&gt;Kickoff Questions&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;What are elliptic curves?&lt;&#x2F;li&gt;
+&lt;li&gt;How do elliptic curves relate to cryptography?&lt;&#x2F;li&gt;
+&lt;li&gt;How are Elliptic Curve Cryptography functions different from similar ones like RSA?&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;memory-hard-functions&quot;&gt;Memory-hard functions&lt;&#x2F;h2&gt;
+&lt;p&gt;Weeks 3 and 4 of the course should be dedicated to the topic of Memory Hard Functions.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;kickoff-resources-1&quot;&gt;Kickoff Resources&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Memory-hard functions and tradeoff cryptanalysis with applications to password hashing, cryptocurrencies, and white-box cryptography: &lt;a href=&quot;https:&#x2F;&#x2F;www.cryptolux.org&#x2F;images&#x2F;d&#x2F;d1&#x2F;Tradeoff-slides.pdf&quot;&gt;https:&#x2F;&#x2F;www.cryptolux.org&#x2F;images&#x2F;d&#x2F;d1&#x2F;Tradeoff-slides.pdf&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Strict Memory Hard Hashing Functions: &lt;a href=&quot;http:&#x2F;&#x2F;www.hashcash.org&#x2F;papers&#x2F;memohash.pdf&quot;&gt;http:&#x2F;&#x2F;www.hashcash.org&#x2F;papers&#x2F;memohash.pdf&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;kickoff-questions-1&quot;&gt;Kickoff Questions&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;What are Memory-hard functions?&lt;&#x2F;li&gt;
+&lt;li&gt;What purposes are Memory-hard functions used for?&lt;&#x2F;li&gt;
+&lt;li&gt;What are some examples of Memory-hard functions and how do they work?&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;garbled-circuits&quot;&gt;Garbled circuits&lt;&#x2F;h2&gt;
+&lt;p&gt;Weeks 5-7 should be dedicated to garbled circuits.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;kickoff-resources-2&quot;&gt;Kickoff Resources&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Garbled Circuits: &lt;a href=&quot;https:&#x2F;&#x2F;youtu.be&#x2F;TxCu1L_tzlU&quot;&gt;https:&#x2F;&#x2F;youtu.be&#x2F;TxCu1L_tzlU&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Foundations of Garbled Circuits: &lt;a href=&quot;https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2012&#x2F;265.pdf&quot;&gt;https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2012&#x2F;265.pdf&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Faster Secure Two-Party Computation Using Garbled Circuits: &lt;a href=&quot;https:&#x2F;&#x2F;www.usenix.org&#x2F;legacy&#x2F;event&#x2F;sec11&#x2F;tech&#x2F;full_papers&#x2F;Huang.pdf&quot;&gt;https:&#x2F;&#x2F;www.usenix.org&#x2F;legacy&#x2F;event&#x2F;sec11&#x2F;tech&#x2F;full_papers&#x2F;Huang.pdf&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;SFE: Yao’s Garbled Circuit: &lt;a href=&quot;https:&#x2F;&#x2F;courses.engr.illinois.edu&#x2F;cs598man&#x2F;fa2009&#x2F;slides&#x2F;ac-f09-lect16-yao.pdf&quot;&gt;https:&#x2F;&#x2F;courses.engr.illinois.edu&#x2F;cs598man&#x2F;fa2009&#x2F;slides&#x2F;ac-f09-lect16-yao.pdf&lt;&#x2F;a&gt; (bonus points if you find the talk for these slides).&lt;&#x2F;li&gt;
+&lt;li&gt;Garbled Circuts, Cryptowiki, &lt;a href=&quot;http:&#x2F;&#x2F;cryptowiki.net&#x2F;index.php?title=Garbled_circuits&quot;&gt;http:&#x2F;&#x2F;cryptowiki.net&#x2F;index.php?title=Garbled_circuits&lt;&#x2F;a&gt; (probably don&#x27;t cite this one in a paper)&lt;&#x2F;li&gt;
+&lt;li&gt;Amortizing Garbled Circuits: &lt;a href=&quot;https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2015&#x2F;081.pdf&quot;&gt;https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2015&#x2F;081.pdf&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;independent-study&quot;&gt;Independent study&lt;&#x2F;h2&gt;
+&lt;p&gt;In the last seven or so weeks you&#x27;ve learned a lot.
+You&#x27;ve read papers, watch informative lectures, and had insightful conversations with peers and mentors.
+Many of these probably sparked your attention in a particular topic.
+Use these last few weeks to investigate one of those sparks that you&#x27;ve been itching to learn more about.&lt;&#x2F;p&gt;
+&lt;p&gt;If you truly feel uninspired you can use this time to learn about Private Set Intersection.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;kickoff-resources-for-private-set-intersection&quot;&gt;Kickoff Resources for Private Set Intersection&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;BIU Winter School on Cryptography on Youtube.&lt;&#x2F;li&gt;
+&lt;li&gt;CSCI E-127, Introduction to Cryptography &lt;a href=&quot;http:&#x2F;&#x2F;cm.dce.harvard.edu&#x2F;2014&#x2F;01&#x2F;14301&#x2F;publicationListing.shtml&quot;&gt;http:&#x2F;&#x2F;cm.dce.harvard.edu&#x2F;2014&#x2F;01&#x2F;14301&#x2F;publicationListing.shtml&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;generic-kickoff-questions&quot;&gt;Generic Kickoff Questions&lt;&#x2F;h3&gt;
+&lt;ul&gt;
+&lt;li&gt;What topic are you investigating?&lt;&#x2F;li&gt;
+&lt;li&gt;How does this relate to Cryptography?&lt;&#x2F;li&gt;
+&lt;li&gt;How would you explain this topic to your friends or parents?&lt;&#x2F;li&gt;
+&lt;li&gt;Why is this topic important?&lt;&#x2F;li&gt;
+&lt;li&gt;What interests you about this topic?&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;additional-resources&quot;&gt;Additional resources&lt;&#x2F;h2&gt;
+&lt;p&gt;OSU Professor &lt;a href=&quot;http:&#x2F;&#x2F;web.engr.oregonstate.edu&#x2F;~rosulekm&#x2F;&quot;&gt;Mike Rosulek&lt;&#x2F;a&gt; volunteered the following additional resources:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Scrypt is maximally memory-hard, &lt;a href=&quot;http:&#x2F;&#x2F;www.cs.bu.edu&#x2F;fac&#x2F;reyzin&#x2F;papers&#x2F;BostonCryptoDayTalk-Leo.pptx&quot;&gt;http:&#x2F;&#x2F;www.cs.bu.edu&#x2F;fac&#x2F;reyzin&#x2F;papers&#x2F;BostonCryptoDayTalk-Leo.pptx&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Practical Graphs for Optimal Side-Channel Resistant Memory-Hard Functions, &lt;a href=&quot;https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2017&#x2F;443.pdf&quot;&gt;https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2017&#x2F;443.pdf&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Efficiently Computing Data Independent Memory Hard Functions, &lt;a href=&quot;https:&#x2F;&#x2F;youtu.be&#x2F;ujpvPtn_N5Y&quot;&gt;https:&#x2F;&#x2F;youtu.be&#x2F;ujpvPtn_N5Y&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Memory hard Functions and Password Hashing, &lt;a href=&quot;https:&#x2F;&#x2F;youtu.be&#x2F;9yX4v89m5oo&quot;&gt;https:&#x2F;&#x2F;youtu.be&#x2F;9yX4v89m5oo&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Towards a Theory of Data-Independent Memory Hard Functions, &lt;a href=&quot;https:&#x2F;&#x2F;youtu.be&#x2F;YtfVLzUkwME&quot;&gt;https:&#x2F;&#x2F;youtu.be&#x2F;YtfVLzUkwME&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Depth-Robust Graphs and Their Cumulative Memory Complexity, &lt;a href=&quot;https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2016&#x2F;875.pdf&quot;&gt;https:&#x2F;&#x2F;eprint.iacr.org&#x2F;2016&#x2F;875.pdf&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Practical Garbled Circuit Optimizations, &lt;a href=&quot;http:&#x2F;&#x2F;web.engr.oregonstate.edu&#x2F;~rosulekm&#x2F;pubs&#x2F;gc-survey-talk.pdf&quot;&gt;http:&#x2F;&#x2F;web.engr.oregonstate.edu&#x2F;~rosulekm&#x2F;pubs&#x2F;gc-survey-talk.pdf&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Pratical Garbled Circuit Optimizations, &lt;a href=&quot;https:&#x2F;&#x2F;youtu.be&#x2F;FTxh908u9y8&quot;&gt;https:&#x2F;&#x2F;youtu.be&#x2F;FTxh908u9y8&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Cache-timing attacks on AES, &lt;a href=&quot;http:&#x2F;&#x2F;cr.yp.to&#x2F;antiforgery&#x2F;cachetiming-20050414.pdf&quot;&gt;http:&#x2F;&#x2F;cr.yp.to&#x2F;antiforgery&#x2F;cachetiming-20050414.pdf&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Lucky Thirteen attack on TLS CBC, &lt;a href=&quot;https:&#x2F;&#x2F;www.imperialviolet.org&#x2F;2013&#x2F;02&#x2F;04&#x2F;luckythirteen.html&quot;&gt;https:&#x2F;&#x2F;www.imperialviolet.org&#x2F;2013&#x2F;02&#x2F;04&#x2F;luckythirteen.html&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</content>
+        
+    </entry>
+</feed>

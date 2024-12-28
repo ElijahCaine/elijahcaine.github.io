@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="shortcut icon" href="&#x2F;favicon.ico"><title>elijah.run</title>
+  <meta name="title" content="elijah.run">
+<meta name="description" content="A blog about tech, media, and art">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="alternate" type="application/atom+xml" title="elijah.run" href="/atom.xml">
+  <style>
+    :root {
+    --width: 586px;
+    --font-main: Verdana, sans-serif;
+    --font-secondary: "Times New Roman", serif;
+    --font-scale: 1.1em;
+    --background-color: #fff;
+    --heading-color: #222;
+    --text-color: #444;
+    --link-color: #3273dc;
+    --visited-color: #8b6fcb;
+    --blockquote-color: #222;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background-color: #01242e;
+      --heading-color: #eee;
+      --text-color: #ddd;
+      --link-color: #8cc2dd;
+      --visited-color: #8b6fcb;
+      --blockquote-color: #ccc;
+    }
+  }
+
+  body {
+    font-family: var(--font-secondary);
+    font-size: var(--font-scale);
+    margin: auto;
+    padding: 20px;
+    max-width: var(--width);
+    text-align: left;
+    background-color: var(--background-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: var(--text-color);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-main);
+    color: var(--heading-color);
+  }
+
+  a {
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  nav a {
+    margin-right: 8px;
+  }
+
+  nav span.active {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  strong,
+  b {
+    color: var(--heading-color);
+  }
+
+  button {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  main {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px dashed;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  pre code {
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 0.875rem;
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: monospace;
+    padding: 2px;
+    border-radius: 3px;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: var(--code-color);
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px 0;
+    text-align: center;
+  }
+
+  .title:hover {
+    text-decoration: none;
+  }
+
+  .title h1 {
+    font-size: 1.5em;
+  }
+
+  .inline {
+    width: auto !important;
+  }
+
+  .highlight,
+  .code {
+    padding: 1px 15px;
+    background-color: var(--code-background-color);
+    color: var(--code-color);
+    border-radius: 3px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    overflow-x: auto;
+  }
+
+  /* blog post list */
+  ul.posts {
+    list-style-type: none;
+    padding: unset;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  ul.posts li {
+    line-height: 1;
+    margin: 0;
+  }
+
+  ul.posts li time {
+    margin-left: 0px;
+    font-size: 12px;
+  }
+
+  ul.posts li a:visited {
+    color: var(--visited-color);
+  }
+
+  li.post {
+    padding: 0px 0px 10px 0px;
+  }
+
+  span.tags {
+    font-size: smaller;
+  }
+
+  /* table of contents */
+  details ul {
+    list-style-type: circle;
+  }
+
+  </style>
+</head>
+<body>
+  <header>
+  <a href="/" class="title">
+    <h1>elijah.run</h1>
+  </a>
+  <nav aria-label="site">
+      <a href="/">(🏠 elijah.run)</a>
+      <a href="https:&#x2F;&#x2F;games.elijah.run">(🕹️ games)</a>
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;pop">(🐙 github 🐱)</a>
+      <a href="/Elijah Voigt.pdf">(👔 resume)</a>
+  </nav>
+</header>
+<main>
+
+    
+
+    <h1>Recent Posts</h1>
+
+    <ul class="posts">
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;whats-good-2024-12&#x2F;">What&#x27;s good: December 2024</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2024-12-27T00:00:00+00:00" pubdate>
+        Fri 27 Dec 2024
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/what-s-good/">#what&#x27;s good</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;whats-good-2024-11&#x2F;">What&#x27;s good: November 2024</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2024-11-30T00:00:00+00:00" pubdate>
+        Sat 30 Nov 2024
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/what-s-good/">#what&#x27;s good</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;whats-good-2024-10&#x2F;">What&#x27;s good: October 2024</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2024-10-31T00:00:00+00:00" pubdate>
+        Thu 31 Oct 2024
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/what-s-good/">#what&#x27;s good</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;rust-default-from&#x2F;">Rust Ergonomics: Default and From</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2022-05-17T00:00:00+00:00" pubdate>
+        Tue 17 May 2022
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/rust/">#rust</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;buying-a-house-04-is-this-investing&#x2F;">Buying a House Part 4: Is this investing?</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2022-01-18T00:00:00+00:00" pubdate>
+        Tue 18 Jan 2022
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/hgtv/">#HGTV</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;buying-a-house-03-renovation-station&#x2F;">Buying a House Part 3: Renovation Station!</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2022-01-04T00:00:00+00:00" pubdate>
+        Tue 04 Jan 2022
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/hgtv/">#HGTV</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;buying-a-house-02-show-me-the-money&#x2F;">Buying a House Part 2: Show Me The Money!</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2021-12-21T00:00:00+00:00" pubdate>
+        Tue 21 Dec 2021
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/hgtv/">#HGTV</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;python-dynamic-dispatch&#x2F;">Dynamic Dispatch in Python</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2021-09-02T00:00:00+00:00" pubdate>
+        Thu 02 Sep 2021
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/python/">#python</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;buying-a-house-01-lets-go-shopping&#x2F;">Buying a House Part 1: Let&#x27;s Go Shopping!</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2021-08-26T00:00:00+00:00" pubdate>
+        Thu 26 Aug 2021
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/hgtv/">#HGTV</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;git-main-branch&#x2F;">Nuggit: Manually change your default branch name</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2021-07-07T00:00:00+00:00" pubdate>
+        Wed 07 Jul 2021
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/git/">#git</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;circular-imports&#x2F;">Circular Imports</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2021-01-31T00:00:00+00:00" pubdate>
+        Sun 31 Jan 2021
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/python/">#python</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;seagl-2020-lets-build-a-game-with-rust&#x2F;">Let&#x27;s Build a Game with Rust</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2020-11-13T00:00:00+00:00" pubdate>
+        Fri 13 Nov 2020
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/rust/">#rust</a>
+      
+      <a href="/tags/amethyst/">#amethyst</a>
+      
+      <a href="/tags/games/">#games</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;independent-crypto-conclusion&#x2F;">Independent Crypto Conclusion</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2017-11-27T00:00:00+00:00" pubdate>
+        Mon 27 Nov 2017
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/independent-crypto/">#independent crypto</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;remote-timing-attacks&#x2F;">Remote Timing Attacks</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2017-11-20T00:00:00+00:00" pubdate>
+        Mon 20 Nov 2017
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/independent-crypto/">#independent crypto</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;memory-hard-functions&#x2F;">Memory Hard Functions</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2017-10-17T00:00:00+00:00" pubdate>
+        Tue 17 Oct 2017
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/independent-crypto/">#independent crypto</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;garbled-circuits&#x2F;">Garbled Circuits</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2017-10-10T00:00:00+00:00" pubdate>
+        Tue 10 Oct 2017
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/independent-crypto/">#independent crypto</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;elliptic-curve-cryptography&#x2F;">Elliptic Curve Cryptography</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2017-10-04T00:00:00+00:00" pubdate>
+        Wed 04 Oct 2017
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/independent-crypto/">#independent crypto</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;independent-crypto&#x2F;">Independent Crypto Course syllabus</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2017-07-10T00:00:00+00:00" pubdate>
+        Mon 10 Jul 2017
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/independent-crypto/">#independent crypto</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;buildbot-on-kubernetes&#x2F;">Deploying Buildbot on Kubernetes</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2016-12-12T00:00:00+00:00" pubdate>
+        Mon 12 Dec 2016
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/kubernetes/">#kubernetes</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;programming-hurdles&#x2F;">Conceptual hurdles in programming</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2016-08-21T00:00:00+00:00" pubdate>
+        Sun 21 Aug 2016
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/programming/">#programming</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;git-does-a-lot-of-things&#x2F;">Git Does a Lot of Things</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2016-07-27T00:00:00+00:00" pubdate>
+        Wed 27 Jul 2016
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/git/">#git</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;induction&#x2F;">Induction</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2016-07-27T00:00:00+00:00" pubdate>
+        Wed 27 Jul 2016
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/comic/">#comic</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;python-exceptions&#x2F;">How to Get the Most out of Your Python Exceptions</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2016-04-03T00:00:00+00:00" pubdate>
+        Sun 03 Apr 2016
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/python/">#python</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;how-to-develop-a-site-for-the-web&#x2F;">How to develop a site for the web</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2016-03-25T00:00:00+00:00" pubdate>
+        Fri 25 Mar 2016
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/development/">#development</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;running-firefox-in-docker&#x2F;">Running Firefox in Docker</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2016-03-05T00:00:00+00:00" pubdate>
+        Sat 05 Mar 2016
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/docker/">#docker</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;cat-barcamp-2015&#x2F;">CatBarcamp 2015</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2015-10-12T00:00:00+00:00" pubdate>
+        Mon 12 Oct 2015
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/barcamp/">#barcamp</a>
+      
+      
+    </span>
+  </div>
+</li>
+
+          
+<li class=post>
+  <div class=title>
+    <a href="&#x2F;covertly-install-packages-with-docker&#x2F;">Covertly Installing Packages with Docker</a>
+  </div>
+  <div class=info>
+    <span class=date>
+      <time datetime="2015-10-07T00:00:00+00:00" pubdate>
+        Wed 07 Oct 2015
+      </time>
+    </span>
+    <span class=tags>
+      
+      
+      <a href="/tags/docker/">#docker</a>
+      
+      
+    </span>
+  </div>
+</li>
+</ul>
+
+    <a href=/atom.xml>📰 feed</a>
+    <a href=/tags/archive>📼 archive</a>
+  </main>
+<footer>
+  Made with <a href="https://www.getzola.org/">Zola</a>;
+  theme inspired by <a href="https://codeberg.org/alanpearce/zola-bearblog">Zola ʕ•ᴥ•ʔ Bear</a>.
+</footer>
+</body>
+</html>

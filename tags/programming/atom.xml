@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>elijah.run - programming</title>
+    <subtitle>A blog about tech, media, and art</subtitle>
+    <link rel="self" type="application/atom+xml" href="/tags/programming/atom.xml"/>
+    <link rel="alternate" type="text/html" href="/"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2016-08-21T00:00:00+00:00</updated>
+    <id>/tags/programming/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Conceptual hurdles in programming</title>
+        <published>2016-08-21T00:00:00+00:00</published>
+        <updated>2016-08-21T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/programming-hurdles/"/>
+        <id>/programming-hurdles/</id>
+        
+        <content type="html" xml:base="/programming-hurdles/">&lt;p&gt;I&#x27;ve been actively learning programming for almost five years now.
+I started by taking a C++ class at Portland Community College.
+That class was the best thing to happen to my engineering career because it taught me that &lt;em&gt;programming is very hard, and I am not naturally good at it&lt;&#x2F;em&gt;, but it was also very rewarding so I stuck with it.&lt;&#x2F;p&gt;
+&lt;p&gt;I&#x27;m not special either, most of us aren&#x27;t very good at programming because it&#x27;s so abstract and hard to grasp, like Math and Infinite Jest.
+There are of course the people that seem like &lt;em&gt;programming gods&lt;&#x2F;em&gt;, but nine times out of ten those people have been programming since they were eight and it&#x27;s really not fair to compare yourself to them.
+That&#x27;s like comparing your sporting abilities to &lt;em&gt;any olympic athlete&lt;&#x2F;em&gt;.
+Don&#x27;t be so hard on yourself.&lt;&#x2F;p&gt;
+&lt;p&gt;In learning to program, and now teaching others how to program, I&#x27;ve identified a few &lt;strong&gt;hurdles&lt;&#x2F;strong&gt; (mountains, cliffs, obstacles, w&#x2F;e) that folks tend to hit and have trouble crossing.
+They always get past these hurdles eventually (or they quit CS ☹), but not without a bit of unnecessary struggle.
+Struggling builds character, and I don&#x27;t want to cheat anybody out of that, but I do want to help those that want it.&lt;&#x2F;p&gt;
+&lt;p&gt;This post will in no way guarantee your success in overcoming these obstacles but it should at least give you a head start to help you understand what you&#x27;re learning and point you in the right direction when you want to ask a question.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;data-structures&quot;&gt;Data Structures&lt;&#x2F;h2&gt;
+&lt;p&gt;Understanding that &lt;strong&gt;a lot of programming is basically manipulating data to fit a need&lt;&#x2F;strong&gt; is pretty important.
+A social network can be thought of as a bunch of people&#x27;s personal information plugged into a bunch of algorithms to make connecting easier.
+A word processor is really just a front-end for some &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Microsoft_Office_XML_formats&quot;&gt;XML under the hood&lt;&#x2F;a&gt;, which is itself &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;XML&quot;&gt;just a way to represent structured data&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;When handling data try to keep in mind what you are trying to accomplish and the best way to structure the data in the pursuit of that goal.&lt;&#x2F;p&gt;
+&lt;span class=&quot;define&quot;&gt;
+    &lt;span class=&quot;define-word&quot;&gt;
+        &amp;lt;a href=&amp;quot;https:&amp;#x2F;&amp;#x2F;en.wikipedia.org&amp;#x2F;wiki&amp;#x2F;Array_data_structure&amp;quot;&amp;gt;Arrays&amp;#x2F;Lists&amp;#x2F;Vectors&amp;lt;&amp;#x2F;a&amp;gt;
+    &lt;&#x2F;p&gt;
+
+    &lt;span class=&quot;define-body&quot;&gt;
+        &amp;lt;p&amp;gt;&amp;lt;strong&amp;gt;Arrays and Lists are an ordered data type&amp;lt;&amp;#x2F;strong&amp;gt;. Use them when you need to
+keep track of the order things happened in, like queuing an event.
+Try to keep them &amp;lt;em&amp;gt;relatively small&amp;lt;&amp;#x2F;em&amp;gt; since they are fast for retrieval but not inherently space efficient.&amp;lt;&amp;#x2F;p&amp;gt;
+
+    &lt;&#x2F;span&gt;
+&lt;&#x2F;span&gt;
+&lt;p&gt;%{ define(word=&quot;&lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Hash_table&quot;&gt;Hash-table&#x2F;Key-Value&#x2F;Dictionary&lt;&#x2F;a&gt;&quot; %}
+&lt;strong&gt;Hashes are useful for storing unordered data&lt;&#x2F;strong&gt; with keys, like an address book or a small database.
+We use them to access data quickly and easily since data is retrieved using a key and always takes approximately the same amount of time.
+When you get data out of a dictionary you provide a key and get back the associated data, just like (you guessed it) &lt;em&gt;a real dictionary&lt;&#x2F;em&gt; where provided the word you get back a definition.&lt;&#x2F;p&gt;
+&lt;p&gt;Hash-tables are useful tools but should only be used for &lt;em&gt;relatively small&lt;&#x2F;em&gt; amounts of data.
+There is a bit of overhead in creating the table for storing your data so if your data-set gets too big you&#x27;ll run out of memory.
+{% end %}&lt;&#x2F;p&gt;
+&lt;span class=&quot;define&quot;&gt;
+    &lt;span class=&quot;define-word&quot;&gt;
+        &amp;lt;a href=&amp;quot;https:&amp;#x2F;&amp;#x2F;en.wikipedia.org&amp;#x2F;wiki&amp;#x2F;Linked_list&amp;quot;&amp;gt;Linked Lists&amp;#x2F;Sorted Trees&amp;lt;&amp;#x2F;a&amp;gt;
+    &lt;&#x2F;p&gt;
+
+    &lt;span class=&quot;define-body&quot;&gt;
+        &amp;lt;p&amp;gt;Linked Lists and Sorted Trees aren&amp;#x27;t exactly the same thing but I&amp;#x27;m lumping them together because they both deal with a lot of the same concepts and can be implemented in similar ways.
+In learning about LL&amp;#x2F;ST you&amp;#x27;ll probably deal with Structs, Nodes, Pointers, and dynamic memory allocation, which if you&amp;#x27;re like me will totally break your brain and then become second-nature.&amp;lt;&amp;#x2F;p&amp;gt;
+&amp;lt;p&amp;gt;&amp;lt;strong&amp;gt;One advantage to these structures is that they can be implemented to take up only the space they require&amp;lt;&amp;#x2F;strong&amp;gt;.
+Where Hash-maps and lists are hard to make the &amp;lt;em&amp;gt;right size&amp;lt;&amp;#x2F;em&amp;gt;, LL&amp;#x2F;ST can only take up exactly as much room as they need.
+The trade-off (a word you hear a lot when dealing choosing data structures) is that they&amp;#x27;re not always the &amp;lt;em&amp;gt;fastest&amp;lt;&amp;#x2F;em&amp;gt; way to store&amp;#x2F;retrieve data.
+Just consider your use-case and think about what you need for the task at hand.&amp;lt;&amp;#x2F;p&amp;gt;
+&amp;lt;p&amp;gt;If you&amp;#x27;re interested in learning Rust though there&amp;#x27;s a great guide on &amp;lt;a href=&amp;quot;http:&amp;#x2F;&amp;#x2F;cglab.ca&amp;#x2F;~abeinges&amp;#x2F;blah&amp;#x2F;too-many-lists&amp;#x2F;book&amp;#x2F;README.html&amp;quot;&amp;gt;Learning Rust With Entirely Too Many Linked Lists&amp;lt;&amp;#x2F;a&amp;gt;.
+I do suggest it.&amp;lt;&amp;#x2F;p&amp;gt;
+
+    &lt;&#x2F;span&gt;
+&lt;&#x2F;span&gt;
+&lt;p&gt;&lt;strong&gt;These are all just the structures you&#x27;re giving your data&lt;&#x2F;strong&gt; (a series of ones and zeros on disk and in memory).
+Anybody that&#x27;s done work with a sufficiently complicated project (e.g., the Linux Kernel) can tell you that one glob of data can be treated as a Linked List, Array, Hash -- or all three at the same time!
+The structure you give your data is just so &lt;em&gt;you&lt;&#x2F;em&gt; can work with it, the computer doesn&#x27;t really care one way or another, so choose what makes the most sense.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;Speaking of data structures...&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;objects-classes&quot;&gt;Objects&#x2F;Classes&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;strong&gt;Objects are logical groupings of data (variables) and functions that act on that data&lt;&#x2F;strong&gt;.
+They differ from structs in that they are (usually) private by default, meaning that variables declared in an object are not accessible from the &lt;em&gt;outside&lt;&#x2F;em&gt; unless you explicitly say so.
+Variables are usually manipulated via a method called a &lt;em&gt;getter&lt;&#x2F;em&gt; and &lt;em&gt;setter&lt;&#x2F;em&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Well... what I&#x27;ve actually described so far is creating a &lt;strong&gt;class: aka a blueprint for an object&lt;&#x2F;strong&gt;.
+This python is a pretty succinct way to describe classes and objects:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;&amp;quot;&amp;quot;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;objects_example.py
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;Declare a class named BazClass.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;&amp;quot;&amp;quot;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#ff5e5e;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;color:#8cdaff;&quot;&gt;BazClass&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;font-style:italic;color:#8cdaff;&quot;&gt;object&lt;&#x2F;span&gt;&lt;span&gt;):
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#ff5e5e;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;__init__&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fc9354;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fc9354;&quot;&gt;x&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff8942;&quot;&gt;None&lt;&#x2F;span&gt;&lt;span&gt;):
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;&amp;quot;&amp;quot;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;        The __init__ function sets class variables and sets up the object.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;        &amp;quot;&amp;quot;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.var1 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;x
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.var2 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;6
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#ff5e5e;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8cdaff;&quot;&gt;a&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fc9354;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;):
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;&amp;quot;&amp;quot;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;        a() acts on the object variables (accessed via `self`).
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;        &amp;quot;&amp;quot;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;Variable you set &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;{}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;format&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.var1))
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;Variable set by class definition &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;{}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;format&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.var2))
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;&amp;quot;&amp;quot;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;Creating an instance of the class and call the `a()` function.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;&amp;quot;&amp;quot;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;foo_object &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;BazClass&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;7&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;foo_object.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;a&lt;&#x2F;span&gt;&lt;span&gt;()
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Objects are something that will &lt;em&gt;click&lt;&#x2F;em&gt; after you use the for a while.
+There&#x27;s some nuances and implementation quirks depending on the language you&#x27;re using, but in the end they&#x27;re just logical collections of private data and functions.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;functional-programming&quot;&gt;Functional Programming&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Functional_programming&quot;&gt;Functional Programming&lt;&#x2F;a&gt; (FP) was my first big paradigm shift in CS since functions. FP includes concepts of variable immutability (once it&#x27;s set it&#x27;s set), callbacks (functions calling functions and propagating results up), program state -- the list goes on. Here&#x27;s an example to get us started.&lt;&#x2F;p&gt;
+&lt;p&gt;Non-functional paradigm:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;javascript&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-javascript &quot;&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span style=&quot;font-style:italic;color:#fbdfb5;&quot;&gt;function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8cdaff;&quot;&gt;average_evens&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fc9354;&quot;&gt;x&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;) &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;avg &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;i &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;i &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;&amp;lt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;x&lt;&#x2F;span&gt;&lt;span&gt;.length; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;i&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;++&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;x&lt;&#x2F;span&gt;&lt;span&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;i&lt;&#x2F;span&gt;&lt;span&gt;] &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;% &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;2 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;avg &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;+= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;x&lt;&#x2F;span&gt;&lt;span&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;i&lt;&#x2F;span&gt;&lt;span&gt;];
+&lt;&#x2F;span&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;avg &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;avg&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;x&lt;&#x2F;span&gt;&lt;span&gt;.length;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;avg&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Functional Paradigm:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;javascript&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-javascript &quot;&gt;&lt;code class=&quot;language-javascript&quot; data-lang=&quot;javascript&quot;&gt;&lt;span style=&quot;font-style:italic;color:#fbdfb5;&quot;&gt;function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8cdaff;&quot;&gt;average_evens&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fc9354;&quot;&gt;x&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;) &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;x&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8cdaff;&quot;&gt;reduce&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fbdfb5;&quot;&gt;function&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fc9354;&quot;&gt;x&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;) &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;x &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;% &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;2 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;== &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;x&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;span&gt;    }) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;&#x2F; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;x&lt;&#x2F;span&gt;&lt;span&gt;.length;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;In the non-functional example one would create a variable, iterate with a for-loop, and return a variable at the end.
+In the functional example you call functions which return data that you handle (callback) and that result is added to or replaces the original data. I&#x27;m honestly not doing this topic justice but it&#x27;s one of those things you either learn first or you learn the hard way.&lt;&#x2F;p&gt;
+&lt;p&gt;This is just the tip of the ice-berg; many people prefer functional programming.
+If you are even remotely interested you should find one of those people and let them talk your ear off.&lt;&#x2F;p&gt;
+&lt;p&gt;If you&#x27;re learning functional programming I suggest either &lt;a href=&quot;http:&#x2F;&#x2F;learnyouahaskell.com&#x2F;chapters&quot;&gt;Learn You a Haskell for Great Good&lt;&#x2F;a&gt; if you&#x27;re interested in learning Haskell (which is interesting an interesting language if nothing else) or &lt;a href=&quot;http:&#x2F;&#x2F;www.oreilly.com&#x2F;programming&#x2F;free&#x2F;functional-programming-python.csp&quot;&gt;Functional Programming in Python&lt;&#x2F;a&gt; for &lt;em&gt;pythonistas&lt;&#x2F;em&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;frameworks&quot;&gt;Frameworks&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;strong&gt;Frameworks are a collection of libraries, methods, and tools to accomplish a specific type of task&lt;&#x2F;strong&gt;.
+If you want to get something &lt;em&gt;complicated&lt;&#x2F;em&gt; done &lt;em&gt;fast&lt;&#x2F;em&gt;, you&#x27;ll use a framework.
+Take for instance a web-app like Facebook or Twitter: it needs to be able to &lt;em&gt;send&#x2F;receive HTTP requests&lt;&#x2F;em&gt;, &lt;em&gt;interface with a database&lt;&#x2F;em&gt; &#x2F; &lt;em&gt;craft database queries&lt;&#x2F;em&gt;, &lt;em&gt;render web-pages&lt;&#x2F;em&gt;, &lt;em&gt;and&lt;&#x2F;em&gt; whatever the actual website is supposed to do.&lt;&#x2F;p&gt;
+&lt;p&gt;Frameworks can be very small or very large but they are always a big hurdle for those of us that have never worked with one before.
+A good starter framework I suggest is &lt;a href=&quot;http:&#x2F;&#x2F;flask.pocoo.org&#x2F;&quot;&gt;Flask&lt;&#x2F;a&gt; for Python-based web-apps.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;testing&quot;&gt;Testing&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;strong&gt;Testing is writing a program to test your program&lt;&#x2F;strong&gt;.
+There are many different &lt;em&gt;kinds&lt;&#x2F;em&gt; of tests from &lt;em&gt;unit tests&lt;&#x2F;em&gt; (checking single functions), to &lt;em&gt;integration tests&lt;&#x2F;em&gt; (checking that your functions work &lt;em&gt;together&lt;&#x2F;em&gt;), to &lt;em&gt;random tests&lt;&#x2F;em&gt; (trying to break your program by telling a computer to break your functions by using they in weird ways).&lt;&#x2F;p&gt;
+&lt;p&gt;Remember that first program you wrote for class?
+You wrote one that prompted the user for data and then manipulated that input in some way?
+Remember how you tested that?
+Probably in the most tedious way imaginable: &lt;strong&gt;by hand&lt;&#x2F;strong&gt;.
+Tests are much easier to write than your actual code and while they&#x27;re a tedious investment up-front it&#x27;s a small commitment relative to the &lt;em&gt;hours&lt;&#x2F;em&gt; you&#x27;d spend checking your program every time you made a change.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;troubleshooting&quot;&gt;Troubleshooting&lt;&#x2F;h2&gt;
+&lt;p&gt;The last thing isn&#x27;t really about programming but about &lt;em&gt;fixing&lt;&#x2F;em&gt; your programming.
+When you&#x27;re learning a new paradigm, language, or framework you&#x27;re going to spend a lot of time &lt;em&gt;fixing&lt;&#x2F;em&gt; what doesn&#x27;t currently work much more than you&#x27;re going to actually be producing working code.
+This skill can also be summed up as &#x27;How to Read Error Messages and Google well&#x27;.&lt;&#x2F;p&gt;
+&lt;p&gt;My troubleshooting advice is to &lt;em&gt;read&lt;&#x2F;em&gt; the error message, don&#x27;t give up, and search for anything that looks meaningful.
+Once you find an answer try to &lt;em&gt;grok&lt;&#x2F;em&gt; what the answer means so you can learn &lt;em&gt;why&lt;&#x2F;em&gt; that worked instead of knowing &lt;em&gt;if I type this in a certain way it will not fall down&lt;&#x2F;em&gt;.
+Future you will appreciate the investment you put into &lt;em&gt;understanding&lt;&#x2F;em&gt; the problem and it&#x27;s solution.&lt;&#x2F;p&gt;
+&lt;p&gt;Also don&#x27;t be afraid to experiment. Make a copy of your program (or use &lt;a href=&quot;https:&#x2F;&#x2F;git-scm.com&#x2F;&quot;&gt;git&lt;&#x2F;a&gt;) and see if some crazy idea is exactly what you need.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;This list is far from complete but it still felt worth sharing.
+If you think I missed something, &lt;a href=&quot;&#x2F;about&#x2F;#contact&quot;&gt;contact me&lt;&#x2F;a&gt; and I might do a follow-up post.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="shortcut icon" href="&#x2F;favicon.ico"><title>Circular Imports | elijah.run</title>
+  <meta name="title" content="Circular Imports">
+<meta name="description" content="A blog about tech, media, and art">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="alternate" type="application/atom+xml" title="elijah.run" href="/atom.xml">
+  <style>
+    :root {
+    --width: 586px;
+    --font-main: Verdana, sans-serif;
+    --font-secondary: "Times New Roman", serif;
+    --font-scale: 1.1em;
+    --background-color: #fff;
+    --heading-color: #222;
+    --text-color: #444;
+    --link-color: #3273dc;
+    --visited-color: #8b6fcb;
+    --blockquote-color: #222;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background-color: #01242e;
+      --heading-color: #eee;
+      --text-color: #ddd;
+      --link-color: #8cc2dd;
+      --visited-color: #8b6fcb;
+      --blockquote-color: #ccc;
+    }
+  }
+
+  body {
+    font-family: var(--font-secondary);
+    font-size: var(--font-scale);
+    margin: auto;
+    padding: 20px;
+    max-width: var(--width);
+    text-align: left;
+    background-color: var(--background-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: var(--text-color);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-main);
+    color: var(--heading-color);
+  }
+
+  a {
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  nav a {
+    margin-right: 8px;
+  }
+
+  nav span.active {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  strong,
+  b {
+    color: var(--heading-color);
+  }
+
+  button {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  main {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px dashed;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  pre code {
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 0.875rem;
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: monospace;
+    padding: 2px;
+    border-radius: 3px;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: var(--code-color);
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px 0;
+    text-align: center;
+  }
+
+  .title:hover {
+    text-decoration: none;
+  }
+
+  .title h1 {
+    font-size: 1.5em;
+  }
+
+  .inline {
+    width: auto !important;
+  }
+
+  .highlight,
+  .code {
+    padding: 1px 15px;
+    background-color: var(--code-background-color);
+    color: var(--code-color);
+    border-radius: 3px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    overflow-x: auto;
+  }
+
+  /* blog post list */
+  ul.posts {
+    list-style-type: none;
+    padding: unset;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  ul.posts li {
+    line-height: 1;
+    margin: 0;
+  }
+
+  ul.posts li time {
+    margin-left: 0px;
+    font-size: 12px;
+  }
+
+  ul.posts li a:visited {
+    color: var(--visited-color);
+  }
+
+  li.post {
+    padding: 0px 0px 10px 0px;
+  }
+
+  span.tags {
+    font-size: smaller;
+  }
+
+  /* table of contents */
+  details ul {
+    list-style-type: circle;
+  }
+
+  </style>
+</head>
+<body>
+  <header>
+  <a href="/" class="title">
+    <h1>elijah.run</h1>
+  </a>
+  <nav aria-label="site">
+      <a href="/">(🏠 elijah.run)</a>
+      <a href="https:&#x2F;&#x2F;games.elijah.run">(🕹️ games)</a>
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;pop">(🐙 github 🐱)</a>
+      <a href="/Elijah Voigt.pdf">(👔 resume)</a>
+  </nav>
+</header>
+<h1>Circular Imports</h1>
+      <p>
+        <i>
+          <time datetime="2021-01-31T00:00:00+00:00" pubdate>Sun 31 Jan 2021</time>
+        </i>
+      </p>
+    <details open>
+      <summary>Table of contents</summary>
+    <ul>
+        <li>
+          <a href="/circular-imports/#welcome-to-my-ted-talk">welcome to my ted talk</a>
+        </li>
+        <li>
+          <a href="/circular-imports/#fuck-plastic">fuck plastic</a>
+        </li>
+        <li>
+          <a href="/circular-imports/#from-plastics-import-lobbying">from plastics import lobbying</a>
+        </li>
+        <li>
+          <a href="/circular-imports/#from-lobbying-import-profit">from lobbying import profit</a>
+        </li>
+        <li>
+          <a href="/circular-imports/#from-profit-import">from profit import ???</a>
+        </li>
+        <li>
+          <a href="/circular-imports/#soapbox-intensifies">soapbox intensifies</a>
+        </li>
+    </ul>
+    </details>
+  <main>
+    <p>Don't you hate when you're writing a python program and you get hit with one of these?</p>
+<pre data-lang="txt" style="background-color:#191919;color:#f8f8f2;" class="language-txt "><code class="language-txt" data-lang="txt"><span>Traceback (most recent call last):
+</span><span>  File &quot;a.py&quot;, line 1, in &lt;module&gt;
+</span><span>    from b import g
+</span><span>  File &quot;/home/pop/Projects/src/localhost/circular/b.py&quot;, line 1, in &lt;module&gt;
+</span><span>    from a import f
+</span><span>  File &quot;/home/pop/Projects/src/localhost/circular/a.py&quot;, line 1, in &lt;module&gt;
+</span><span>    from b import g
+</span><span>ImportError: cannot import name &#39;g&#39; from partially initialized module &#39;b&#39; (most likely due to a circular import) (/home/pop/Projects/src/localhost/circular/b.py)
+</span></code></pre>
+<p>What a drag.</p>
+<p>Circular imports are of course the literal devel in programming, but in a Godel Escher Bach sort of way they are all around us.</p>
+<h2 id="welcome-to-my-ted-talk">welcome to my ted talk</h2>
+<p>There are a lot of problems in the world that everybody agrees are problems<sup class="footnote-reference"><a href="#1">1</a></sup>, but we can sometimes disagree about what the solution is.</p>
+<p>Many of these problems stem can be thought of as emergent properties of other phenomena.</p>
+<p>Take for example, plastic.</p>
+<h2 id="fuck-plastic">fuck plastic</h2>
+<p>Remember the good old days in America when women tended to the house while PTSD ridden white men worked a 40 minute drive away and the ethnically, racially, sexually, abally discriminated minorities were repressed?</p>
+<p>Well something that actually was pretty sweet was milk delivery.</p>
+<p>Milk, delivered regularly in reusable glass bottles had incredibly ecological benefits compared with how we get milk<sup class="footnote-reference"><a href="#2">2</a></sup> today.</p>
+<p>Deliveries are an incredibly efficient means of distriuting goods<sup class="footnote-reference"><a href="#3">3</a></sup> and re-using glass bottles requires far less energy than say, melting a bottle down or worse creating a plastic single-use bottle.</p>
+<p>I really want to focus on the glass bottles because they are <em>so</em> efficient, why did we ever stop?</p>
+<p>Lobbying.</p>
+<h2 id="from-plastics-import-lobbying">from plastics import lobbying</h2>
+<p>That's right: lobbying, not the free market, gave us the fucking horrific amount of single-use plastic we have today.</p>
+<p>For sure there are a million things we need to cut the fuck out if we want this planet to be anything close to what we were born into in 100 years, but plastics are worth spending a few hundred words.</p>
+<p>The plastics industry spent millions<sup class="footnote-reference"><a href="#4">4</a></sup> lobbying to allow the use of single use plastics instead of reusable containers.</p>
+<p>Instead of identifying the inevitable crisis of too much fucking plastic and shutting that shit down, governments across the world wer just like "yeah this is cool, pour up my dude".</p>
+<p>Congress, given no external input, very well could have legislated against the use of single-use plastics, but because they were convinced... with money... otherwise here we are in a world full of single use plastics, and just like a virus it's spread so far that it feels impossible to slow it's spread.</p>
+<p>So clearly we need to stop lobbying.
+We need to think of some clever way to prevent corruptable government officials from being bought off to vote against the interests of their constituents, their country, and future generations...</p>
+<p>Well that's clearly impossible.</p>
+<p>Let's dig deeper.
+What causes lobbying?</p>
+<p>Profit.</p>
+<h2 id="from-lobbying-import-profit">from lobbying import profit</h2>
+<p>It is clear that profit is the reason lobbying exists.</p>
+<p>Some lobbying is good. If you own a farm and you hear about legislation that will like... just straight up dump a bunch of nuclear waste on your property, you're probably going to knock on some doors and grease some palms to prevent that from happening.</p>
+<p>Arithmetically it makes sense that lobbying is tied to profit.
+If a piece of legislation is projected to decrease profits by 30 million USD, you're probably willing to spend 2 million USD to prevent it from going through.</p>
+<p>Lobbying, like swordfishing<sup class="footnote-reference"><a href="#5">5</a></sup>, is a targeted, and therefore monetarily effective, way to influence change.</p>
+<p>Maximizing profit has a lot of other problems<sup class="footnote-reference"><a href="#6">6</a></sup> like supressing wages despite productivity going up, and cock-blocking public alternatives to private services like healthcare... Where was I?</p>
+<p>Oh right, so this begs the question, where does profit come from?</p>
+<h2 id="from-profit-import">from profit import ???</h2>
+<h2 id="soapbox-intensifies">soapbox intensifies</h2>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>All <em>good faith actors</em> actors agree are a problem.</p>
+</div>
+<div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
+<p>Yes, also mylks.</p>
+</div>
+<div class="footnote-definition" id="3"><sup class="footnote-definition-label">3</sup>
+<p>Citation needed?</p>
+</div>
+<div class="footnote-definition" id="4"><sup class="footnote-definition-label">4</sup>
+<p>... <em>sigh</em> citation needed.</p>
+</div>
+<div class="footnote-definition" id="5"><sup class="footnote-definition-label">5</sup>
+<p>The internet phishing scam not the oceanic activity.</p>
+</div>
+<div class="footnote-definition" id="6"><sup class="footnote-definition-label">6</sup>
+<p>... citation... needed...?</p>
+</div>
+
+  </main>
+  <p>
+        Tags:
+          <a href="/tags/python/">#python</a>
+  </p>
+<footer>
+  Made with <a href="https://www.getzola.org/">Zola</a>;
+  theme inspired by <a href="https://codeberg.org/alanpearce/zola-bearblog">Zola ʕ•ᴥ•ʔ Bear</a>.
+</footer>
+</body>
+</html>

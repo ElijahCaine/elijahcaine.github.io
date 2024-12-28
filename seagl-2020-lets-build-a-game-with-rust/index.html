@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="shortcut icon" href="&#x2F;favicon.ico"><title>Let&#x27;s Build a Game with Rust | elijah.run</title>
+  <meta name="title" content="Let&#x27;s Build a Game with Rust">
+<meta name="description" content="A blog about tech, media, and art">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="alternate" type="application/atom+xml" title="elijah.run" href="/atom.xml">
+  <style>
+    :root {
+    --width: 586px;
+    --font-main: Verdana, sans-serif;
+    --font-secondary: "Times New Roman", serif;
+    --font-scale: 1.1em;
+    --background-color: #fff;
+    --heading-color: #222;
+    --text-color: #444;
+    --link-color: #3273dc;
+    --visited-color: #8b6fcb;
+    --blockquote-color: #222;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background-color: #01242e;
+      --heading-color: #eee;
+      --text-color: #ddd;
+      --link-color: #8cc2dd;
+      --visited-color: #8b6fcb;
+      --blockquote-color: #ccc;
+    }
+  }
+
+  body {
+    font-family: var(--font-secondary);
+    font-size: var(--font-scale);
+    margin: auto;
+    padding: 20px;
+    max-width: var(--width);
+    text-align: left;
+    background-color: var(--background-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: var(--text-color);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-main);
+    color: var(--heading-color);
+  }
+
+  a {
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  nav a {
+    margin-right: 8px;
+  }
+
+  nav span.active {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  strong,
+  b {
+    color: var(--heading-color);
+  }
+
+  button {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  main {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px dashed;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  pre code {
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 0.875rem;
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: monospace;
+    padding: 2px;
+    border-radius: 3px;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: var(--code-color);
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px 0;
+    text-align: center;
+  }
+
+  .title:hover {
+    text-decoration: none;
+  }
+
+  .title h1 {
+    font-size: 1.5em;
+  }
+
+  .inline {
+    width: auto !important;
+  }
+
+  .highlight,
+  .code {
+    padding: 1px 15px;
+    background-color: var(--code-background-color);
+    color: var(--code-color);
+    border-radius: 3px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    overflow-x: auto;
+  }
+
+  /* blog post list */
+  ul.posts {
+    list-style-type: none;
+    padding: unset;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  ul.posts li {
+    line-height: 1;
+    margin: 0;
+  }
+
+  ul.posts li time {
+    margin-left: 0px;
+    font-size: 12px;
+  }
+
+  ul.posts li a:visited {
+    color: var(--visited-color);
+  }
+
+  li.post {
+    padding: 0px 0px 10px 0px;
+  }
+
+  span.tags {
+    font-size: smaller;
+  }
+
+  /* table of contents */
+  details ul {
+    list-style-type: circle;
+  }
+
+  </style>
+</head>
+<body>
+  <header>
+  <a href="/" class="title">
+    <h1>elijah.run</h1>
+  </a>
+  <nav aria-label="site">
+      <a href="/">(🏠 elijah.run)</a>
+      <a href="https:&#x2F;&#x2F;games.elijah.run">(🕹️ games)</a>
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;pop">(🐙 github 🐱)</a>
+      <a href="/Elijah Voigt.pdf">(👔 resume)</a>
+  </nav>
+</header>
+<h1>Let&#x27;s Build a Game with Rust</h1>
+      <p>
+        <i>
+          <time datetime="2020-11-13T00:00:00+00:00" pubdate>Fri 13 Nov 2020</time>
+        </i>
+      </p>
+    <details open>
+      <summary>Table of contents</summary>
+    <ul>
+        <li>
+          <a href="/seagl-2020-lets-build-a-game-with-rust/#making-games-entities-components-systems-gear">Making Games: Entities, Components, Systems ⚙️</a>
+        </li>
+        <li>
+          <a href="/seagl-2020-lets-build-a-game-with-rust/#tools-of-the-trade-c-and-c-hammer-pick">Tools of the Trade: C and C++ ⚒️</a>
+        </li>
+        <li>
+          <a href="/seagl-2020-lets-build-a-game-with-rust/#rusty-games-hello-amethyst-gem">Rusty Games: Hello Amethyst 💎</a>
+        </li>
+        <li>
+          <a href="/seagl-2020-lets-build-a-game-with-rust/#conclusions">Conclusions</a>
+        </li>
+        <li>
+          <a href="/seagl-2020-lets-build-a-game-with-rust/#links">Links</a>
+        </li>
+    </ul>
+    </details>
+  <main>
+    <span class="note">
+    <span class="note-title">
+        Note
+    </span>
+
+    <span class="note-body">
+        &lt;p&gt;This is the outline for a talk I gave at the Seattle GNU Linux
+conference (SeaGL) 2020. Once the video is posted I will link it here.&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<span class="note">
+    <span class="note-title">
+        Note
+    </span>
+
+    <span class="note-body">
+        &lt;p&gt;The code for this post can be found at https:&#x2F;&#x2F;github.com&#x2F;pop&#x2F;lets-make-games-with-rust.&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<p>Like many of you, I really like games.
+I enjoy playing games, talking about games, and a few times I've even tried making games.
+I enjoy making games for a few reasons:</p>
+<ul>
+<li>Games are an interesting technical challenge.</li>
+<li>They are a flexible artistic outlet.</li>
+<li>I don't make games in my day-job (yay hobbies).</li>
+</ul>
+<p>I'm also interested in this programming language called Rust!
+You might have heard of it.
+Rust is a maturing systems programming language which aims to be performant, reliable, and productive.</p>
+<ul>
+<li>Performant in that it often goes head to head with C and C++ in benchmarks.</li>
+<li>Reliable in that it refuses to compile memory unsafe code.</li>
+<li>Productive because it includes "zero cost abstractions" (link <code>filter</code> and <code>map</code>) and awesome tooling.</li>
+</ul>
+<p>The community is pretty good too!</p>
+<p>This post is about bringing those two interests together.
+Let's learn how to build a videogame with the Rust programming language.</p>
+<span class="warning">
+    <span class="warning-title">
+        Warning
+    </span>
+
+    <span class="warning-body">
+        &lt;p&gt;This post is for folks who have a passing familiarity with Rust.
+If Rust is new to you, you get a little confused.&lt;&#x2F;p&gt;
+&lt;p&gt;You&#x27;re a smart cookie though, I&#x27;m sure you&#x27;ll keep up.&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<h2 id="making-games-entities-components-systems-gear">Making Games: Entities, Components, Systems ⚙️</h2>
+<p>Games are an incredibly fun and flexible type of project to work on.</p>
+<p>At it's core, all games need a "game loop":</p>
+<ol>
+<li>Process input</li>
+<li>Transforms state</li>
+<li>Display new state</li>
+<li>Repeat</li>
+</ol>
+<p>Outside of that, the possibilities are endless.
+But while the <em>possibilities</em> are endless, there are a few <em>patterns</em> that lots of folks seem to gravitate toward.</p>
+<p>You could write a whole book on game programming patterns (and somebody has, links at the bottom).
+Today we're going to talk about one popular pattern: <strong>ECS: Entity Component System</strong>.
+Here's what that looks like:</p>
+<h3 id="components">Components</h3>
+<p>Pieces of data mixed, matched, and queried on.</p>
+<p>Example: Some components needed to simulate physics might be "Mass", "Movable", and "Friction"</p>
+<h3 id="entities">Entities</h3>
+<blockquote>
+<p>A Unique ID associated with a collection of Components.</p>
+</blockquote>
+<p>Example: Potted plant you can break have the following components:</p>
+<ul>
+<li><code>Sprite("/path/to/plant.png")</code></li>
+<li><code>Mass(6.8)</code></li>
+<li><code>Movable(True)</code></li>
+<li><code>Location((2, 5, 2))</code></li>
+</ul>
+<p>Each of these components are reusable. Instead of creating a "PottedPlant" class in code, we can define each entity in a config file like this:</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>potted-plant.txt:
+</span><span>Sprite /path/to/plant.png
+</span><span>Mass 6.8
+</span><span>Movable True
+</span><span>Location 2 5 2
+</span></code></pre>
+<p>This makes our engine much more reusable and separates our content from our logic.</p>
+<p>But how do we use these components?</p>
+<h3 id="systems">Systems</h3>
+<p>Functions that operate on entities with specific components.</p>
+<p>A System queries for all entities with a specific subset of components and does some transformation on it.</p>
+<p>Example: a system that applies fire damage to an entity might look like this:</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>entities_on_fire = entities.query(on_fire=True, health &gt; 0)
+</span><span>for entity in entities_on_fire:
+</span><span>    entity.health -= 5
+</span></code></pre>
+<p>This is nice compared with a classes-based approach where we would need to manage inheritance to manually make sure everything interacted
+correctly.
+Here we define systems based on what features an entity has.
+The resulting systems and components interact with eachother in interesting and potentially unexpected ways.</p>
+<p>ECS is a popular pattern for creating interactive games and simulations.
+Engines like Unity have some ECS patterns built in, and almost every big game engine uses ECS in some way.</p>
+<p>Of course ECS isn't a silver bullet, but for this blog post it's good enough.</p>
+<h2 id="tools-of-the-trade-c-and-c-hammer-pick">Tools of the Trade: C and C++ ⚒️</h2>
+<p>C and C++ are very popular languages in games programming.
+They are defacto in the industry and many large engines, both internal and licensed engines, are written in C++.</p>
+<p>I'm not here to bash on C and C++, but it can be useful to point out why you would bother using Rust if the norm is C++.</p>
+<p>The usual arguments in favor of Rust go a little something like this:</p>
+<ul>
+<li>Rust is memory safe; in Rust it is very difficult to reference freed memory, mutate memory in two threads, and dereference a null pointer.</li>
+<li>Rust is expressive; a lot of functional-programming language features exist in Rust without the usual run-time cost of those languages.</li>
+<li>Rust doesn't have any of the C/C++ legacy baggage but <em>can</em> inter-operate with C/C++ codebases.</li>
+<li>Rust has a kick-ass community and an ecosystem of battle-tested and safe code.</li>
+</ul>
+<p>So why does this all matter for games? I think of it it like this: Any project when it gets sufficiently complex benefits from Rust.
+Rust, by preventing a whole class of memory bugs, makes it easier to maintain a complex codebase over time.
+It might not be life or death, or as mission critical as security software, but completely avoiding null-pointer bugs, at essentially no performance cost, sounds like a huge weight off my shoulders.</p>
+<p>Games are by their nature huge and sprawling codebases.
+Many bugs in games are caught by a compiler, but even more errors would be caught by the Rust borrow-checker.
+And being able to use some of the nice functional-programming features would be nice too.</p>
+<p>Of course Rust is a relatively new language so your mileage may vary.
+If I ran a big game studio I don't think I would throw out my C++ code and start fresh with Rust, but I would definitely put some research and development into it for new projects (said the Rust fanboy).</p>
+<h2 id="rusty-games-hello-amethyst-gem">Rusty Games: Hello Amethyst 💎</h2>
+<p>Writing games in a safe, expressive, not C/C++ language sounds great; where do I start?</p>
+<p>You could write a game from scratch, but there are engines written in Rust you can use today!
+Some of these focus on ease of use, some are for 2D games, some focus on compiling for the web.
+Most of these engines require you to write Rust, as opposed to using a GUI, but even that is changing.</p>
+<p>For a comprehensive list check out <a href="https://www.arewegameyet.rs">https://www.arewegameyet.rs</a></p>
+<p>You could write this talk for almost any Rust Game Engine, but my personal favorite is Amethyst, so we'll use that.
+Amethyst has a solid API, very active community, and is a good mix of flexible, convenient, and powerful.</p>
+<p>Amethyst checks off a few other boxes:</p>
+<ul>
+<li>Implements an ECS runtime. Register Components, create Entities, and run Systems in Amethyst.</li>
+<li>Data driven design. Almost all data in Amethyst can be read in from a Config file.</li>
+<li>Apache + MIT licensed. Free as in speech is always nice.</li>
+</ul>
+<h3 id="step-0-join-the-cargo-cult">Step 0: Join the Cargo Cult</h3>
+<p>In this step we're going to get Rust setup and create a "hello world" Rust project.</p>
+<p>If you haven't already, setup your Rust toolchain and start a Rust project.</p>
+<ol>
+<li>Install <code>rustup</code>, the Rust toolchain manager.</li>
+<li>Run <code>rustup toolchain install stable</code> to install the latest stable Rust.</li>
+<li>Run <code>cargo new seagl-game</code> to create a "hello world" Rust application.</li>
+<li>Navigate to the new <code>seagl-game</code> folder.
+Add this to the end of our project's metadata file, <code>Cargo.toml</code>:</li>
+</ol>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span># Cargo.toml
+</span><span>[dependencies.amethyst]
+</span><span>version = &quot;0.15.1&quot;
+</span><span>features = [&quot;vulkan&quot;]  # &quot;metal&quot; on MacOS
+</span></code></pre>
+<ol start="5">
+<li>Run <code>cargo build</code> to build and cache our dependencies.
+You should see a <strong>bunch</strong> of output like this:</li>
+</ol>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ cargo build
+</span><span>...
+</span><span>Compiling either v1.6.1
+</span><span>Compiling gimli v0.23.0
+</span><span>Compiling adler v0.2.3
+</span><span>Compiling object v0.22.0
+</span><span>...
+</span></code></pre>
+<p>Now we have a "hello world" Rust project we can start building on.</p>
+<h3 id="step-1-draw-a-window-triangular-ruler">Step 1: Draw a Window 📐</h3>
+<p>Before we run, we need to walk.
+And before we walk we crawl.
+And before we crawl we draw a window.
+This is, of course, a little harder than just asking your computer "Please draw me a window".</p>
+<p>First we need to add a bunch of imports to our project:</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#ff5e5e;">use </span><span>amethyst::{
+</span><span>    assets::{AssetStorage, Loader},
+</span><span>    core::{
+</span><span>        timing::Time,
+</span><span>        transform::{Transform, TransformBundle},
+</span><span>    },
+</span><span>    derive::SystemDesc,
+</span><span>    ecs::{
+</span><span>        Component, DenseVecStorage, Entities, Join, Read, ReadStorage, System, SystemData,
+</span><span>        WriteStorage,
+</span><span>    },
+</span><span>    input::{InputBundle, InputHandler, StringBindings},
+</span><span>    prelude::</span><span style="color:#ff5e5e;">*</span><span>,
+</span><span>    renderer::{
+</span><span>        plugins::{RenderFlat2D, RenderToWindow},
+</span><span>        types::DefaultBackend,
+</span><span>        Camera, ImageFormat, RenderingBundle, SpriteRender, SpriteSheet, SpriteSheetFormat,
+</span><span>        Texture,
+</span><span>    },
+</span><span>    utils::application_root_dir,
+</span><span>};
+</span></code></pre>
+<p>This is every dependency we will need for the entire project, so if <code>cargo build|run</code> complains about unused dependencies, don't worry... we'll get there.</p>
+<p>Here we are including a few useful</p>
+<p>Then we need to add some boiler-plate to our <code>main</code> function:</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#6d6d6d;">// This is necessary to make Rust&#39;s type-checker happy
+</span><span style="color:#6d6d6d;">// Our main function technically returns an Amethyst Result
+</span><span style="color:#6d6d6d;">// It can either return an Amethyst error or a unit value
+</span><span style="font-style:italic;color:#fbdfb5;">fn </span><span style="color:#8cdaff;">main</span><span>() -&gt; amethyst::</span><span style="color:#fbe3bf;">Result</span><span>&lt;()&gt; {
+</span><span>    </span><span style="color:#6d6d6d;">// Not required, but a logger very useful
+</span><span>    amethyst::start_logger(</span><span style="color:#fbe3bf;">Default</span><span>::default());
+</span><span>
+</span><span>    </span><span style="color:#6d6d6d;">// Declare some useful variables used to tell Amethyst where our asset files and config files live
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">let</span><span> app_root </span><span style="color:#ff5e5e;">= </span><span style="color:#6699cc;">application_root_dir</span><span>()</span><span style="color:#ff5e5e;">?</span><span>;
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">let</span><span> assets_dir </span><span style="color:#ff5e5e;">=</span><span> app_root.</span><span style="color:#6699cc;">join</span><span>(</span><span style="color:#ffffff;">&quot;</span><span style="color:#fbe3bf;">assets</span><span style="color:#ffffff;">&quot;</span><span>);
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">let</span><span> display_config_path </span><span style="color:#ff5e5e;">=</span><span> app_root.</span><span style="color:#6699cc;">join</span><span>(</span><span style="color:#ffffff;">&quot;</span><span style="color:#fbe3bf;">config</span><span style="color:#ffffff;">&quot;</span><span>).</span><span style="color:#6699cc;">join</span><span>(</span><span style="color:#ffffff;">&quot;</span><span style="color:#fbe3bf;">display.ron</span><span style="color:#ffffff;">&quot;</span><span>);
+</span><span>
+</span><span>    </span><span style="color:#6d6d6d;">// Declare a renderer bundle
+</span><span>    </span><span style="color:#6d6d6d;">// Amethyst adds this collection of 2D Render systems to our game&#39;s runtime
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">let</span><span> renderer </span><span style="color:#ff5e5e;">= </span><span>RenderingBundle::&lt;DefaultBackend&gt;::new()
+</span><span>        .</span><span style="color:#6699cc;">with_plugin</span><span>(
+</span><span>            RenderToWindow::from_config_path(display_config_path)</span><span style="color:#ff5e5e;">?
+</span><span>                .</span><span style="color:#6699cc;">with_clear</span><span>([</span><span style="color:#fdb082;">1.00</span><span>, </span><span style="color:#fdb082;">0.33</span><span>, </span><span style="color:#fdb082;">0.00</span><span>, </span><span style="color:#fdb082;">1.0</span><span>]),
+</span><span>        ).</span><span style="color:#6699cc;">with_plugin</span><span>(RenderFlat2D::default());
+</span><span>
+</span><span>    </span><span style="color:#6d6d6d;">// Build the game&#39;s systems
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">let</span><span> game_data </span><span style="color:#ff5e5e;">= </span><span>GameDataBuilder::default()
+</span><span>        .</span><span style="color:#6699cc;">with_bundle</span><span>(renderer)</span><span style="color:#ff5e5e;">?</span><span>;
+</span><span>
+</span><span>    </span><span style="color:#6d6d6d;">// Build our application, which includes our game data, where our assets live, and our starting state
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">let </span><span style="color:#ff5e5e;">mut</span><span> game </span><span style="color:#ff5e5e;">= </span><span>Application::new(assets_dir, SeaglState, game_data)</span><span style="color:#ff5e5e;">?</span><span>;
+</span><span>
+</span><span>    </span><span style="color:#6d6d6d;">// Run the game!
+</span><span>    game.</span><span style="color:#6699cc;">run</span><span>();
+</span><span>
+</span><span>    </span><span style="color:#6d6d6d;">// Nothing bad happened, so return `()`
+</span><span>    </span><span style="color:#fbe3bf;">Ok</span><span>(())
+</span><span>}
+</span></code></pre>
+<p>That won't compile because we haven't defined our <code>SeaglState</code>.</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ cargo run
+</span><span>...
+</span><span>error[E0425]: cannot find value `SeaglState` in this scope
+</span><span>  --&gt; src/main.rs:17:49
+</span><span>   |
+</span><span>30 |     let mut game = Application::new(assets_dir, SeaglState, game_data)?;
+</span><span>   |                                                 ^^^^^^^^^^ not found in this scope
+</span></code></pre>
+<p>Let's add <code>SeaglState</code></p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#6d6d6d;">// States can store values, but for now we can use a unit-struct
+</span><span style="font-style:italic;color:#fbdfb5;">struct </span><span>SeaglState;
+</span><span>
+</span><span style="color:#6d6d6d;">// We get a working state for free by rubber-stamping the &quot;SimpleState&quot; struct onto our SeaglState
+</span><span style="color:#6d6d6d;">// We will implement our own logic for handling state start-up in the next step
+</span><span style="font-style:italic;color:#fbdfb5;">impl </span><span>SimpleState </span><span style="color:#ff5e5e;">for </span><span>SeaglState { }
+</span></code></pre>
+<p>We will add some methods to <code>SeaglState</code> later, but for now this makes Rust and Amethyst happy enough to compile.</p>
+<p>But if we run our code we get a wonderfully cryptic error message:</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>Compiling seagl-talk v0.1.0 (/home/pop/seagl-talk)
+</span><span> Finished dev [unoptimized + debuginfo] target(s) in 24.81s
+</span><span>  Running `target/debug/seagl-talk`
+</span><span>Error: Error { inner: Inner { source: None, backtrace: None, error: File(Os { code: 2, kind: NotFound, message: &quot;No such file or directory&quot; }) } }
+</span></code></pre>
+<p>We get errors like this when we have an unhandled exception in our code.
+In our <code>main</code> function, that is any place where we call a function with a <code>?</code>, e.g., <code>foo(...)?;</code>.</p>
+<p>TLDT (Too Long Didn't Troubleshoot) this is because we haven't created our display config file!</p>
+<p>Add a new file <code>display.ron</code> in a new folder called <code>config/</code>:</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#6d6d6d;">// config/display.ron
+</span><span>(
+</span><span>    title: </span><span style="color:#ffffff;">&quot;</span><span style="color:#fbe3bf;">SeaGL!</span><span style="color:#ffffff;">&quot;</span><span>,
+</span><span>    dimensions: </span><span style="color:#fbe3bf;">Some</span><span>((</span><span style="color:#fdb082;">500</span><span>, </span><span style="color:#fdb082;">500</span><span>)),
+</span><span>)
+</span></code></pre>
+<p>Now when we <code>cargo run</code> we should get a wonderful orange window:</p>
+<p><img src="/images/seagl-2020/blank-window.png" alt="It worked! We drew a window." /></p>
+<h3 id="step-2-draw-a-seagl-dove">Step 2: Draw a SeaGL 🕊️</h3>
+<p>Alas, we have a window but no game! Let's draw our first character to the screen.</p>
+<span class="note">
+    <span class="note-title">
+        Note
+    </span>
+
+    <span class="note-body">
+        &lt;p&gt;Did you know that SeaGL&#x27;s mascot is named Patch?
+https:&#x2F;&#x2F;seagl.org&#x2F;news&#x2F;2020&#x2F;09&#x2F;10&#x2F;naming-contest.html&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<p>First we'll create a Component for our Seagl.</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span>#[</span><span style="color:#e9fdac;">derive</span><span>(Default)]
+</span><span style="color:#ff5e5e;">pub </span><span style="font-style:italic;color:#fbdfb5;">struct </span><span>Seagl;
+</span><span>
+</span><span style="font-style:italic;color:#fbdfb5;">impl </span><span>Component </span><span style="color:#ff5e5e;">for </span><span>Seagl {
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">type </span><span>Storage </span><span style="color:#ff5e5e;">= </span><span>DenseVecStorage&lt;</span><span style="font-style:italic;color:#fbdfb5;">Self</span><span>&gt;;
+</span><span>}
+</span></code></pre>
+<p>Next we'll create a Seagl entity.</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="font-style:italic;color:#fbdfb5;">impl </span><span>SimpleState </span><span style="color:#ff5e5e;">for </span><span>SeaglState {
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">fn </span><span style="color:#8cdaff;">on_start</span><span>(</span><span style="color:#ff5e5e;">&amp;mut </span><span style="font-style:italic;color:#fc9354;">self</span><span>, </span><span style="font-style:italic;color:#fc9354;">data</span><span>: StateData&lt;GameData&gt;) {
+</span><span>        </span><span style="font-style:italic;color:#fbdfb5;">let </span><span style="color:#ff5e5e;">mut</span><span> transform </span><span style="color:#ff5e5e;">= </span><span>Transform::default();
+</span><span>        transform.</span><span style="color:#6699cc;">set_translation_xyz</span><span>(</span><span style="color:#fdb082;">50.0</span><span>, </span><span style="color:#fdb082;">50.0</span><span>, </span><span style="color:#fdb082;">0.0</span><span>);
+</span><span>        </span><span style="font-style:italic;color:#fbdfb5;">let</span><span> seagl </span><span style="color:#ff5e5e;">= </span><span>Seagl::default();
+</span><span>        data.world
+</span><span>            .</span><span style="color:#6699cc;">create_entity</span><span>()
+</span><span>            .</span><span style="color:#6699cc;">with</span><span>(seagl)
+</span><span>            .</span><span style="color:#6699cc;">with</span><span>(transform)
+</span><span>            .</span><span style="color:#6699cc;">build</span><span>();
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>This is a good start, but our Seagl is a spriteless ghost!</p>
+<span class="warning">
+    <span class="warning-title">
+        Warning
+    </span>
+
+    <span class="warning-body">
+        &lt;p&gt;Seagull ghosts are terrifying.
+Add a sprite!&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<p>First we need to load the spritesheet into memory.
+Add this in our <em>on_start</em> function above where we added the seagl:</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="font-style:italic;color:#fbdfb5;">let</span><span> sprite_sheet_handle </span><span style="color:#ff5e5e;">= </span><span>{
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">let</span><span> loader </span><span style="color:#ff5e5e;">=</span><span> data.world.read_resource::&lt;Loader&gt;();
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">let</span><span> texture_storage </span><span style="color:#ff5e5e;">=</span><span> data.world.read_resource::&lt;AssetStorage&lt;Texture&gt;&gt;();
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">let</span><span> texture_handle </span><span style="color:#ff5e5e;">=</span><span> loader.</span><span style="color:#6699cc;">load</span><span>(
+</span><span>        </span><span style="color:#ffffff;">&quot;</span><span style="color:#fbe3bf;">texture/spritesheet.png</span><span style="color:#ffffff;">&quot;</span><span>,
+</span><span>        ImageFormat::default(),
+</span><span>        (),
+</span><span>        </span><span style="color:#ff5e5e;">&amp;</span><span>texture_storage,
+</span><span>    );
+</span><span>
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">let</span><span> sprite_sheet_store </span><span style="color:#ff5e5e;">=</span><span> data.world.read_resource::&lt;AssetStorage&lt;SpriteSheet&gt;&gt;();
+</span><span>    loader.</span><span style="color:#6699cc;">load</span><span>(
+</span><span>        </span><span style="color:#ffffff;">&quot;</span><span style="color:#fbe3bf;">texture/spritesheet.ron</span><span style="color:#ffffff;">&quot;</span><span>,
+</span><span>        SpriteSheetFormat(texture_handle),
+</span><span>        (),
+</span><span>        </span><span style="color:#ff5e5e;">&amp;</span><span>sprite_sheet_store,
+</span><span>    )
+</span><span>};
+</span></code></pre>
+<p>Then modify our Seagl entity like so:</p>
+<pre data-lang="diff" style="background-color:#191919;color:#f8f8f2;" class="language-diff "><code class="language-diff" data-lang="diff"><span style="color:#a6e22e;">++ main.rs
+</span><span>@@ impl SimpleState for SeaglState
+</span><span>@@ fn on_start(...)
+</span><span>  let mut transform = Transform::default();
+</span><span>  transform.set_translation_xyz(50.0, 50.0, 0.0);
+</span><span style="color:#a6e22e;">+ let sprite = SpriteRender::new(sprite_sheet_handle.clone(), 0);
+</span><span>  let seagl = Seagl::default();
+</span><span>  data.world
+</span><span>      .create_entity()
+</span><span>      .with(seagl)
+</span><span style="color:#a6e22e;">+     .with(sprite)
+</span><span>      .with(transform)
+</span><span>      .build();
+</span></code></pre>
+<p>Let's see.
+We created a Seagl entity. Let's try running this thing:</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ cargo run
+</span><span>...
+</span><span>thread &#39;main&#39; panicked at &#39;Tried to fetch resource of type `MaskedStorage&lt;Seagl&gt;`[^1] from the `World`, but the resource does not exist.
+</span><span>
+</span><span>You may ensure the resource exists through one of the following methods:
+</span><span>
+</span><span>* Inserting it when the world is created: `world.insert(..)`.
+</span><span>* If the resource implements `Default`, include it in a system&#39;s `SystemData`, and ensure the system is registered in the dispatcher.
+</span><span>* If the resource does not implement `Default`, insert it in the world during `System::setup`.
+</span></code></pre>
+<p>Hmm.
+It seems like our <code>Seagl</code> Component isn't registered with Amethyst.
+This happens implicitly when we add a system that uses our component, but until we write a System, we'll have to explicitly register our Component with Amethyst.</p>
+<p>Add this toward the top of our <code>on_start</code> method:</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span>data.world.register::&lt;Seagl&gt;();
+</span></code></pre>
+<p>Let's try running again:</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ cargo run
+</span><span>...
+</span><span>Error { inner: Inner { source: Some(Error { inner: Inner { source: None, backtrace: None,
+</span><span>error: Os { code: 2, kind: NotFound, message: &quot;No such file or directory&quot; } } }), backtrace: None,
+</span><span>error: StringError(&quot;Failed to fetch metadata for \&quot;/home/pop/seagl-talk/assets/texture/spritesheet.ron\&quot;&quot;) } }
+</span></code></pre>
+<p>Ah, a different runtime error.
+This time we forgot to add our spritesheet image and spritesheet config file.
+Lets add those.</p>
+<p>Add this code to a file in <code>assets/texture/spritesheet.ron</code>:</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#6d6d6d;">// assets/texture/spritesheet.ron
+</span><span>List((
+</span><span>    texture_width: </span><span style="color:#fdb082;">32</span><span>,
+</span><span>    texture_height: </span><span style="color:#fdb082;">16</span><span>,
+</span><span>    sprites: [
+</span><span>        ( </span><span style="color:#6d6d6d;">// Seagl
+</span><span>            x: </span><span style="color:#fdb082;">0</span><span>,
+</span><span>            y: </span><span style="color:#fdb082;">0</span><span>,
+</span><span>            width: </span><span style="color:#fdb082;">16</span><span>,
+</span><span>            height: </span><span style="color:#fdb082;">16</span><span>,
+</span><span>        ),
+</span><span>        ( </span><span style="color:#6d6d6d;">// Burger
+</span><span>            x: </span><span style="color:#fdb082;">16</span><span>,
+</span><span>            y: </span><span style="color:#fdb082;">0</span><span>,
+</span><span>            width: </span><span style="color:#fdb082;">10</span><span>,
+</span><span>            height: </span><span style="color:#fdb082;">8</span><span>,
+</span><span>        ),
+</span><span>    ],
+</span><span>))
+</span></code></pre>
+<p>And save this image to <code>assets/texture/spritesheet.png</code>:</p>
+<p><img src="/images/seagl-2020/spritesheet.png" alt="Seagl and Burger. 32x16. Pixel on LCD." /></p>
+<p>Now if we run <code>cargo run</code> we get the same blank orange window.
+This happened because we forgot to add a Camera to the scene!</p>
+<p>Add this to the end of our <code>on_start</code> function:</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="font-style:italic;color:#fbdfb5;">let </span><span style="color:#ff5e5e;">mut</span><span> transform </span><span style="color:#ff5e5e;">= </span><span>Transform::default();
+</span><span>transform.</span><span style="color:#6699cc;">set_translation_xyz</span><span>(</span><span style="color:#fdb082;">50.0</span><span>, </span><span style="color:#fdb082;">50.0</span><span>, </span><span style="color:#fdb082;">1.0</span><span>);
+</span><span>data.world
+</span><span>    .</span><span style="color:#6699cc;">create_entity</span><span>()
+</span><span>    .</span><span style="color:#6699cc;">with</span><span>(Camera::standard_2d(</span><span style="color:#fdb082;">100.0</span><span>, </span><span style="color:#fdb082;">100.0</span><span>))
+</span><span>    .</span><span style="color:#6699cc;">with</span><span>(transform)
+</span><span>    .</span><span style="color:#6699cc;">build</span><span>();
+</span></code></pre>
+<p><img src="/images/seagl-2020/window-with-seagl.png" alt="That&#39;s a nice looking Seagl there..." /></p>
+<span class="note">
+    <span class="note-title">
+        Note
+    </span>
+
+    <span class="note-body">
+        &lt;p&gt;It&#x27;s so beautifull...&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<h3 id="step-3-move-around-horse-racing">Step 3: Move Around 🏇</h3>
+<p>Thinking back to our ECS discussion, we have two of the three ingredients: an Entity, some Components, but no Systems!</p>
+<p>First, we need to create a System struct and implement <code>System</code> on it.</p>
+<p>Our System's run function looks like this in psuedocode:</p>
+<pre data-lang="txt" style="background-color:#191919;color:#f8f8f2;" class="language-txt "><code class="language-txt" data-lang="txt"><span>for every seagl that can move:
+</span><span>    If the user input was to move horizontal:
+</span><span>        Move the seagl horizontally
+</span><span>    If the user input was to move vertical:
+</span><span>        Move the seagl vertically
+</span></code></pre>
+<p>This doesn't look <em>exactly</em> the same in Rust, but it's pretty close.</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span>[</span><span style="color:#6699cc;">derive</span><span>(SystemDesc)]
+</span><span style="color:#ff5e5e;">pub </span><span style="font-style:italic;color:#fbdfb5;">struct </span><span>MoveSystem;
+</span><span>
+</span><span style="font-style:italic;color:#fbdfb5;">impl</span><span>&lt;</span><span style="color:#ff5e5e;">&#39;s</span><span>&gt; System&lt;</span><span style="color:#ff5e5e;">&#39;s</span><span>&gt; </span><span style="color:#ff5e5e;">for </span><span>MoveSystem {
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">type </span><span>SystemData </span><span style="color:#ff5e5e;">= </span><span>(
+</span><span>        WriteStorage&lt;</span><span style="color:#ff5e5e;">&#39;s</span><span>, Transform&gt;,
+</span><span>        ReadStorage&lt;</span><span style="color:#ff5e5e;">&#39;s</span><span>, Seagl&gt;,
+</span><span>        Read&lt;</span><span style="color:#ff5e5e;">&#39;s</span><span>, Time&gt;,
+</span><span>        Read&lt;</span><span style="color:#ff5e5e;">&#39;s</span><span>, InputHandler&lt;StringBindings&gt;&gt;,
+</span><span>    );
+</span><span>
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">fn </span><span style="color:#8cdaff;">run</span><span>(</span><span style="color:#ff5e5e;">&amp;mut </span><span style="font-style:italic;color:#fc9354;">self</span><span>, (</span><span style="font-style:italic;color:#fc9354;">mut transforms</span><span>, </span><span style="font-style:italic;color:#fc9354;">seagls</span><span>, </span><span style="font-style:italic;color:#fc9354;">time</span><span>, </span><span style="font-style:italic;color:#fc9354;">input</span><span>): </span><span style="font-style:italic;color:#fbdfb5;">Self::</span><span>SystemData) {
+</span><span>        </span><span style="font-style:italic;color:#fbdfb5;">let</span><span> speed: </span><span style="font-style:italic;color:#fbdfb5;">f32 </span><span style="color:#ff5e5e;">= </span><span style="color:#fdb082;">50.0</span><span>;
+</span><span>        </span><span style="color:#ff5e5e;">for </span><span>(_seagl, transform) </span><span style="color:#ff5e5e;">in </span><span>(</span><span style="color:#ff5e5e;">&amp;</span><span>seagls, </span><span style="color:#ff5e5e;">&amp;mut</span><span> transforms).</span><span style="color:#6699cc;">join</span><span>() {
+</span><span>            </span><span style="color:#ff5e5e;">if </span><span style="font-style:italic;color:#fbdfb5;">let </span><span style="color:#fbe3bf;">Some</span><span>(horizontal) </span><span style="color:#ff5e5e;">=</span><span> input.</span><span style="color:#6699cc;">axis_value</span><span>(</span><span style="color:#ffffff;">&quot;</span><span style="color:#fbe3bf;">horizontal</span><span style="color:#ffffff;">&quot;</span><span>) {
+</span><span>                transform.</span><span style="color:#6699cc;">prepend_translation_x</span><span>(
+</span><span>                    horizontal </span><span style="color:#ff5e5e;">*</span><span> time.</span><span style="color:#6699cc;">delta_seconds</span><span>() </span><span style="color:#ff5e5e;">*</span><span> speed  </span><span style="color:#ff5e5e;">as </span><span style="font-style:italic;color:#fbdfb5;">f32
+</span><span>                );
+</span><span>
+</span><span>            };
+</span><span>            </span><span style="color:#ff5e5e;">if </span><span style="font-style:italic;color:#fbdfb5;">let </span><span style="color:#fbe3bf;">Some</span><span>(vertical) </span><span style="color:#ff5e5e;">=</span><span> input.</span><span style="color:#6699cc;">axis_value</span><span>(</span><span style="color:#ffffff;">&quot;</span><span style="color:#fbe3bf;">vertical</span><span style="color:#ffffff;">&quot;</span><span>) {
+</span><span>                transform.</span><span style="color:#6699cc;">prepend_translation_y</span><span>(
+</span><span>                    vertical </span><span style="color:#ff5e5e;">*</span><span> time.</span><span style="color:#6699cc;">delta_seconds</span><span>() </span><span style="color:#ff5e5e;">*</span><span> speed </span><span style="color:#ff5e5e;">as </span><span style="font-style:italic;color:#fbdfb5;">f32
+</span><span>                );
+</span><span>            };
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>We declare a <code>SystemData</code> type which is a tuple of components.
+The <code>Transform</code> component will be modified, so we require it as <code>mut</code>, but everything else is <code>Read</code> for stuff that Amethyst provides and <code>ReadStorage</code> for things we created.</p>
+<p>We loop over every entity with the <code>Seagl</code> and <code>Transform</code> components, then we match against any user input:</p>
+<ul>
+<li>If we had "vertical" input, move the entity on the x axis.</li>
+<li>If we had "horizontal" input, move the entity on the y axis.</li>
+<li>We don't need to explicitly say "move left"/"move right" because the horizontal/vertical inputs can be positive or negative.</li>
+</ul>
+<p>Next we need to register this system with out game.
+Because we are using Inputs we also need to register the inputs bundle with the game.</p>
+<pre data-lang="diff" style="background-color:#191919;color:#f8f8f2;" class="language-diff "><code class="language-diff" data-lang="diff"><span style="color:#75715e;">+++ main.rs
+</span><span>@@ fn main() -&gt; amethyst::Result&lt;()&gt;
+</span><span>     )
+</span><span>     .with_plugin(RenderFlat2D::default());
+</span><span>
+</span><span style="color:#a6e22e;">+    let bindings_path = app_root.join(&quot;config&quot;).join(&quot;bindings.ron&quot;);
+</span><span style="color:#a6e22e;">+    let inputs = InputBundle::&lt;StringBindings&gt;::new().with_bindings_from_file(bindings_path)?;
+</span><span style="color:#a6e22e;">+
+</span><span>     let game_data = GameDataBuilder::default()
+</span><span>         .with_bundle(transform)?
+</span><span>         .with_bundle(renderer)?
+</span><span style="color:#a6e22e;">+        .with_bundle(inputs)?
+</span><span style="color:#a6e22e;">+        .with(MoveSystem, &quot;move_system&quot;, &amp;[&quot;input_system&quot;]);
+</span><span>
+</span><span>     let mut game = Application::new(assets_dir, SeaglState, game_data)?;
+</span></code></pre>
+<p>We have a dependency on the <code>input_system</code>, so Amethyst will ensure that system runs before <code>move_system</code>.</p>
+<p>Next we need to create a config file for our movement bindings.
+Instead of hard-coding "Up arrow means move up, down arrow means down" we put that in config files:</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#6d6d6d;">// config/bindings.ron
+</span><span>(
+</span><span>    axes: {
+</span><span>        </span><span style="color:#ffffff;">&quot;</span><span style="color:#fbe3bf;">horizontal</span><span style="color:#ffffff;">&quot;</span><span>: Emulated(pos: Key(Right), neg: Key(Left)),
+</span><span>        </span><span style="color:#ffffff;">&quot;</span><span style="color:#fbe3bf;">vertical</span><span style="color:#ffffff;">&quot;</span><span>: Emulated(pos: Key(Up), neg: Key(Down)),
+</span><span>    },
+</span><span>    actions: {},
+</span><span>)
+</span></code></pre>
+<p>![It moves!](/images/seagl-2020/SeaGL-move.gif" class="align-center)</p>
+<p>This is a good start, but you'll notice the Seagl doesn't turn left and right, this <em>totally</em> breaks my suspension of disbelief so we're gonna need to fix that in our <code>run</code> method:</p>
+<pre data-lang="diff" style="background-color:#191919;color:#f8f8f2;" class="language-diff "><code class="language-diff" data-lang="diff"><span>diff --git a/src/main.rs b/src/main.rs
+</span><span>@@ impl&lt;&#39;s&gt; System&lt;&#39;s&gt; for MoveSystem
+</span><span>@@ run(...)
+</span><span>  if let Some(vertical) = input.axis_value(&quot;vertical&quot;) {
+</span><span>      transform.prepend_translation_x(
+</span><span>        horizontal * time.delta_seconds() * speed  as f32
+</span><span>      );
+</span><span style="color:#a6e22e;">+     if horizontal &gt; 0.0 {
+</span><span style="color:#a6e22e;">+       transform.set_rotation_y_axis(std::f32::consts::PI);
+</span><span style="color:#a6e22e;">+     }
+</span><span style="color:#a6e22e;">+     if horizontal &lt; 0.0 {
+</span><span style="color:#a6e22e;">+       transform.set_rotation_y_axis(0.0);
+</span><span style="color:#a6e22e;">+     }
+</span><span style="color:#a6e22e;">+
+</span><span>  };
+</span><span>  if let Some(vertical) = input.axis_value(&quot;vertical&quot;) {
+</span><span>      transform.prepend_translation_y(
+</span></code></pre>
+<p>In our "horizontal" check we added:</p>
+<ul>
+<li>If the input was greater than 0, flip our sprite on the Y axis.</li>
+<li>If the input was less than 0, reset our sprite on the Y axis.</li>
+</ul>
+<p>This makes it look like our Seagl is facing the direction they're moving which should help boost our Metacritic score when we publish this at the end of the blogpost.</p>
+<span class="note">
+    <span class="note-title">
+        Note
+    </span>
+
+    <span class="note-body">
+        &lt;p&gt;We rotate by PI because our 2D sprite is in the 3D world and we&#x27;re rotating it in radians.&lt;&#x2F;p&gt;
+&lt;p&gt;Do you ever feel like a 2D sprite in a 3D world? I know I do...&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<p><img src="/images/seagl-2020/SeaGL-move-look.gif" alt="It moves!" /></p>
+<h3 id="step-4-eat-some-food-hamburger">Step 4: Eat some food! 🍔</h3>
+<p>I'm sure we could all get <em>minutes</em> of fun out of moving our seagl around the screen, but this game could really use something else... Something tastier.</p>
+<p>Let's add burgers.</p>
+<p>This will require us to do everything we just did, again:</p>
+<ul>
+<li>Add a Food Compnent.</li>
+<li>Create a Burger entity with the food component.</li>
+<li>Add an Eat system.</li>
+<li>Register our Eat system with the game.</li>
+</ul>
+<p>First we need to add a food Component.</p>
+<p>Add this component anywhere that feels right:</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span>#[</span><span style="color:#e9fdac;">derive</span><span>(Default)]
+</span><span style="color:#ff5e5e;">pub </span><span style="font-style:italic;color:#fbdfb5;">struct </span><span>Food;
+</span><span>
+</span><span style="font-style:italic;color:#fbdfb5;">impl </span><span>Component </span><span style="color:#ff5e5e;">for </span><span>Food {
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">type </span><span>Storage </span><span style="color:#ff5e5e;">= </span><span>DenseVecStorage&lt;</span><span style="font-style:italic;color:#fbdfb5;">Self</span><span>&gt;;
+</span><span>}
+</span></code></pre>
+<p>It's structurally identical to our Seagl, but with a different <code>struct</code> it's a totally different component.</p>
+<p>With a Food component we can add our Burger entity.
+Add this code to our <code>on_setup</code> function at the end:</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="font-style:italic;color:#fbdfb5;">let</span><span> burger_sprite </span><span style="color:#ff5e5e;">= </span><span>SpriteRender::new(sprite_sheet_handle.</span><span style="color:#6699cc;">clone</span><span>(), </span><span style="color:#fdb082;">1</span><span>);
+</span><span style="font-style:italic;color:#fbdfb5;">let </span><span style="color:#ff5e5e;">mut</span><span> transform </span><span style="color:#ff5e5e;">= </span><span>Transform::default();
+</span><span>transform.</span><span style="color:#6699cc;">set_translation_xyz</span><span>(</span><span style="color:#fdb082;">75.0</span><span>, </span><span style="color:#fdb082;">75.0</span><span>, </span><span style="color:#ff5e5e;">-</span><span style="color:#fdb082;">1.0</span><span>);
+</span><span>data.world
+</span><span>    .</span><span style="color:#6699cc;">create_entity</span><span>()
+</span><span>    .</span><span style="color:#6699cc;">with</span><span>(Food::default())
+</span><span>    .</span><span style="color:#6699cc;">with</span><span>(burger_sprite)
+</span><span>    .</span><span style="color:#6699cc;">with</span><span>(transform)
+</span><span>    .</span><span style="color:#6699cc;">build</span><span>();
+</span></code></pre>
+<p>We create an entity spawning it at the point (75, 75, -1).</p>
+<span class="note">
+    <span class="note-title">
+        Note
+    </span>
+
+    <span class="note-body">
+        &lt;p&gt;We spawn the burger at &lt;code&gt;z=-1&lt;&#x2F;code&gt; to ensure the Seagl sprite is closer to
+the camera and thus is drawn on top of the burger.&lt;&#x2F;p&gt;
+&lt;p&gt;Have you ever seen a Seagull &lt;em&gt;behind&lt;&#x2F;em&gt; a burger? That&#x27;s ridiculous.&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<span class="note">
+    <span class="note-title">
+        Note
+    </span>
+
+    <span class="note-body">
+        &lt;p&gt;A few exercises left to the reader:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;How would you spawn multiple burgers?&lt;&#x2F;li&gt;
+&lt;li&gt;How would you re-spawn burgers when one is eaten?&lt;&#x2F;li&gt;
+&lt;li&gt;How would you keep track of how many burgers were eaten?&lt;&#x2F;li&gt;
+&lt;li&gt;How would you display the number of burgers eaten?&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;I&#x27;ve only covered enough in this post to answer the first two.&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<p>And finally an "eat" system.</p>
+<p>This system's pseudocode looks like this:</p>
+<pre data-lang="txt" style="background-color:#191919;color:#f8f8f2;" class="language-txt "><code class="language-txt" data-lang="txt"><span>For each seagl with a location:
+</span><span>    For each Food with a location:
+</span><span>        If the Seagl overlaps with the Food:
+</span><span>            Destory that food
+</span></code></pre>
+<p>This is a bit of a hack.
+If this were a real game we would keep track of how many burgers the Seagl ate, but for this demo, we'll be lazy:</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#ff5e5e;">pub </span><span style="font-style:italic;color:#fbdfb5;">struct </span><span>EatSystem;
+</span><span>
+</span><span style="font-style:italic;color:#fbdfb5;">impl</span><span>&lt;</span><span style="color:#ff5e5e;">&#39;s</span><span>&gt; System&lt;</span><span style="color:#ff5e5e;">&#39;s</span><span>&gt; </span><span style="color:#ff5e5e;">for </span><span>EatSystem {
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">type </span><span>SystemData </span><span style="color:#ff5e5e;">= </span><span>(
+</span><span>        ReadStorage&lt;</span><span style="color:#ff5e5e;">&#39;s</span><span>, Transform&gt;,
+</span><span>        ReadStorage&lt;</span><span style="color:#ff5e5e;">&#39;s</span><span>, Seagl&gt;,
+</span><span>        ReadStorage&lt;</span><span style="color:#ff5e5e;">&#39;s</span><span>, Food&gt;,
+</span><span>        Entities&lt;</span><span style="color:#ff5e5e;">&#39;s</span><span>&gt;,
+</span><span>    );
+</span><span>
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">fn </span><span style="color:#8cdaff;">run</span><span>(</span><span style="color:#ff5e5e;">&amp;mut </span><span style="font-style:italic;color:#fc9354;">self</span><span>, (</span><span style="font-style:italic;color:#fc9354;">transforms</span><span>, </span><span style="font-style:italic;color:#fc9354;">seagls</span><span>, </span><span style="font-style:italic;color:#fc9354;">foods</span><span>, </span><span style="font-style:italic;color:#fc9354;">entities</span><span>): </span><span style="font-style:italic;color:#fbdfb5;">Self::</span><span>SystemData) {
+</span><span>        </span><span style="color:#ff5e5e;">for </span><span>(_seagl, seagl_pos) </span><span style="color:#ff5e5e;">in </span><span>(</span><span style="color:#ff5e5e;">&amp;</span><span>seagls, </span><span style="color:#ff5e5e;">&amp;</span><span>transforms).</span><span style="color:#6699cc;">join</span><span>() {
+</span><span>            </span><span style="color:#ff5e5e;">for </span><span>(_food, food_pos, entity) </span><span style="color:#ff5e5e;">in </span><span>(</span><span style="color:#ff5e5e;">&amp;</span><span>foods, </span><span style="color:#ff5e5e;">&amp;</span><span>transforms, </span><span style="color:#ff5e5e;">&amp;</span><span>entities).</span><span style="color:#6699cc;">join</span><span>() {
+</span><span>                </span><span style="color:#6d6d6d;">// https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
+</span><span>                </span><span style="color:#ff5e5e;">if </span><span>(seagl_pos.</span><span style="color:#6699cc;">translation</span><span>().x </span><span style="color:#ff5e5e;">&lt;</span><span> food_pos.</span><span style="color:#6699cc;">translation</span><span>().x </span><span style="color:#ff5e5e;">+ </span><span style="color:#fdb082;">5.0</span><span>) </span><span style="color:#ff5e5e;">&amp;&amp;
+</span><span>                   (seagl_pos.</span><span style="color:#6699cc;">translation</span><span>().x </span><span style="color:#ff5e5e;">+ </span><span style="color:#fdb082;">8.0 </span><span style="color:#ff5e5e;">&gt;</span><span> food_pos.</span><span style="color:#6699cc;">translation</span><span>().x) </span><span style="color:#ff5e5e;">&amp;&amp;
+</span><span>                   (seagl_pos.</span><span style="color:#6699cc;">translation</span><span>().y </span><span style="color:#ff5e5e;">&lt;</span><span> food_pos.</span><span style="color:#6699cc;">translation</span><span>().y </span><span style="color:#ff5e5e;">+ </span><span style="color:#fdb082;">4.0</span><span>) </span><span style="color:#ff5e5e;">&amp;&amp;
+</span><span>                   (seagl_pos.</span><span style="color:#6699cc;">translation</span><span>().y </span><span style="color:#ff5e5e;">+ </span><span style="color:#fdb082;">8.0 </span><span style="color:#ff5e5e;">&gt;</span><span> food_pos.</span><span style="color:#6699cc;">translation</span><span>().y)
+</span><span>                {
+</span><span>                    entities.</span><span style="color:#6699cc;">delete</span><span>(entity).</span><span style="color:#6699cc;">unwrap</span><span>();
+</span><span>                }
+</span><span>            }
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>And last but not least, we need to register this system with our game:</p>
+<pre data-lang="diff" style="background-color:#191919;color:#f8f8f2;" class="language-diff "><code class="language-diff" data-lang="diff"><span style="color:#75715e;">+++ main.rs
+</span><span>@@ fn main() -&gt; amethyst::Result&lt;()&gt;
+</span><span>     let game_data = GameDataBuilder::default()
+</span><span>         .with_bundle(transform)?
+</span><span>         .with_bundle(renderer)?
+</span><span>         .with_bundle(inputs)?
+</span><span>         .with(MoveSystem, &quot;move_system&quot;, &amp;[&quot;input_system&quot;])
+</span><span style="color:#a6e22e;">+        .with(EatSystem, &quot;eat_system&quot;, &amp;[&quot;move_system&quot;]);
+</span></code></pre>
+<p><img src="/images/seagl-2020/SeaGL-move-look-burger.gif"
+class="align-center" alt="It moves!" /></p>
+<h2 id="conclusions">Conclusions</h2>
+<p>We did it. We made a lil' game. It had a Seagl and a burger. And we had
+fun making it.</p>
+<p>I wouldn't say it's <em>easy</em> to make games in Rust, but we are <em>very far</em>
+from having to write games from scratch.</p>
+<p>If this post piqued your interest I hope you check out <a href="https://arewegameyet.rs">https://arewegameyet.rs</a> to learn more about the Rust Games ecosystem, and <a href="https://amethyst.rs">https://amethyst.rs</a> to learn more about this budding Game Engine.</p>
+<h2 id="links">Links</h2>
+<ul>
+<li>SeaGL conference website: <a href="https://seagl.org/">https://seagl.org/</a> (You should go if you're in the Pacific Northwest)</li>
+<li>The code for this post is avaliable at <a href="https://github.com/pop/lets-make-games-with-rust">https://github.com/pop/lets-make-games-with-rust</a>. I even tagged each step so you can see exactly what we added!</li>
+<li>Rust Language: <a href="https://www.rust-lang.org/">https://www.rust-lang.org/</a></li>
+<li>Are We Game Yet?: <a href="https://arewegameyet.rs/">https://arewegameyet.rs/</a></li>
+<li>Amethyst Game Engine website: <a href="https://amethyst.rs/">https://amethyst.rs/</a></li>
+<li>Amethyst Game Engine book has a great introduction and overview: <a href="https://book.amethyst.rs/stable/">https://book.amethyst.rs/stable/</a></li>
+<li>Bevy Game Engine is an interesting iteration on Game Engines in Rust: <a href="https://bevyengine.org/">https://bevyengine.org/</a></li>
+<li>My Source that C++ is the defacto language in the games industry: <a href="https://youtu.be/rX0ItVEVjHc">https://youtu.be/rX0ItVEVjHc</a></li>
+<li>Game Programming Patterns is an awesome book with a free &amp; legal copy online: <a href="https://gameprogrammingpatterns.com/">https://gameprogrammingpatterns.com/</a></li>
+<li><code>rustup</code> homepage for installation instructions: <a href="https://rustup.rs/">https://rustup.rs/</a></li>
+</ul>
+
+  </main>
+  <p>
+        Tags:
+          <a href="/tags/rust/">#rust</a>
+          <a href="/tags/amethyst/">#amethyst</a>
+          <a href="/tags/games/">#games</a>
+  </p>
+<footer>
+  Made with <a href="https://www.getzola.org/">Zola</a>;
+  theme inspired by <a href="https://codeberg.org/alanpearce/zola-bearblog">Zola ʕ•ᴥ•ʔ Bear</a>.
+</footer>
+</body>
+</html>

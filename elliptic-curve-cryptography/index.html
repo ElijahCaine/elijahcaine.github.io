@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="shortcut icon" href="&#x2F;favicon.ico"><title>Elliptic Curve Cryptography | elijah.run</title>
+  <meta name="title" content="Elliptic Curve Cryptography">
+<meta name="description" content="A blog about tech, media, and art">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="alternate" type="application/atom+xml" title="elijah.run" href="/atom.xml">
+  <style>
+    :root {
+    --width: 586px;
+    --font-main: Verdana, sans-serif;
+    --font-secondary: "Times New Roman", serif;
+    --font-scale: 1.1em;
+    --background-color: #fff;
+    --heading-color: #222;
+    --text-color: #444;
+    --link-color: #3273dc;
+    --visited-color: #8b6fcb;
+    --blockquote-color: #222;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background-color: #01242e;
+      --heading-color: #eee;
+      --text-color: #ddd;
+      --link-color: #8cc2dd;
+      --visited-color: #8b6fcb;
+      --blockquote-color: #ccc;
+    }
+  }
+
+  body {
+    font-family: var(--font-secondary);
+    font-size: var(--font-scale);
+    margin: auto;
+    padding: 20px;
+    max-width: var(--width);
+    text-align: left;
+    background-color: var(--background-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: var(--text-color);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-main);
+    color: var(--heading-color);
+  }
+
+  a {
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  nav a {
+    margin-right: 8px;
+  }
+
+  nav span.active {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  strong,
+  b {
+    color: var(--heading-color);
+  }
+
+  button {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  main {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px dashed;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  pre code {
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 0.875rem;
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: monospace;
+    padding: 2px;
+    border-radius: 3px;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: var(--code-color);
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px 0;
+    text-align: center;
+  }
+
+  .title:hover {
+    text-decoration: none;
+  }
+
+  .title h1 {
+    font-size: 1.5em;
+  }
+
+  .inline {
+    width: auto !important;
+  }
+
+  .highlight,
+  .code {
+    padding: 1px 15px;
+    background-color: var(--code-background-color);
+    color: var(--code-color);
+    border-radius: 3px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    overflow-x: auto;
+  }
+
+  /* blog post list */
+  ul.posts {
+    list-style-type: none;
+    padding: unset;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  ul.posts li {
+    line-height: 1;
+    margin: 0;
+  }
+
+  ul.posts li time {
+    margin-left: 0px;
+    font-size: 12px;
+  }
+
+  ul.posts li a:visited {
+    color: var(--visited-color);
+  }
+
+  li.post {
+    padding: 0px 0px 10px 0px;
+  }
+
+  span.tags {
+    font-size: smaller;
+  }
+
+  /* table of contents */
+  details ul {
+    list-style-type: circle;
+  }
+
+  </style>
+</head>
+<body>
+  <header>
+  <a href="/" class="title">
+    <h1>elijah.run</h1>
+  </a>
+  <nav aria-label="site">
+      <a href="/">(🏠 elijah.run)</a>
+      <a href="https:&#x2F;&#x2F;games.elijah.run">(🕹️ games)</a>
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;pop">(🐙 github 🐱)</a>
+      <a href="/Elijah Voigt.pdf">(👔 resume)</a>
+  </nav>
+</header>
+<h1>Elliptic Curve Cryptography</h1>
+      <p>
+        <i>
+          <time datetime="2017-10-04T00:00:00+00:00" pubdate>Wed 04 Oct 2017</time>
+        </i>
+      </p>
+    <details open>
+      <summary>Table of contents</summary>
+    <ul>
+        <li>
+          <a href="/elliptic-curve-cryptography/#diffie-hellman-key-exchange">Diffie-Hellman key exchange ++</a>
+        </li>
+        <li>
+          <a href="/elliptic-curve-cryptography/#elliptic-curves-and-elliptic-curve-cryptography-q-a">Elliptic Curves and Elliptic Curve Cryptography Q&amp;A</a>
+        </li>
+        <li>
+          <a href="/elliptic-curve-cryptography/#an-example-of-elliptic-curve-cryptography">An example of Elliptic Curve Cryptography</a>
+        </li>
+        <li>
+          <a href="/elliptic-curve-cryptography/#why-elliptic-curve-cryptography-is-useful">Why Elliptic Curve Cryptography is useful</a>
+        </li>
+        <li>
+          <a href="/elliptic-curve-cryptography/#notes-and-edge-cases">Notes and edge cases</a>
+        </li>
+        <li>
+          <a href="/elliptic-curve-cryptography/#annotated-bibliography">Annotated Bibliography</a>
+        </li>
+        <li>
+          <a href="/elliptic-curve-cryptography/#errata">Errata</a>
+        </li>
+    </ul>
+    </details>
+  <main>
+    <span class="note">
+    <span class="note-title">
+        Note
+    </span>
+
+    <span class="note-body">
+        &lt;p&gt;This is a part of a series of blog posts I wrote for an Independent
+Study on cryptography at Oregon State University. To read all of the
+posts, check out the &#x27;Independent Crypto&#x27; tag.&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<span class="warning">
+    <span class="warning-title">
+        Warning
+    </span>
+
+    <span class="warning-body">
+        &lt;p&gt;This post is jumps around a bit. We&#x27;ll start by showing how Elliptic
+Curve Cryptography works at a high level, then create a list of
+questions about how&#x2F;why Elliptic Curve Cryptography works and how it is
+useful to cryptogrpahy. Once those questions are answered we will end
+with a recap. Hopefully we will zero in on what Elliptic Curves are and
+what Elliptic Curve Cryptography is.&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<h2 id="diffie-hellman-key-exchange">Diffie-Hellman key exchange ++</h2>
+<p>You find yourself day-dreaming during a walk around campus wondering if there is an alternative cryptography system to the very popular RSA.
+You want something that has improved computational and network efficiency.
+You want smaller keys that are harder to crack.
+Could such a system exist?</p>
+<p>You share this fantasy with a friend, you share all of your crypto fantasies with this friend, and they tell you that Elliptic Curve Cryptography is promising and it perfectly fits your needs.
+... but how does it work?</p>
+<h3 id="diffie-hellman-key-exchange-a-recap">Diffie-Hellman key exchange (a recap)</h3>
+<p>To create a useful crypto out of Elliptic Curves we need to implement <a href="https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange">Diffie–Hellman key exchange</a> (DHKE).
+Once we have DHKE we more or less have a valid crypto system which we can build upon to encrypt and decrypt private information.</p>
+<p>The reader (you) is assumed to be familiar with DHKE.
+While DHKE is fairly simple, it is not unforgettable, so here is quick reminder:</p>
+<ol>
+<li>Alice and Bob agree on a public modulus (p) and a base (g).</li>
+<li>Alice and Bob both choose secret integers (a and b).</li>
+<li>Alice sends Bob g<sup>a</sup> (mod p) (we call it A) and Bob sends Alice g<sup>b</sup> (mod p) (we call it B).</li>
+<li>Alice computes B<sup>a</sup> (mod p) and Bob computes A<sup>b</sup> (mod p).
+These are equivalent (mod p).
+This is Alice and Bob's shared secret.</li>
+</ol>
+<p>How do we use Elliptic Curves get a similar 'shared secret'?</p>
+<h3 id="elliptic-diffie-hellman-key-exchange">Elliptic Diffie-Hellman key exchange</h3>
+<p>At a (very) high level the algorithm is as follows:</p>
+<ol>
+<li>Alice and Bob agree to use a given Elliptic Curve over a finite field, E(F<sub>p</sub>), and a public point P ∈ E(F<sub>p</sub>).</li>
+<li>Alice chooses a secret integer n<sub>A</sub> and Bob choose secret integers n<sub>B</sub>.</li>
+<li>Alice computes Q<sub>A</sub> = n<sub>A</sub>P and Bob computes Q<sub>B</sub> = n<sub>B</sub>P.
+These are the "Public Keys"</li>
+<li>Alice sends Bob her public key, Bob send Alice his public key.</li>
+<li>Alice computes n<sub>A</sub>Q<sub>B</sub>, Bob computes n<sub>B</sub>Q<sub>A</sub>.</li>
+<li>The shared secret value is n<sub>A</sub>Q<sub>B</sub> = n<sub>A</sub>(n<sub>B</sub>P) = n<sub>B</sub>(n<sub>A</sub>P) = n<sub>B</sub>Q<sub>A</sub></li>
+</ol>
+<p>It looks similar to the given DHKE algorithm, and seems promising, but... how does it work?</p>
+<h2 id="elliptic-curves-and-elliptic-curve-cryptography-q-a">Elliptic Curves and Elliptic Curve Cryptography Q&amp;A</h2>
+<p>To answer that we are going to answer the following:</p>
+<ul>
+<li>What are Elliptic Curves?</li>
+<li>What does an Elliptic Curve look like?</li>
+<li>What does it mean to multiply P by n?</li>
+<li>What about a finite field?</li>
+<li>How are the pubic keys used? Why are these a shared secret?</li>
+<li>Why is Elliptic Curve Cryptography useful?</li>
+</ul>
+<h3 id="what-are-elliptic-curves">What are Elliptic Curves?</h3>
+<p>A Elliptic Curve is the set of solutions to an equation of the form</p>
+<blockquote>
+<p>y<sup>2</sup> = x<sup>3</sup> + AX + B</p>
+</blockquote>
+<h3 id="what-does-an-elliptic-curve-look-like">What does an Elliptic Curve look like?</h3>
+<p>Two examples of Elliptic Curves are as follows:</p>
+<p><img src="/images/independent-crypto/ecc-1.png" alt="A simple elliptic curve" /></p>
+<p>and:</p>
+<p><img src="/images/independent-crypto/ecc-2.png" alt="Another simple elliptic curve" /></p>
+<h3 id="adding-p-and-q">Adding P and Q</h3>
+<p>Multiplication is <em>just</em> repeated addition.
+Oh shoot we haven't said how "addition" happens on an Elliptic Curve. Let's do that.</p>
+<p>Addition is the process of drawing a line L between P and Q.
+The third point that the line L intersects is point R. When R is reflected over the X axis we call this R'.
+The result of P ⊕ Q (read: P 'plus' Q) is R'.</p>
+<p>We can enumerate these steps as:</p>
+<ol>
+<li>Take two points P and Q on the Elliptic Curve E.</li>
+<li>Draw a line L which passes through these two points.</li>
+<li>L should ultimately pass through <em>three</em> points: P, Q, and R.</li>
+<li>Multiply the Y coordinate of R by -1, this is R'.</li>
+<li>P ⊕ Q = R'.</li>
+</ol>
+<p>Here's a visualization of straight forward addition.</p>
+<p><img src="/images/independent-crypto/ecc-3.png" alt="Annotated curve E with points P, Q, R, R&#39; and line L labeled." /></p>
+<p>You might think "What happens when P is tangent a point on E?" In that
+case we say P = Q, so R = P ⊕ P, or R = 2P. It looks like this:</p>
+<p><img src="/images/independent-crypto/ecc-4.png" alt="Annotated curve E with points P, R, R&#39; and line L labeled. P is tangent to the curve." /></p>
+<p>Wait a second, 2P looks like n*P which was one of the questions we had!
+Don't worry, we'll get there soon.</p>
+<h3 id="that-thing-about-finite-fields">That thing about Finite Fields</h3>
+<p>In practice we bound the curve over a field F<sub>p</sub> with p ≥ 3.
+We input {1, 2, ..., p-1} as the value of X in E and select the results which are squares modulo 13.</p>
+<p>For example:</p>
+<blockquote>
+<p>E : y<sup>2</sup> = x<sup>3</sup> + 3X + 8 over F<sub>13</sub>
+X = 1
+1 + 3 + 8 = 12
+12 is a square (mod 13)</p>
+</blockquote>
+<p>Repeating this gives us the set of points in E(F<sub>13</sub>):</p>
+<blockquote>
+<p>E(F<sub>13</sub>) = {O, (1,5), (1,8), (2,3), (2,10), (9,6), (9,7),
+(12,2), (12,11)}</p>
+</blockquote>
+<p>In practice this bounds the graph of E and forces us to draw a strange modulus graph shown below:</p>
+<p><img src="/images/independent-crypto/ecc-5.gif" alt="Elliptic Curves illustrated where each point is a valid coordinate. There are no curves." /></p>
+<p><em>Image source: A (relatively easy to understand) primer on elliptic curve cryptography</em><sup class="footnote-reference"><a href="#1">1</a></sup></p>
+<h3 id="multiplying-p-by-an-integer-with-the-double-and-add-algorithm">Multiplying P by an integer with The Double-and-Add Algorithm</h3>
+<p>To "multiply" P by n we need to use the Double-and-Add Algorithm.
+Here's how that looks:</p>
+<ol start="0">
+<li>Take a point P ∈ E(F<sub>p</sub>) and an integer n ≥ 1.</li>
+<li>Set Q = P and R = O.</li>
+<li>Loop while n &gt; 0.
+3.  If n ≡ 1 (mod 2), set R = R + Q
+4.  Set Q = 2Q and n = floor(n/2).</li>
+<li>Return the point R, which equals nP.</li>
+</ol>
+<p><em>Recall that the algorithm for finding point 2Q was covered in the above section</em> <a href="/elliptic-curve-cryptography/#adding-p-and-q">Adding P and Q</a></p>
+<h3 id="what-is-the-shared-secret">What <em>is</em> the shared secret?</h3>
+<p>Let's review.
+The shared secret is the second point n<sub>A</sub>n<sub>B</sub>P, which is a point on the public curve E(F<sub>p</sub>).
+This point can be used to encrypt information as it is a shared secret (necessary for DHKE).
+How exactly it is used to encrypt information is left as an exercise for readers in charge of cryptographic implementation standards.</p>
+<p>The reason this is a shared secret is because an adversary needs to solve the following Elliptic Curve Discrete Logarithm Problem</p>
+<blockquote>
+<p>nP = Q<sub>A</sub></p>
+</blockquote>
+<p>Which is a very hard problem, as mentioned in the next section.</p>
+<h2 id="an-example-of-elliptic-curve-cryptography">An example of Elliptic Curve Cryptography</h2>
+<p>This sounds good in theory, but let's give it a test drive.</p>
+<p>Alice and Bob are given the following shared information:</p>
+<blockquote>
+<p>p = 3851, E: y<sup>2</sup> = x<sup>3</sup> + 324X + 1287, P = (920, 303) ∈ E(F<sub>3851</sub>)</p>
+</blockquote>
+<p>Alice and Bob choose their secret integers:</p>
+<blockquote>
+<p>n<sub>A</sub> = 1194
+n<sub>B</sub> = 1759</p>
+</blockquote>
+<p>Alice and Bob then compute their public keys:</p>
+<blockquote>
+<p>Alice computes Q<sub>A</sub> = 1194P = (2067, 2178) ∈ E(F<sub>3851</sub>)
+Bob computes Q<sub>B</sub> = 1759P = (3684, 3125) ∈ E(F<sub>3851</sub>)</p>
+</blockquote>
+<span class="note">
+    <span class="note-title">
+        Note
+    </span>
+
+    <span class="note-body">
+        &lt;p&gt;Remember that we use the Double-and-Add algorithm to compute
+Q&lt;sub&gt;A&lt;&#x2F;sub&gt; and Q&lt;sub&gt;B&lt;&#x2F;sub&gt;. This invloves iteratively computing the
+tangent line at a point, the intersection with E at that intersection,
+and reflecting that point over the X axis.&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<p>Alice and Bob trade public keys and calculate their shared secret:</p>
+<blockquote>
+<p>Alice computes n<sub>A</sub>Q<sub>B</sub> = 1194(3684, 3125) = (3347, 1242) ∈ E(F<sub>3851</sub>)
+Bob computes n<sub>B</sub>Q<sub>A</sub> = 1759(2067, 2178) = (3347, 1242) ∈ E(F<sub>3851</sub>)</p>
+</blockquote>
+<p>Therefore (3347, 1242) is the shared secret.</p>
+<h2 id="why-elliptic-curve-cryptography-is-useful">Why Elliptic Curve Cryptography is useful</h2>
+<p>While it is harder than simply multiplying mod p for Alice to compute her shared secret (which is the case in RSA), it is <em>even harder</em> for a
+malicious actor to figure out that same shared secret.
+This point is best put by the source <em>A (relatively easy to understand) primer on elliptic curve cryptography</em><sup class="footnote-reference"><a href="#2">2</a></sup>:</p>
+<blockquote>
+<p>You can compute how much energy is needed to break a cryptographic algorithm and compare that with how much water that energy could boil.
+This is a kind of a cryptographic carbon footprint. By this measure, breaking a 228-bit RSA key requires less energy than it takes to boil a teaspoon of water.
+Comparatively, breaking a 228-bit elliptic curve &gt; key requires enough energy to boil all the water on earth.
+For this &gt; level of security with RSA, you'd need a key with 2,380 bits.</p>
+</blockquote>
+<p>So an Elliptic Curve Cryptography key can be one magnitude smaller in size and offer the same level of security as RSA.</p>
+<p>We can put this in more concrete terms: the fastest algorithm to solve the Elliptic Curve Discrete Logarithm Problem, which Elliptic DHKE security is built upon, in E(F<sub>p</sub>) takes √p steps.
+This is much more difficult than the 'vanilla' Discrete Logarithm Problem.</p>
+<h2 id="notes-and-edge-cases">Notes and edge cases</h2>
+<p>Elliptic Curve Cryptography, much like the rest of Cryptography, deals heavily with <a href="https://en.wikipedia.org/wiki/Number_theory">Number Theory</a>.
+Despite my best efforts most of the nitty-gritty Number Theory in this topic went <em>way</em> over my head.
+As a result I didn't include much of that kind of stuff and instead focused on the things I <em>could</em> share and sound smart about.</p>
+<p>Here are some other things about Elliptic Curve Cryptography I didn't cover that deserve more air time:</p>
+<ul>
+<li>The Elliptic Curve chosen must meet a special set of criteria; any old Elliptic Curve won't do.
+This was the cause of a cryptographic breach with Elliptic Curve Cryptography a few years ago that triggered doubts about Elliptic Curve Cryptography as a whole.</li>
+<li>Some primes cause solving the Elliptic Curve Discrete Logarithm Problem for E(F<sub>p</sub>) to be easier than the Discrete Logarithm Problem, these primes can be computed and should be avoided.</li>
+<li>If you want a deeper understanding of the theory of Elliptic Curves (addition of points on these curves, etc) you should look into <a href="https://en.wikipedia.org/wiki/Algebraic_geometry">algebraic geometry</a>.</li>
+</ul>
+<h2 id="annotated-bibliography">Annotated Bibliography</h2>
+<p>An Introduction to Mathematical Cryptography<sup class="footnote-reference"><a href="#3">3</a></sup> The chapter in this textbook on Elliptic Curves in Cryptography established the bedrock understanding of the topic of Elliptic Curve Cryptography.
+This ended up being the main resource for this post and offered a great median between "Regular Joe's guide to Elliptic Curve Cryptography" and "The graduate student's guide to Elliptic Curve Cryptography" which were my other two resources.
+It was also the source of all examples, which were very useful in gaining an intuitive understanding of the material.</p>
+<p>A (relatively easy to understand) primer on elliptic curve cryptography<sup class="footnote-reference"><a href="#4">4</a></sup> This blog post was my <em>second</em> source and did a good job of taking the proofs and dense material in Intro to Math Cyrpto (above) and boiled it down to the important stuff.
+It drastically improved further readings of the original textbook and provided that great animated image of adding P ⊕ Q in E(F<sub>p</sub>). It didn't cover any of the Number Theory, but explained the historical context of Elliptic Curve Cryptography, roughly how/why it works, and did a good job of describing it's impact in our world today.</p>
+<p>Cryptography: An Introduction<sup class="footnote-reference"><a href="#5">5</a></sup>
+This wasn't a resource I actually <em>used</em>, but I did read the chapter on Elliptic Curve Cryptography (chapter 2!).
+It gave me an appreciation for the previous two sources and some exposure to the other ways Elliptic Curves can be taught.</p>
+<h2 id="errata">Errata</h2>
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p>A (relatively easy to understand) primer on elliptic curve cryptography, October 24, 2013, Nick Sullivan, Cloudflare blog, reposted on Ars Technica, <a href="https://arstechnica.com/information-technology/2013/10/a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography/">https://arstechnica.com/information-technology/2013/10/a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography/</a></p>
+</div>
+<div class="footnote-definition" id="2"><sup class="footnote-definition-label">2</sup>
+<p>A (relatively easy to understand) primer on elliptic curve cryptography, October 24, 2013, Nick Sullivan, Cloudflare blog, reposted on Ars Technica, <a href="https://arstechnica.com/information-technology/2013/10/a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography/">https://arstechnica.com/information-technology/2013/10/a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography/</a></p>
+</div>
+<div class="footnote-definition" id="3"><sup class="footnote-definition-label">3</sup>
+<p>An Introduction to Mathematical Cryptography, 2008, Jeffery Hoffstein, Jill Pipher, Joseph H. Silverman, Springer Publishing, ISBN 978-0-387-77993-5</p>
+</div>
+<div class="footnote-definition" id="4"><sup class="footnote-definition-label">4</sup>
+<p>A (relatively easy to understand) primer on elliptic curve cryptography, October 24, 2013, Nick Sullivan, Cloudflare blog, reposted on Ars Technica, <a href="https://arstechnica.com/information-technology/2013/10/a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography/">https://arstechnica.com/information-technology/2013/10/a-relatively-easy-to-understand-primer-on-elliptic-curve-cryptography/</a></p>
+</div>
+<div class="footnote-definition" id="5"><sup class="footnote-definition-label">5</sup>
+<p>Cryptography: An Introduction (Third Edition), May 19, 2016, Nigel Smart, <a href="https://www.cs.umd.edu/~waa/414-F11/IntroToCrypto.pdf">https://www.cs.umd.edu/~waa/414-F11/IntroToCrypto.pdf</a></p>
+</div>
+
+  </main>
+  <p>
+        Tags:
+          <a href="/tags/independent-crypto/">#independent crypto</a>
+  </p>
+<footer>
+  Made with <a href="https://www.getzola.org/">Zola</a>;
+  theme inspired by <a href="https://codeberg.org/alanpearce/zola-bearblog">Zola ʕ•ᴥ•ʔ Bear</a>.
+</footer>
+</body>
+</html>

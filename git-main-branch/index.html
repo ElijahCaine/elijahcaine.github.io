@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="shortcut icon" href="&#x2F;favicon.ico"><title>Nuggit: Manually change your default branch name | elijah.run</title>
+  <meta name="title" content="Nuggit: Manually change your default branch name">
+<meta name="description" content="A blog about tech, media, and art">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="alternate" type="application/atom+xml" title="elijah.run" href="/atom.xml">
+  <style>
+    :root {
+    --width: 586px;
+    --font-main: Verdana, sans-serif;
+    --font-secondary: "Times New Roman", serif;
+    --font-scale: 1.1em;
+    --background-color: #fff;
+    --heading-color: #222;
+    --text-color: #444;
+    --link-color: #3273dc;
+    --visited-color: #8b6fcb;
+    --blockquote-color: #222;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background-color: #01242e;
+      --heading-color: #eee;
+      --text-color: #ddd;
+      --link-color: #8cc2dd;
+      --visited-color: #8b6fcb;
+      --blockquote-color: #ccc;
+    }
+  }
+
+  body {
+    font-family: var(--font-secondary);
+    font-size: var(--font-scale);
+    margin: auto;
+    padding: 20px;
+    max-width: var(--width);
+    text-align: left;
+    background-color: var(--background-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: var(--text-color);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-main);
+    color: var(--heading-color);
+  }
+
+  a {
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  nav a {
+    margin-right: 8px;
+  }
+
+  nav span.active {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  strong,
+  b {
+    color: var(--heading-color);
+  }
+
+  button {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  main {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px dashed;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  pre code {
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 0.875rem;
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: monospace;
+    padding: 2px;
+    border-radius: 3px;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: var(--code-color);
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px 0;
+    text-align: center;
+  }
+
+  .title:hover {
+    text-decoration: none;
+  }
+
+  .title h1 {
+    font-size: 1.5em;
+  }
+
+  .inline {
+    width: auto !important;
+  }
+
+  .highlight,
+  .code {
+    padding: 1px 15px;
+    background-color: var(--code-background-color);
+    color: var(--code-color);
+    border-radius: 3px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    overflow-x: auto;
+  }
+
+  /* blog post list */
+  ul.posts {
+    list-style-type: none;
+    padding: unset;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  ul.posts li {
+    line-height: 1;
+    margin: 0;
+  }
+
+  ul.posts li time {
+    margin-left: 0px;
+    font-size: 12px;
+  }
+
+  ul.posts li a:visited {
+    color: var(--visited-color);
+  }
+
+  li.post {
+    padding: 0px 0px 10px 0px;
+  }
+
+  span.tags {
+    font-size: smaller;
+  }
+
+  /* table of contents */
+  details ul {
+    list-style-type: circle;
+  }
+
+  </style>
+</head>
+<body>
+  <header>
+  <a href="/" class="title">
+    <h1>elijah.run</h1>
+  </a>
+  <nav aria-label="site">
+      <a href="/">(🏠 elijah.run)</a>
+      <a href="https:&#x2F;&#x2F;games.elijah.run">(🕹️ games)</a>
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;pop">(🐙 github 🐱)</a>
+      <a href="/Elijah Voigt.pdf">(👔 resume)</a>
+  </nav>
+</header>
+<h1>Nuggit: Manually change your default branch name</h1>
+      <p>
+        <i>
+          <time datetime="2021-07-07T00:00:00+00:00" pubdate>Wed 07 Jul 2021</time>
+        </i>
+      </p>
+    <details open>
+      <summary>Table of contents</summary>
+    <ul>
+        <li>
+          <a href="/git-main-branch/#note">Note...</a>
+        </li>
+    </ul>
+    </details>
+  <main>
+    <p>So I was on my laptop running an ancient release of Linux called Fedora 30 -- so old COVID wasn't even a twinkle in a bat's eye when it was released.</p>
+<p>On this ancient OS I'm have <code>git 2.21.3</code> which is like 13 versions behind.
+I ask yum -- err <em>dnf</em> -- if there is an upgrade and it's like "nope".
+Nothing makes me feel older than software.</p>
+<p>I've gotten into the habit of naming my default branches <code>main</code> instead of <code>master</code> because every time I say "master" I need to take a shower.
+I'm pretty sure the latest git names the default branch <code>main</code> out of the box, but git from April 2019 was not aware of problematic language choices.</p>
+<p>So as one does I'm starting a new repo and I decide before updating <code>git</code>, which is gonna require like 3 Fedora upgrades, I'm just going to rename the branch.
+I know I'll get woke-git if I upgrade Fedora, but I want to write this post first so we're gonna find a workaround.</p>
+<pre data-lang="txt" style="background-color:#191919;color:#f8f8f2;" class="language-txt "><code class="language-txt" data-lang="txt"><span>[branch:master]$ git branch -m main
+</span><span>error: refname refs/heads/master not found
+</span><span>fatal: Branch rename failed
+</span></code></pre>
+<p>Hmm.
+So on a bare repo you can't rename the starting branch because there's no objects in the repo... or something like that <em>waves hands</em>.</p>
+<p>Umm... I guess we'll go spelunking into the <code>.git</code> directory to see if we can manually force our <code>main</code> branch naming.</p>
+<pre data-lang="txt" style="background-color:#191919;color:#f8f8f2;" class="language-txt "><code class="language-txt" data-lang="txt"><span>[branch:master]$ cd .git
+</span><span>[.git]$ tree -F
+</span><span>.
+</span><span>├── branches/
+</span><span>├── config
+</span><span>├── description
+</span><span>├── HEAD
+</span><span>├── hooks/
+</span><span>│   ├── A bunch of sample scripts
+</span><span>├── info/
+</span><span>│   └── exclude
+</span><span>├── objects/
+</span><span>│   ├── info/
+</span><span>│   └── pack/
+</span><span>└── refs/
+</span><span>    ├── heads/
+</span><span>    └── tags/
+</span></code></pre>
+<p>Well unsurprisingly we have a bunch of empty directories and some sample scripts.</p>
+<p>The only files that <em>might</em> be worth looking at are <code>config</code>, <code>description</code>, and <code>HEAD</code>.</p>
+<pre data-lang="txt" style="background-color:#191919;color:#f8f8f2;" class="language-txt "><code class="language-txt" data-lang="txt"><span>// config
+</span><span>[core]
+</span><span>    repositoryformatversion = 0
+</span><span>    filemode = true
+</span><span>    bare = false
+</span><span>    logallrefupdates = true
+</span></code></pre>
+<p>This seems to be config options for this repo, none of which mention branch naming so it's a skip for me.</p>
+<pre data-lang="txt" style="background-color:#191919;color:#f8f8f2;" class="language-txt "><code class="language-txt" data-lang="txt"><span>// description
+</span><span>Unnamed repository; edit this file &#39;description&#39; to name the repository.
+</span></code></pre>
+<p>I had no idea this feature existed.
+I have never seen it be used -- but fun facts!</p>
+<pre data-lang="txt" style="background-color:#191919;color:#f8f8f2;" class="language-txt "><code class="language-txt" data-lang="txt"><span>// HEAD
+</span><span>ref: refs/heads/master
+</span></code></pre>
+<p>And the money shot. Let's change that bad boy to <code>refs/heads/main</code> and see if my magical git prompt picks it up:</p>
+<pre data-lang="txt" style="background-color:#191919;color:#f8f8f2;" class="language-txt "><code class="language-txt" data-lang="txt"><span>[.git]$ cd ../
+</span><span>[branch:main]$
+</span></code></pre>
+<p>Heyo!
+There you have it. How to manually change the name of your main branch in a fresh git repo.</p>
+<p>Sanity check, this won't fuck up if we commit right?</p>
+<pre data-lang="txt" style="background-color:#191919;color:#f8f8f2;" class="language-txt "><code class="language-txt" data-lang="txt"><span>$ cargo init .
+</span><span>$ git add . &amp;&amp; git commit -m &quot;initial commit&quot;
+</span><span>[main (root-commit) ebecbee] initial commit
+</span><span> 3 files changed, 12 insertions(+)
+</span><span> create mode 100644 .gitignore
+</span><span> create mode 100644 Cargo.toml
+</span><span> create mode 100644 src/main.rs
+</span></code></pre>
+<h2 id="note">Note...</h2>
+<p>After anxiously upgrading to Fedora 34 I confirmed that git fixed a lot of this:</p>
+<pre data-lang="txt" style="background-color:#191919;color:#f8f8f2;" class="language-txt "><code class="language-txt" data-lang="txt"><span>[pop@lappy foo]$ git init
+</span><span>hint: Using &#39;master&#39; as the name for the initial branch. This default branch name
+</span><span>hint: is subject to change. To configure the initial branch name to use in all
+</span><span>hint: of your new repositories, which will suppress this warning, call:
+</span><span>hint:
+</span><span>hint:   git config --global init.defaultBranch &lt;name&gt;
+</span><span>hint:
+</span><span>hint: Names commonly chosen instead of &#39;master&#39; are &#39;main&#39;, &#39;trunk&#39; and
+</span><span>hint: &#39;development&#39;. The just-created branch can be renamed via this command:
+</span><span>hint:
+</span><span>hint:   git branch -m &lt;name&gt;
+</span></code></pre>
+<p>And yes, <code>git branch -m &lt;name&gt;</code> does work on an empty repo.</p>
+
+  </main>
+  <p>
+        Tags:
+          <a href="/tags/git/">#git</a>
+  </p>
+<footer>
+  Made with <a href="https://www.getzola.org/">Zola</a>;
+  theme inspired by <a href="https://codeberg.org/alanpearce/zola-bearblog">Zola ʕ•ᴥ•ʔ Bear</a>.
+</footer>
+</body>
+</html>

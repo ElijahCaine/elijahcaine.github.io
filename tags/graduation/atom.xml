@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>elijah.run - graduation</title>
+    <subtitle>A blog about tech, media, and art</subtitle>
+    <link rel="self" type="application/atom+xml" href="/tags/graduation/atom.xml"/>
+    <link rel="alternate" type="text/html" href="/"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2017-12-12T00:00:00+00:00</updated>
+    <id>/tags/graduation/atom.xml</id>
+    <entry xml:lang="en">
+        <title>I. Fucking. Graduated.</title>
+        <published>2017-12-12T00:00:00+00:00</published>
+        <updated>2017-12-12T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/graduation/"/>
+        <id>/graduation/</id>
+        
+        <content type="html" xml:base="/graduation/">&lt;p&gt;Today I checked my grades for the last time.
+I can safely say that I have &lt;strong&gt;finally&lt;&#x2F;strong&gt; gotten a gorramn undergraduate degree in Computer Science, with a minor in Mathematics, from Oregon State University.[^1]&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#2&quot;&gt;1&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;I hear that this happens on the reg&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#3&quot;&gt;2&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt; but I&#x27;m sure that every single person who &lt;em&gt;actually graduates&lt;&#x2F;em&gt; feels amazing when they do.&lt;&#x2F;p&gt;
+&lt;p&gt;It&#x27;s not amazing because graduation is a Herculean feat.
+I know I&#x27;m not a 60 year old grandmother who dreamt of getting a college degree for 45 years and finally scraped together the cash and time in retirement.
+I&#x27;m also not a refugee that escaped a war-torn country for an education and a better life.
+I&#x27;m just another white dude that checked all the boxes.&lt;&#x2F;p&gt;
+&lt;p&gt;It wasn&#x27;t hard for me. I just had to put my head down and do the work.
+But it did take a long ass time.&lt;&#x2F;p&gt;
+&lt;p&gt;Honestly my story is exactly like &lt;em&gt;most&lt;&#x2F;em&gt; college graduation stories.
+I went to kindergarten, then elementary school, then middle school, then high school, then college, and now life.
+I plugged away at school, did what I needed to pass my classes, stressed and lamented, studied hard and eventually the system said &quot;Cool.You&#x27;re done.&quot; Along the way I learned how to &quot;play the game&quot;&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#4&quot;&gt;3&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;, albeit a bit late compared to a lot of my peers.&lt;&#x2F;p&gt;
+&lt;p&gt;I&#x27;m thankful to be in a field which doesn&#x27;t require a masters or PHD to get a jorb.
+Heck my field doesn&#x27;t really require the degree I got; a surprising number of my friends got well paying jobs sans-degree.&lt;&#x2F;p&gt;
+&lt;p&gt;I&#x27;m also thankful to graduate without debt.
+This came from some kickass parents + grandparents, some work during school, and some bad stuff that happened which ended up paying for abou half of my tuition.&lt;&#x2F;p&gt;
+&lt;p&gt;I&#x27;m thankful to graduate with wonderful friends, a job, and some passions which make my work-related decisions simple and profitable.&lt;&#x2F;p&gt;
+&lt;p&gt;Last, I&#x27;m thankful to be &lt;em&gt;done&lt;&#x2F;em&gt;. Now I can finally focus on &lt;em&gt;learning&lt;&#x2F;em&gt;, my real passion.&lt;&#x2F;p&gt;
+&lt;p&gt;I&#x27;m gonna have a &lt;a href=&quot;https:&#x2F;&#x2F;10barrel.com&#x2F;beer&#x2F;crush-cucumber-sour&#x2F;&quot;&gt;Cucumber Sour&lt;&#x2F;a&gt; and celebrate.
+Thanks for reading.&lt;&#x2F;p&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;1&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;4&lt;&#x2F;sup&gt;
+&lt;p&gt;I don&#x27;t claim to have the best sources, but at least it&#x27;s not Yahoo Answers: &lt;a href=&quot;https:&#x2F;&#x2F;www.reference.com&#x2F;education&#x2F;many-people-graduate-college-year-8b0ccf821050d39e&quot;&gt;https:&#x2F;&#x2F;www.reference.com&#x2F;education&#x2F;many-people-graduate-college-year-8b0ccf821050d39e&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;2&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;1&lt;&#x2F;sup&gt;
+&lt;p&gt;Go beavs.&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;3&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;2&lt;&#x2F;sup&gt;
+&lt;p&gt;I&#x27;m 99% sure I graduated.
+Something horribly kafkaesque might still happen, but fuckit.&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;4&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;3&lt;&#x2F;sup&gt;
+&lt;p&gt;This is shorthand for tips and tricks to get through school.&lt;&#x2F;p&gt;
+&lt;p&gt;School isn&#x27;t really focused on making sure you &lt;em&gt;learned&lt;&#x2F;em&gt;, it&#x27;s mostly designed to make sure you can pass tests.
+Once you figure this out you can focus on learning for the test instead of trying to grok the material.
+I believe the kids call it a &quot;life hack&quot;.&lt;&#x2F;p&gt;
+&lt;p&gt;Not that you shouldn&#x27;t try to grok the material, that just happens to take &lt;em&gt;way&lt;&#x2F;em&gt; longer than test-based learning.
+So if you want a personal life, learn for the test; if you want a PHD, learn for the material.&lt;&#x2F;p&gt;
+&lt;p&gt;I didn&#x27;t figure this system out until about Junior year of High School, too late to apply this zen skill to the ACT and SAT, but it was useful in college.&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+</content>
+        
+    </entry>
+</feed>

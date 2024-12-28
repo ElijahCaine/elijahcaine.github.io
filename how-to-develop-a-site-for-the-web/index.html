@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="shortcut icon" href="&#x2F;favicon.ico"><title>How to develop a site for the web | elijah.run</title>
+  <meta name="title" content="How to develop a site for the web">
+<meta name="description" content="A blog about tech, media, and art">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="alternate" type="application/atom+xml" title="elijah.run" href="/atom.xml">
+  <style>
+    :root {
+    --width: 586px;
+    --font-main: Verdana, sans-serif;
+    --font-secondary: "Times New Roman", serif;
+    --font-scale: 1.1em;
+    --background-color: #fff;
+    --heading-color: #222;
+    --text-color: #444;
+    --link-color: #3273dc;
+    --visited-color: #8b6fcb;
+    --blockquote-color: #222;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background-color: #01242e;
+      --heading-color: #eee;
+      --text-color: #ddd;
+      --link-color: #8cc2dd;
+      --visited-color: #8b6fcb;
+      --blockquote-color: #ccc;
+    }
+  }
+
+  body {
+    font-family: var(--font-secondary);
+    font-size: var(--font-scale);
+    margin: auto;
+    padding: 20px;
+    max-width: var(--width);
+    text-align: left;
+    background-color: var(--background-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: var(--text-color);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-main);
+    color: var(--heading-color);
+  }
+
+  a {
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  nav a {
+    margin-right: 8px;
+  }
+
+  nav span.active {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  strong,
+  b {
+    color: var(--heading-color);
+  }
+
+  button {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  main {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px dashed;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  pre code {
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 0.875rem;
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: monospace;
+    padding: 2px;
+    border-radius: 3px;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: var(--code-color);
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px 0;
+    text-align: center;
+  }
+
+  .title:hover {
+    text-decoration: none;
+  }
+
+  .title h1 {
+    font-size: 1.5em;
+  }
+
+  .inline {
+    width: auto !important;
+  }
+
+  .highlight,
+  .code {
+    padding: 1px 15px;
+    background-color: var(--code-background-color);
+    color: var(--code-color);
+    border-radius: 3px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    overflow-x: auto;
+  }
+
+  /* blog post list */
+  ul.posts {
+    list-style-type: none;
+    padding: unset;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  ul.posts li {
+    line-height: 1;
+    margin: 0;
+  }
+
+  ul.posts li time {
+    margin-left: 0px;
+    font-size: 12px;
+  }
+
+  ul.posts li a:visited {
+    color: var(--visited-color);
+  }
+
+  li.post {
+    padding: 0px 0px 10px 0px;
+  }
+
+  span.tags {
+    font-size: smaller;
+  }
+
+  /* table of contents */
+  details ul {
+    list-style-type: circle;
+  }
+
+  </style>
+</head>
+<body>
+  <header>
+  <a href="/" class="title">
+    <h1>elijah.run</h1>
+  </a>
+  <nav aria-label="site">
+      <a href="/">(🏠 elijah.run)</a>
+      <a href="https:&#x2F;&#x2F;games.elijah.run">(🕹️ games)</a>
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;pop">(🐙 github 🐱)</a>
+      <a href="/Elijah Voigt.pdf">(👔 resume)</a>
+  </nav>
+</header>
+<h1>How to develop a site for the web</h1>
+      <p>
+        <i>
+          <time datetime="2016-03-25T00:00:00+00:00" pubdate>Fri 25 Mar 2016</time>
+        </i>
+      </p>
+    <details open>
+      <summary>Table of contents</summary>
+    <ul>
+        <li>
+          <a href="/how-to-develop-a-site-for-the-web/#run-a-development-server-it-s-easy">Run A Development Server (it&#x27;s easy!)</a>
+        </li>
+    </ul>
+    </details>
+  <main>
+    <span class="note">
+    <span class="note-title">
+        Note
+    </span>
+
+    <span class="note-body">
+        &lt;p&gt;This post does not deal with the basics of HTML, CSS, or Javascript, but
+rather a simple and often overlooked part of the web-dev toolchain.&lt;&#x2F;p&gt;
+&lt;p&gt;If you would like help with the basics of HTML, CSS, and Javascript I
+suggest &lt;a href=&quot;https:&#x2F;&#x2F;codecademy.com&#x2F;learn&#x2F;make-a-website&quot;&gt;Codecademy&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<p>Web Development, especially the front-endy stuff, is a great way to
+understand how computers <em>think</em> and can be a wonderful foray into
+computer programming. Anybody that's made a website probably remembers
+their first time:</p>
+<ol>
+<li>Open up a text editor.</li>
+<li>Type something like the following in:</li>
+</ol>
+<pre data-lang="html" style="background-color:#191919;color:#f8f8f2;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#ff5e5e;">h1</span><span>&gt;Hello world!&lt;/</span><span style="color:#ff5e5e;">h1</span><span>&gt;
+</span><span>&lt;</span><span style="color:#ff5e5e;">p</span><span>&gt;This is so cool!&lt;/</span><span style="color:#ff5e5e;">h1</span><span>&gt;
+</span></code></pre>
+<ol start="3">
+<li><code>Save As index.html</code>.</li>
+<li>Right click and open the file in your browser.</li>
+<li>Marvel at what you've created and hack away at it all night long.</li>
+</ol>
+<p>And there you go! You've got a website made and ready to roll. It's not
+on a server, and you can't tell your friends to go to it from <em>their</em>
+computer --but those are just technicalities. You can still celebrate
+doing a thing <em>like a boss</em>.</p>
+<p>Unfortunately, when you test your website by viewing local files you're
+missing out on a lot of advantages and quirks that you get when you host
+a website on a <em>real server</em> using something like <a href="https://en.wikipedia.org/wiki/Web_server">Apache or
+Nginx</a>.</p>
+<p>For instance, when you run check your website by clicking through
+<code>file///home/username/project/files.html</code> all of your hyperlinks that
+should point to <code>http://mywebsite.ext/somepage/</code> will take you to
+<code>file:////somepage</code> when they should take you to
+<code>file:///home/username/projects/myawesomesite/somepage/index.html</code>.</p>
+<h2 id="run-a-development-server-it-s-easy">Run A Development Server (it's easy!)</h2>
+<h3 id="the-short-answer">The Short Answer</h3>
+<p><strong>Use Python!</strong></p>
+<pre data-lang="txt" style="background-color:#191919;color:#f8f8f2;" class="language-txt "><code class="language-txt" data-lang="txt"><span>$ python2 -m SimpleHTTPServer
+</span><span>Serving HTTP on 0.0.0.0 port 8000 ...
+</span></code></pre>
+<h3 id="the-longer-answer">The Longer Answer</h3>
+<p>You can run your own local webserver to serve files <em>locally</em>.
+This gets you all of the developmental advantages of running a webserver without having to rent or run a server in the cloud.
+The best part is that it's very easy to run a development web server.</p>
+<p>Here's how:</p>
+<ol>
+<li><a href="https://python.org/downloads/">Install Python</a></li>
+<li>Navigate to <code>your-awesome-website</code> directory/folder.</li>
+<li>Run <code>python -m SimpleHTTPServer</code> if you installed <code>python2</code> or run <code>python -m http.server</code> if you installed <code>python3</code>.</li>
+</ol>
+<span class="note">
+    <span class="note-title">
+        Note
+    </span>
+
+    <span class="note-body">
+        &lt;p&gt;These instructions assume you are doing things in a Unix environment (OSX or Linux) thought the commandline.
+If you are using Windows you should check out this &lt;a href=&quot;http:&#x2F;&#x2F;stackoverflow.com&#x2F;questions&#x2F;17351016&#x2F;set-up-python-simplehttpserver-on-windows&quot;&gt;stack overflow post&lt;&#x2F;a&gt; for Windows-specific help.&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<p>Then in your web browser go to the address <code>http://localhost:8000</code> and
+bam! <strong>Your</strong> Website.</p>
+<p><img src="/images/gifs/high-five.gif" alt="High Five.gif" /></p>
+
+  </main>
+  <p>
+        Tags:
+          <a href="/tags/development/">#development</a>
+  </p>
+<footer>
+  Made with <a href="https://www.getzola.org/">Zola</a>;
+  theme inspired by <a href="https://codeberg.org/alanpearce/zola-bearblog">Zola ʕ•ᴥ•ʔ Bear</a>.
+</footer>
+</body>
+</html>

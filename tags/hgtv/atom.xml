@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>elijah.run - HGTV</title>
+    <subtitle>A blog about tech, media, and art</subtitle>
+    <link rel="self" type="application/atom+xml" href="/tags/hgtv/atom.xml"/>
+    <link rel="alternate" type="text/html" href="/"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2022-01-18T00:00:00+00:00</updated>
+    <id>/tags/hgtv/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Buying a House Part 4: Is this investing?</title>
+        <published>2022-01-18T00:00:00+00:00</published>
+        <updated>2022-01-18T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/buying-a-house-04-is-this-investing/"/>
+        <id>/buying-a-house-04-is-this-investing/</id>
+        
+        <content type="html" xml:base="/buying-a-house-04-is-this-investing/">&lt;p&gt;&lt;em&gt;This is part 4 of a 4 part series on buying a home&lt;&#x2F;em&gt;. &lt;em&gt;Check out part 1
+for to start from the beginning&lt;&#x2F;em&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Before buying a house a major talking point used to convince me of the
+idea was some variation of &quot;It&#x27;s a great investment!&quot; or &quot;You&#x27;re just
+throwing money away by renting&quot;. I try to have a healthy level of
+skepticism about things, especially when counter-arguments aren&#x27;t part
+of most the usual talking points on a topic. So let&#x27;s figure out &quot;is
+buying a house a good investment?&quot;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;houses-are-a-great-investment-origin-story&quot;&gt;&quot;Houses are a great investment&quot; origin story&lt;&#x2F;h2&gt;
+&lt;p&gt;Before de-bunking -- or just bunking -- this myth, let&#x27;s ask where it
+came from.&lt;&#x2F;p&gt;
+&lt;p&gt;Hundreds of years ago, when you had to own property to be considered a
+voting citizen, investing in property was a great idea! Housing was the
+most affordable asset you could buy that could passively grow in value.&lt;&#x2F;p&gt;
+&lt;p&gt;As the years went on this continued to be true. Housing is a market
+rarely which declines value, with umm... one big exception, and it can
+easily be passed on to family, creating generational wealth.&lt;&#x2F;p&gt;
+&lt;p&gt;This notion also pre-dates easier market investing tools like the index
+fund, Vanguard, and Robinhood. When it wasn&#x27;t really clear how an
+average individual could get a diversified portfolio of stocks and
+bonds, a house was a safe investment that was all but guaranteed to
+increase in value -- and it would protect you from snow and rain and
+shit!&lt;&#x2F;p&gt;
+&lt;p&gt;So the origin story of this mantra isn&#x27;t &lt;em&gt;false&lt;&#x2F;em&gt;, but it may be
+outdated. Let&#x27;s find out.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;meet-finley&quot;&gt;Meet Finley&lt;&#x2F;h2&gt;
+&lt;p&gt;For the purposes of this post we will invent a hypothetical protagonist
+named Finley. Our fictional mascot was created in a lab to be incredibly
+average: the most basic curve-fitting person we could find in the the
+Portland tri-state area. Finley likes all the Marvel movies, drinks
+IPAs, and they go on hikes every other weekend. They also make an
+average salary, live in an average apartment, and intend to buy an
+average house. How convenient for talking about hypotheticals.&lt;&#x2F;p&gt;
+&lt;p&gt;Finley lives in Portland, so all of our numbers are for Portland Oregon,
+USA.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;first-finley-rents-an-apartment&quot;&gt;First Finley rents an apartment&lt;&#x2F;h3&gt;
+&lt;p&gt;Finley is currently renting an apartment. On average this is $1250 for
+the Portland area. This is roughly equivalent to what you would pay for
+a mortgage on a 300k house with a 20% (60k) down payment and a 3.0%
+interest rate (which is only a little optimistic).&lt;&#x2F;p&gt;
+&lt;p&gt;Here&#x27;s what I used to cook up those numbers: *
+&lt;a href=&quot;https:&#x2F;&#x2F;www.mortgagecalculator.org&#x2F;&quot;&gt;https:&#x2F;&#x2F;www.mortgagecalculator.org&#x2F;&lt;&#x2F;a&gt; *
+&lt;a href=&quot;https:&#x2F;&#x2F;www.realtor.com&#x2F;mortgage&#x2F;rates&#x2F;Portland_OR&quot;&gt;https:&#x2F;&#x2F;www.realtor.com&#x2F;mortgage&#x2F;rates&#x2F;Portland_OR&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;then-finley-buys-a-house&quot;&gt;Then Finley buys a house&lt;&#x2F;h3&gt;
+&lt;p&gt;In 2020, when I bought a house, the median house prices ranged from 430k
+to 500k trending upward. In the last 12 months from writing this post
+median home prices have ranged from 469k to 550k with a trend still
+going up.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;www.redfin.com&#x2F;city&#x2F;30772&#x2F;OR&#x2F;Portland&#x2F;housing-market&quot;&gt;https:&#x2F;&#x2F;www.redfin.com&#x2F;city&#x2F;30772&#x2F;OR&#x2F;Portland&#x2F;housing-market&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;For simplicity let&#x27;s say Finley got a deal and bought a house for 480k
+with a 3.0% mortgage rate. Their down-payment is 96k and their monthly
+mortgage payment is $1,900.&lt;&#x2F;p&gt;
+&lt;p&gt;Right off the bat Finley is paying 650 more per month on top of the 96k
+they had to pay up front. Let&#x27;s assume Finley is still able to cover
+this cost since they&#x27;re very frugal and despite cost of living going up
+34% they are still spending less than 1&#x2F;3 of their income on living
+expenses.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;how-money-works-for-you&quot;&gt;How money works for you&lt;&#x2F;h2&gt;
+&lt;p&gt;What has Finley &lt;em&gt;financially&lt;&#x2F;em&gt; gained and lost by buying a house?&lt;&#x2F;p&gt;
+&lt;p&gt;Finley has &lt;em&gt;lost&lt;&#x2F;em&gt; the ability to invest a lump sum of 96k on top of an
+extra 600&#x2F;month which could be going toward a range of investments.
+Assuming Finley would have invested this in a stock market index we
+expect this to have increased in value by about 10% year over year given
+historical trends. To put numbers to these claims: 96k alone would have
+appreciated in value to 1,600,000 over 30 years, the duration of most
+home loans. If we add the additional 600&#x2F;month we would have about
+2,860,000 after 30 years.&lt;&#x2F;p&gt;
+&lt;p&gt;(these are very rough calculations using this python code)&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span&gt;a &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;600 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;* &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;12  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Annual investable income
+&lt;&#x2F;span&gt;&lt;span&gt;s &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;96000     &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Starting seed fund
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;x &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;in &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;range&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;30&lt;&#x2F;span&gt;&lt;span&gt;):  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Collect 30 years
+&lt;&#x2F;span&gt;&lt;span&gt;  s &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;*= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;0.1           &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Grow by 10% for the year
+&lt;&#x2F;span&gt;&lt;span&gt;  s &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;+= &lt;&#x2F;span&gt;&lt;span&gt;a             &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Add money saved by renting
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;(this is a very rough approximation of collecting interest over 30
+years)&lt;&#x2F;p&gt;
+&lt;p&gt;Note this doesn&#x27;t mean he are guaranteed to have 2.9 million at the end
+of 30 years; some of those gains would be diminished by inflation, rent
+would go up, and the market could have a down-turn at the 30 year mark.
+Plus, Finley would probably spend more as they get older (called
+&quot;lifestyle inflation&quot;) resulting in diminished invest-able funds -- but
+they would also probably get cost of living raises over time, so this
+should all come out in the wash.&lt;&#x2F;p&gt;
+&lt;p&gt;But a house would &lt;em&gt;also&lt;&#x2F;em&gt; grow in value right? This is tricky to
+calculate because we&#x27;re in a weird housing market right now -- don&#x27;t
+call it a bubble -- but let&#x27;s take the last 10 years at face value. In
+2011 the median Portland house was ~260k, and today it is ~550k. This is
+a 111% return over 10 years, or 7.82% annually.&lt;&#x2F;p&gt;
+&lt;p&gt;So if Finley sold their house after 10 years they would make a profit of
+~290k.&lt;&#x2F;p&gt;
+&lt;p&gt;I neglected to calculate what Finely&#x27;s index fund strategy would return
+after only 10 years, so let&#x27;s do that now. Using the above code, but
+limiting it to just 10 years instead of 30, we get a ~363k total which
+does beat the housing investment by a fair margin. &lt;a href=&quot;https:&#x2F;&#x2F;www.calculator.net&#x2F;roi-calculator.html?beginbalance=259000&amp;amp;endbalance=550000&amp;amp;investmenttime=date&amp;amp;investmentlength=2.5&amp;amp;beginbalanceday=08%2F01%2F2011&amp;amp;endbalanceday=08%2F01%2F2021&amp;amp;ctype=1&amp;amp;x=69&amp;amp;y=36&#x2F;&quot;&gt;citation
+needed&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Note that I am omitting all of the nickles and dimes that add up on both
+sides. Capital gains tax makes your index fund strategy less appealing.
+Home ownership means you are on the hook to fix anything that breaks,
+pay property tax, and there are fees associated with buying and selling
+a home -- plus the cost of the loan which we didn&#x27;t touch on at all! At
+the same time, all the money Finley was paying in rent really was being
+flushed away and not appreciating in value, which is a shame.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;elijah-just-tell-me-if-it-s-good-or-bad&quot;&gt;Elijah, just tell me if it&#x27;s good or bad&lt;&#x2F;h2&gt;
+&lt;p&gt;A house is not a great investment, but that&#x27;s not the point.&lt;&#x2F;p&gt;
+&lt;p&gt;I didn&#x27;t buy a house because it was a good investment, I bought a house
+because I wanted more space and it penciled out to about the same
+monthly cost as my super expensive bougie central-Portland apartment. I
+am glad that my house will re-coop some cost when I decide to move out,
+and I do like the stability of home ownership; I don&#x27;t need to worry
+about rent going up, or getting evicted because my landlord wants to
+demolish the building for something else, etc.&lt;&#x2F;p&gt;
+&lt;p&gt;So many variables go into the &quot;is this a good investment&quot; question. If
+you need to stretch yourself thin, or you already have debt, or what the
+monthly cost is -- all of these and more contribute to the viability of
+buying a house. If your monthly housing costs wouldn&#x27;t go up, it&#x27;s
+probably a solid move.&lt;&#x2F;p&gt;
+&lt;p&gt;Home ownership is not perfect, it&#x27;s not a great investment, but it is an
+OK use of your money if you can afford it. It&#x27;s financially sound if you
+can make it work, comfortably, but it&#x27;s not your only option. Being
+frugal and renting an affordable apartment allows you to make other
+&quot;better&quot; investments, if that&#x27;s all you&#x27;re min-maxing for.&lt;&#x2F;p&gt;
+&lt;p&gt;I don&#x27;t regret buying a house (yet?) but I would be just as happy if I
+was renting a house, or still living in an apartment.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;one-more-soap-box&quot;&gt;One more soap-box&lt;&#x2F;h2&gt;
+&lt;p&gt;Side note: we need to build more housing. Portland passed a bill
+recently allowing more dense housing. If I had more money I would throw
+money at building triplex housing in Portland.&lt;&#x2F;p&gt;
+&lt;p&gt;For too many of my 20-something peers the problem is not &quot;If I want to
+buy a house&quot; but &quot;When can I afford to buy a house?&quot;. There is a bit of
+a market boom right now, but with more housing the market should settle
+down. In a perfect world anybody would be able to buy property if they
+want.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;Thank you for reading this fourth and final installment of my housing
+series. Now go out a buy a house!&lt;&#x2F;p&gt;
+&lt;p&gt;Lol, just kidding. Go do more research you crazy kid.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Buying a House Part 3: Renovation Station!</title>
+        <published>2022-01-04T00:00:00+00:00</published>
+        <updated>2022-01-04T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/buying-a-house-03-renovation-station/"/>
+        <id>/buying-a-house-03-renovation-station/</id>
+        
+        <content type="html" xml:base="/buying-a-house-03-renovation-station/">&lt;p&gt;&lt;em&gt;This is part 3 of a 4 part series on buying a home&lt;&#x2F;em&gt;. &lt;em&gt;Check out part 1
+for to start from the beginning&lt;&#x2F;em&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Congratulations! You slogged through finding, trying to buy, and then
+successfully buying a house. Give yourself a pat on the back because
+that is an impressive feat you&#x27;ve accomplished.&lt;&#x2F;p&gt;
+&lt;p&gt;This post is more of a personal post than the others covering the
+renovations we&#x27;ve made to our house in the first year. I hope it helps
+illustrate some of the pros (and cons) of being able to do whatever the
+heck you want when you own the place.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;let-s-fuck-up-this-yard&quot;&gt;Let&#x27;s fuck up this yard&lt;&#x2F;h2&gt;
+&lt;p&gt;The best part of our house has been the back yard. I&#x27;m writing this post
+from my standing desk on my back patio, our doggo loves playing fetch in
+the yard, and we even started a garden.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;patiooooo&quot;&gt;Patiooooo&lt;&#x2F;h3&gt;
+&lt;p&gt;Our first project was to build a stone patio. Not some half-assed &quot;throw
+some rocks on the ground and call it good&quot; thing, but some real HGTV
+quality shit.&lt;&#x2F;p&gt;
+&lt;p&gt;Lucy of course did all of the research, planning, and purchasing of
+materials. I moved a bunch of rocks.&lt;&#x2F;p&gt;
+&lt;p&gt;Before we could build the patio we had to dig 7&quot; of dirt out from the
+ground, which is non-trivial. We invited some friends, bought Thai food,
+and got to work in late October.&lt;&#x2F;p&gt;
+&lt;p&gt;Fun fact: 7&quot; of dirt for a 10&quot;x16&quot; hole is a shit-ton of dirt. We
+eventually had to rent one of those big metal waste disposal bins you
+usually see in front of houses or other construction sites. Of course
+then we had to move the dirt a second time from piles in our yard to the
+bin, but then it was gone for good.&lt;&#x2F;p&gt;
+&lt;p&gt;Once we dug out the dirt we were able to fill it back in with rocks
+(pebbles) then smaller rocks (sand) and finally pavers, which is what
+the industry calls short cube rocks -- not to be confused with bricks.&lt;&#x2F;p&gt;
+&lt;p&gt;The hardest part was definitely making everything flat. The pavers are
+big squares, which I though would be forgiving if the underlying sand
+and gravel wasn&#x27;t flat, but wow I was wrong. Eventually I found my
+groove and got very zen about making the sand flat. We used used a 10&#x27;
+2x4 and dragged it across our layer of sand in a variety of patterns
+until eventually it was &quot;flat enough&quot;. In retrospect it was kinda fun.
+Very calming once you submit to the process.&lt;&#x2F;p&gt;
+&lt;p&gt;Finally we put the pavers down, filled the cracks with polymeric sand
+(which is just &quot;concrete lite&quot;), and sealed that bitch up.&lt;&#x2F;p&gt;
+&lt;p&gt;The whole project took a few weeks and cost about 1k for materials.&lt;&#x2F;p&gt;
+&lt;p&gt;We almost gave up at the end when we realized making things flat was way
+harder than expected. The quote to get the project finished, which was
+90% done, was around 5k which gave us heart-burn so we stubbornly
+finished it ourselves. So it turns out we saved ~5k by doing this
+project ourselves.&lt;&#x2F;p&gt;
+&lt;p&gt;After this I&#x27;m game to do any home project myself as long as it doesn&#x27;t
+involve electricity and plumbing in the walls.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;baby-you-re-a-fiiiireee-pit&quot;&gt;Baby you&#x27;re a fiiiireee-pit&lt;&#x2F;h3&gt;
+&lt;p&gt;A comparatively small project was our fire pit. This was just a fire
+ring with some bricks stacked on the outside. Very safe, very simple.&lt;&#x2F;p&gt;
+&lt;p&gt;Honestly it was nice to get a quick win.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;big-ass-raised-bed&quot;&gt;Big ass raised bed&lt;&#x2F;h3&gt;
+&lt;p&gt;We also built a big ass raised bed. It&#x27;s 4&#x27;x12&#x27; and it gets a &lt;em&gt;lot&lt;&#x2F;em&gt; of
+sun. Also a quick win.&lt;&#x2F;p&gt;
+&lt;p&gt;Everything feels like a quick win after building that fucking patio.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;new-hvac-who-this&quot;&gt;New HVAC, who this?&lt;&#x2F;h2&gt;
+&lt;p&gt;In December ancient gas furnace ran out of diesel, resulting in not
+having heat... funny how that works. This is usually trivial to solve:
+you call a company and they fill your gas tank and charge you a few
+hundo. With gas in the tank your heat comes back on.&lt;&#x2F;p&gt;
+&lt;p&gt;Multiple people talked about how great the furnace we had was. It was
+installed with the house, so it was at least 70 years old and it did
+work well. The heat that came out of the vents was super hot, but it
+also ran on gasoline in a tank in our basement.&lt;&#x2F;p&gt;
+&lt;p&gt;I&#x27;m sure the carbon footprint of my home&#x27;s gas heating is negligible
+when compared to the carbon footprint of every flight I take, but Lucy
+and I decided if we &lt;em&gt;could&lt;&#x2F;em&gt; get rid of it we &lt;em&gt;should&lt;&#x2F;em&gt;. We did some
+research on alternatives and decided an electric Heat-Pump would be a
+good alternative. It would provide us with heat &lt;em&gt;and&lt;&#x2F;em&gt; cooling, and
+wouldn&#x27;t run on diesel; the only downside is it&#x27;d be expensive.&lt;&#x2F;p&gt;
+&lt;p&gt;A few things: 1. A Heat-Pump is a heating and cooling system that
+operates on similar physics to a refrigerator (taking warm air and
+turning it into cool air, and the inverse). 2. The Heat-Pump has an
+outdoor unit, you&#x27;ve definitely seen them outside some homes. Usually
+it&#x27;s a metal box about 3&quot; cubed with a fan. 3. They don&#x27;t tell you
+that&#x27;s just the &lt;em&gt;outdoor&lt;&#x2F;em&gt; part of the Heat-Pump, there is also a huge
+freaking indoor unit that converts chemical energy into warm&#x2F;cool air
+that gets pumped around your house. 4. Heat-pumps are fully electric so
+no gas!&lt;&#x2F;p&gt;
+&lt;p&gt;So that&#x27;s how a Heat-Pump works. A few stars aligned for this to work
+out:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Our house already has vents that the oil furnace used to heat the
+house. This means we can easily heat&#x2F;cool the entire house with one
+indoor unit.&lt;&#x2F;li&gt;
+&lt;li&gt;We had some extra cash we didn&#x27;t end up needing for our
+down-payment, so we were able to pay in cash saving us a lot in
+interest payments for the Heat-Pump (like 10%!).&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;We could have made it work without those happy coincidences; they make
+in-wall Heat-Pumps that heat&#x2F;cool one or two rooms, and we could have
+financed if we were strapped for cash, or we could have just kept the
+old gas furnace. But we &lt;em&gt;were&lt;&#x2F;em&gt; able to upgrade our central-air because 6
+months later Portland had a 118℉ heat wave and another 100℉+ heat wave
+the day before our wedding! Both of which we barely worried about
+because we were fortunate enough to have AC.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;life-after-renting&quot;&gt;Life after renting&lt;&#x2F;h2&gt;
+&lt;p&gt;I hope this post showed some of the awesome pros of home ownership, like
+being able to add a patio, with some healthy cons, like having to spend
+12k on a new furnace. We were able to get rid of the gas guzzling
+heating system in favor of a full-electric system. We were able to build
+a patio, add a raised bed, fuck up the yard, without asking anybody for
+permission.&lt;&#x2F;p&gt;
+&lt;p&gt;It&#x27;s a lot of work, and a lot of money sometimes, but it is empowering
+to be able to &lt;em&gt;own&lt;&#x2F;em&gt; your house.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;In the next post we&#x27;ll throw all this soft &quot;american dream&quot; and
+&quot;empowered to change&quot; stuff out the window and figure out if this is a
+good investment!&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Buying a House Part 2: Show Me The Money!</title>
+        <published>2021-12-21T00:00:00+00:00</published>
+        <updated>2021-12-21T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/buying-a-house-02-show-me-the-money/"/>
+        <id>/buying-a-house-02-show-me-the-money/</id>
+        
+        <content type="html" xml:base="/buying-a-house-02-show-me-the-money/">&lt;p&gt;&lt;em&gt;This is part 2 of a 4 part series on buying a home&lt;&#x2F;em&gt;. Check out &lt;a href=&quot;&#x2F;buying-a-house-01-lets-go-shopping&#x2F;&quot;&gt;part 1&lt;&#x2F;a&gt; for to start from the beginning.&lt;&#x2F;p&gt;
+&lt;p&gt;In this post we will talk about everything that happens between getting an offer accepted on a house and your move-in day.
+How exciting!
+Let&#x27;s get started.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;so-you-got-an-offer-accepted&quot;&gt;So you got an offer accepted&lt;&#x2F;h2&gt;
+&lt;p&gt;You slogged through the home-buying process, your heart was broken in 12
+pieces when you barely didn&#x27;t get &quot;the one&quot; and then &quot;the other one&quot; and
+finally &quot;the real one&quot;, but you powered through and now you have an
+offer accepted.&lt;&#x2F;p&gt;
+&lt;p&gt;Great, you&#x27;re half way done! Just kidding, this part is much easier, but
+it is time consuming.&lt;&#x2F;p&gt;
+&lt;p&gt;Now in theory you can skip all these steps with a shit-ton of money and
+taking a shot of unnecessary risk. I mean you can pay in cash for a
+house &lt;em&gt;and&lt;&#x2F;em&gt; waive home inspections to expedite the home-buying process.
+I only have one anecdote of this happening, and the guy who told it to
+me was a prick, so I&#x27;m pretty sure it&#x27;s fake news. The only reason you
+would pay in cash is to avoid paying mortgage fees and to close the deal
+faster. The only reason you would waive inspections is to make close on
+the house faster if you don&#x27;t care or really trust the current owner.
+Mortgage rates are bonkers low right now, and most people aren&#x27;t in
+&lt;em&gt;that much&lt;&#x2F;em&gt; of a rush to close on their house, so again: fake news. For
+normal people with a normal amount of debt and a sane income we do
+things the way I&#x27;m about to describe.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;Steps down from soap-box&lt;&#x2F;em&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Now that your offer is accepted you have a 30 day clock. At the end of
+those 30 days you will hopefully have a house. Very cool.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;inspections&quot;&gt;Inspections&lt;&#x2F;h2&gt;
+&lt;p&gt;The first step is to schedule home inspections. Your realtor should do
+this. You will schedule a standard home inspection, but you can also
+request special inspections if you are concerned. For example we tested
+for Radon and buried oil tanks, because both of those are shitty things
+in Portland. These inspections are one of the few fees paid by the buyer
+because you as the buyer can be as picky as you want about the
+inspections.&lt;&#x2F;p&gt;
+&lt;p&gt;Once the inspections happen you&#x27;ll do a walk-through. Often this is the
+&lt;em&gt;second time you have seen the house in person&lt;&#x2F;em&gt;, which I just find
+hilarious. The inspector should walk you through the house and tell you
+literally everything wrong with the house that they can find. They might
+also mention any concerns they have based on the listing&#x27;s disclosures
+and the year the house was built&#x2F;renovated. The inspector shouldn&#x27;t have
+any horse in this race, they&#x27;re getting paid weather the deal falls
+through or not, so they should be pretty matter-of-fact. This means they
+might tell you some scary shit like &quot;This ceiling is probably asbestos,
+don&#x27;t touch it until you get that tested&quot;, this is just because you need
+to know everything that might be a deal breaker before the next step.&lt;&#x2F;p&gt;
+&lt;p&gt;Once the walk-through is complete your inspector will write up an
+inspection report and send it to you and your realtor for you to review
+and keep. This is a very long, very boring, and very important document.
+Keep a copy.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;negotiations&quot;&gt;Negotiations&lt;&#x2F;h2&gt;
+&lt;p&gt;Now that you know everything about the house:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Disclosures given in the house listing.&lt;&#x2F;li&gt;
+&lt;li&gt;Inspection results.&lt;&#x2F;li&gt;
+&lt;li&gt;You&#x27;ve been inside like... twice.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;You can enter the negotiation phase fully informed. Negotiations are not
+done in a board room -- I wish -- they&#x27;re done asynchronously by the
+seller and buyer&#x27;s realtors.&lt;&#x2F;p&gt;
+&lt;p&gt;You sit down &lt;strong&gt;with your realtor&lt;&#x2F;strong&gt; and go over the inspection results.
+If your realtor is good they&#x27;ll basically do the negotiation for you,
+reviewing what the plan is before locking it in.&lt;&#x2F;p&gt;
+&lt;p&gt;For example, our realtor said the following: * The pipes are clogged
+with baby wipes or something, that can take 7k to fix so let&#x27;s ask to
+knock off 7k. * The garage door is busted, let&#x27;s ask to take 5k off for
+that. * Some other stuff got knocked off but I don&#x27;t remember it a year
+later.&lt;&#x2F;p&gt;
+&lt;p&gt;We figure out how much to ask for by basically looking up how much it
+would reasonably cost to fix broken shit. If your roof was caving in you
+would be able to ask to take a lot, if a stair was busted that would
+probably be less.&lt;&#x2F;p&gt;
+&lt;p&gt;You can&#x27;t get away with asking for price reductions for &lt;em&gt;aesthetic&lt;&#x2F;em&gt;
+differences, like you wish the house had more outlets, but you could ask
+to get the price knocked if the electrical was unsafe.&lt;&#x2F;p&gt;
+&lt;p&gt;Your realtor should then write this up and send it to the seller&#x27;s
+realtor who will respond with a counter. Sometimes they will choose to
+fix broken things themselves or they may drop the price for a given
+request. In our case the owner dropped the price a bit, around 3k, and
+spent her own money to fix clogged pipes, which cost a few thousand.&lt;&#x2F;p&gt;
+&lt;p&gt;In the negotiation the seller has an incentive to keep the final price
+fairly high while the buyer has an incentive to get the price as low as
+possible. This means sellers might find more expensive quotes and the
+buyer might find cheaper quotes for repair costs. But both parties have
+an incentive to complete the sale of the house.&lt;&#x2F;p&gt;
+&lt;p&gt;If a seller refuses to negotiate on the price of the house, the buyer at
+this point has the option to pull out of the deal. The buyer will most
+likely get their Earnest Money back because they found something out
+about the house after the offer was accepted which the buyer refused to
+fix or decrease the price for.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;but-what-does-the-bank-think-it-s-worth&quot;&gt;But what does the bank think it&#x27;s worth?&lt;&#x2F;h2&gt;
+&lt;p&gt;After negotiating on a price the bank gets involved again. It takes the
+bank under a week to, given the home inspection plus their piles of
+data, determine what they think it&#x27;s worth. This has very little to do
+with what you thought it was worth and it is what the bank is willing to
+cover in the form of a home loan.&lt;&#x2F;p&gt;
+&lt;p&gt;If the bank decides the house is worth &lt;em&gt;more&lt;&#x2F;em&gt; than the final offer
+you&#x27;re golden. You get a loan for the negotiated price and it&#x27;ll be 100%
+covered by the bank.&lt;&#x2F;p&gt;
+&lt;p&gt;For example: If the final offer is 100k and the bank decides the house
+is worth 105k, you need to do the normal 20% down payment, and then you
+get an 80k loan for the rest.&lt;&#x2F;p&gt;
+&lt;p&gt;... But if the bank decides the house is worth &lt;em&gt;less&lt;&#x2F;em&gt; than the final
+offer you&#x27;re some amount of fucked. You need to pay the difference out
+of pocket, or pull out of the deal.&lt;&#x2F;p&gt;
+&lt;p&gt;For example: If the final offer is 100k but the bank decides the house
+is worth 60k, you need to cover 20k down payment, plus the 20k
+difference on the remaining cost. 100k - 20k = 80k ideal loan. 80k - 20k
+= 60k what the bank will actually loan you.&lt;&#x2F;p&gt;
+&lt;p&gt;Note, I&#x27;m using 100k as a round number for math examples. This is not
+some cruel joke, it&#x27;s just easier numbers. Most houses we looked at were
+between 350k and 600k.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h3 id=&quot;side-note-why-do-we-need-down-payments&quot;&gt;Side note, why do we need down payments?&lt;&#x2F;h3&gt;
+&lt;p&gt;Wait, why do we have down payments? It&#x27;s complicated, but I &lt;em&gt;think&lt;&#x2F;em&gt; it&#x27;s
+a collection of reasons: * The more you pay up front, the less monthly
+payments you have. 20% up front is a good way to reduce your monthly
+payments from the get-go. * Credit worthiness or some bullshit. Banks
+want to make sure you have skin in the game, so before you can get
+approved for a loan you need to prove you have 20%+ of the cost of the
+house for them to cover the other 80%.&lt;&#x2F;p&gt;
+&lt;p&gt;That&#x27;s my best bet. Ask a realtor or your local economist or banker or
+something; they&#x27;ll probably have a better answer.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;Once the bank settles on a price you can close on the house. You&#x27;ll get
+a real loan for the final price (minus the difference you&#x27;ve paid in
+cash). Finally, 30 days (ish) after getting your offer accepted you&#x27;ll
+walk into a title company, go over a stack of papers with a
+professional, sign a bunch of those papers, and walk out the proud owner
+of a house.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;what-now&quot;&gt;What now?&lt;&#x2F;h2&gt;
+&lt;p&gt;We had to wait a few weeks after closing to actually move in. The
+previous owner needed the funds from closing to close on her own house,
+but that ended up going faster than expected so we only had to stay at
+my parents house (#privilege #safetynet) for two weeks.&lt;&#x2F;p&gt;
+&lt;p&gt;Your realtor should give you some keys for the new house. I suggest
+throwing those out once you&#x27;re moved in and replace the locks -- even in
+a nice neighborhood, you have no idea who has the old keys.&lt;&#x2F;p&gt;
+&lt;p&gt;Rent a moving van and bribe your friends, or hire some movers if you&#x27;re
+smart, and enjoy your beautiful house!&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;p&gt;Wait, is this pipe supposed to be leaking? In the next post we&#x27;ll talk
+about home renovations!&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Buying a House Part 1: Let&#x27;s Go Shopping!</title>
+        <published>2021-08-26T00:00:00+00:00</published>
+        <updated>2021-08-26T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/buying-a-house-01-lets-go-shopping/"/>
+        <id>/buying-a-house-01-lets-go-shopping/</id>
+        
+        <content type="html" xml:base="/buying-a-house-01-lets-go-shopping/">&lt;p&gt;So you&#x27;re interested in buying a house eh?
+Well boy howdy do I have a series of blog posts for you.
+This four part series will equip you, a first-time home buyer, with a bunch of knowledge I wish I had before starting my journey to buying a home.&lt;&#x2F;p&gt;
+&lt;p&gt;Here&#x27;s the road-map:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;&#x2F;buying-a-house-01-lets-go-shopping&#x2F;&quot;&gt;Part 1: 🛒 Let&#x27;s Go Shopping!&lt;&#x2F;a&gt; in which we start looking for houses.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;&#x2F;buying-a-house-02-show-me-the-money&#x2F;&quot;&gt;Part 2: 💸 Show Me the Money!&lt;&#x2F;a&gt; in which we buy a freaking house.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;&#x2F;buying-a-house-03-renovation-station&#x2F;&quot;&gt;Part 3: 👷 Renovation Station.&lt;&#x2F;a&gt; in which we live in the freaking house.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;&#x2F;buying-a-house-04-is-this-investing&#x2F;&quot;&gt;Part 4: 📈 Is This Investing?&lt;&#x2F;a&gt; where we figure out if we made a huge financial mistake (or achievement!)&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;hey-quick-disclaimer&quot;&gt;Hey, quick disclaimer&lt;&#x2F;h2&gt;
+&lt;p&gt;Some things I &lt;strong&gt;can&lt;&#x2F;strong&gt; claim to be an expert on: Docker, Linux, why my dog is making that face, etc.
+But with home-buying I am at best a novice, so please take everything you read here with a grain of salt.&lt;&#x2F;p&gt;
+&lt;p&gt;I am just one lowly home owner in his mid-20s who bought a house during a pandemic.
+I got here through a bunch of privilege, support, luck, and the modest amount amount of hard work &lt;em&gt;required&lt;&#x2F;em&gt; to live a wonderful mortgage-filled life.&lt;&#x2F;p&gt;
+&lt;p&gt;I am not a financial advisor, realtor, none of that stuff.
+I encourage you to do independent research, check my work, etc.
+Don&#x27;t make any decisions based purely on this series.
+Please use it as one of many sources in your research before buying a house.&lt;&#x2F;p&gt;
+&lt;p&gt;Okay, &lt;strong&gt;now&lt;&#x2F;strong&gt; we can get started.&lt;&#x2F;p&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;so-um-why-do-you-want-to-buy-a-house&quot;&gt;So um, why do you want to buy a house?&lt;&#x2F;h2&gt;
+&lt;p&gt;Before diving into the home buying process, let&#x27;s ask an annoyingly
+simple (but annoyingly effective) question: &quot;why?&quot;&lt;&#x2F;p&gt;
+&lt;p&gt;There&#x27;s a million reasons to want to buy a house.
+A few that come to mind are&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;You want more space or a yard.&lt;&#x2F;li&gt;
+&lt;li&gt;You want an investment.&lt;&#x2F;li&gt;
+&lt;li&gt;You want to be in a residential neighborhood.&lt;&#x2F;li&gt;
+&lt;li&gt;You want to fulfill the American Dream™.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;Now none of these &lt;em&gt;require&lt;&#x2F;em&gt; you to buy a house.
+You could rent a house to get more space, invest in high yield assets to make passive income, etc. but a house tends to check &lt;strong&gt;all&lt;&#x2F;strong&gt; these boxes.&lt;&#x2F;p&gt;
+&lt;p&gt;My fiance (now wife) and I we were living in a small apartment before buying a house.
+This apartment was perfect pre-COVID.
+It was a 10-20 minutes walking commute to work, centrally located, and big enough to sleep, cook meals, and rest while being young 20-somethings living our best lives.&lt;&#x2F;p&gt;
+&lt;p&gt;When COVID hit we though we could muddle through in the apartment, but around the 2 month mark we thought:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Hmm, this isn&#x27;t gonna be the &quot;Come on Morty.
+Just two weeks, we&#x27;ll be in and out.
+Just a little pandemic to spice things up.&quot; thing that we thought this would be...&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;We looked for house rentals, but while there were hundreds of houses for sale there were almost no houses rentals available in the Portland area. I was always resistant to buying a house, but after realizing it was a reasonable financial decision we got started.&lt;&#x2F;p&gt;
+&lt;p&gt;This is where our home buying journey begins.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;let-s-triage&quot;&gt;Let&#x27;s triage&lt;&#x2F;h2&gt;
+&lt;p&gt;Before buying a house, or even visiting a house, you should go to sites like Zillow and Redfin to get a lay of the land.
+They both have basically the same home listings, so choose whichever site has a better interface for you.
+This goes without saying though; you found this obscure blog post so you&#x27;re probably deeply familiar with all the different home buying sites.
+I promise this series will start saying less &quot;yeah duh&quot; stuff in the next section.&lt;&#x2F;p&gt;
+&lt;p&gt;We knew roughly what neighborhoods we wanted to live in: East Portland with a bias toward the Tabor neighborhoods. This made it quick to narrow
+our search and skip the existential question &quot;where in the world do I want to live?&quot; I&#x27;m sure some people confront.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;money-talk&quot;&gt;Money talk&lt;&#x2F;h2&gt;
+&lt;p&gt;Once you have a feel for the housing market in your target locations, check in with your finances.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;a-big-wad-of-cash&quot;&gt;A big wad of cash&lt;&#x2F;h3&gt;
+&lt;p&gt;Buying your soon-to-be house will require a down-payment.
+This means you&#x27;ll need a very big pile of money &lt;em&gt;very soon&lt;&#x2F;em&gt;.
+Figure out what your liquid assets (savings, non-retirement investment accounts, dubious favors you can call in) talley up to.
+This is the max you could use for a down-payment.&lt;&#x2F;p&gt;
+&lt;p&gt;Down payments tend to be 20% of the purchase price of the house, and houses are hundreds of thousands of dollars, so... yeah that&#x27;s a lot.&lt;&#x2F;p&gt;
+&lt;p&gt;For example:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;If you have 20k in usable assets, you can afford a down payment on a 100k house.&lt;&#x2F;li&gt;
+&lt;li&gt;84k usable assets? 420k house.&lt;&#x2F;li&gt;
+&lt;li&gt;13.8k usable assets? 69k house.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Nice.&lt;&#x2F;p&gt;
+&lt;p&gt;This sets an upper-limit on which houses you can afford.
+Hopefully this upper-limit lines up with median home prices in your target neighborhoods.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;a-smaller-monthly-wad-of-cash&quot;&gt;A smaller monthly wad of cash&lt;&#x2F;h3&gt;
+&lt;p&gt;You also need to consider the monthly cost of your potential home.
+Ideally you only spend up to 30% of your monthly income on living expenses.
+This means your house (with utilities) costs no more than 30% of what you take home.
+Some of you may be laughing at this because it is in fact an outdated metric that has not kept up with inflating home prices.
+Don&#x27;t worry, we&#x27;ll cover how terrible home prices are in a later installment.&lt;&#x2F;p&gt;
+&lt;p&gt;The 30% rule says:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;If you take home 2k&#x2F;month (roughly a 30k&#x2F;year salary after taxes) your
+housing should cost no more than 600&#x2F;month.&lt;&#x2F;li&gt;
+&lt;li&gt;5833&#x2F;month (100k salary) take-home? 1750 housing expenses.&lt;&#x2F;li&gt;
+&lt;li&gt;11452&#x2F;month (200k salary) take-home? 3435 housing expenses.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;But what does that translate to for home prices?
+You don&#x27;t pay for the whole house up front (the bank does that).
+Instead you pay for it in monthly installments with interest -- which is hard for me to intuit.
+Skipping some prelude:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;If your house is 100k, you put up a 20k down payment, and you acquire a 30 year loan with 4% interest, your monthly payment will be ~587.&lt;&#x2F;li&gt;
+&lt;li&gt;200k house, 40k down, 4% interest 30yr loan? ~1070.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;With these numbers, as the price of the house goes up the monthly payments go up sub-linearly.
+This means so a 400k house is a little less than 2000&#x2F;month, ec.&lt;&#x2F;p&gt;
+&lt;p&gt;I have no idea how to calculate these numbers by hand, I always use a calculator... &lt;a href=&quot;https:&#x2F;&#x2F;www.zillow.com&#x2F;mortgage-calculator&#x2F;&quot;&gt;https:&#x2F;&#x2F;www.zillow.com&#x2F;mortgage-calculator&#x2F;&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Once you have established you can afford both the down-payment and monthly payments now we can start shopping!&lt;&#x2F;p&gt;
+&lt;p&gt;If prices in your target neighborhood are out of reach, explore other candidates; neighborhoods near your targets, or even the &#x27;burbs.
+Also if you just like shopping for homes for the kick of it, because shopping is fun, power to you.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;get-yourself-a-realtor&quot;&gt;Get yourself a realtor&lt;&#x2F;h2&gt;
+&lt;p&gt;A realtor is like a lawyer.
+You never &lt;em&gt;want&lt;&#x2F;em&gt; one, but they are incredible necessary for some of life&#x27;s biggest shit.&lt;&#x2F;p&gt;
+&lt;p&gt;We were #blessed to have a family friend that was an active realtor; her name is Mary.&lt;&#x2F;p&gt;
+&lt;p&gt;The relationship we had with our realtor was like this:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Every week around Tuesday we would send her a list of houses we wanted to see.
+Between 5-10 houses every week.&lt;&#x2F;li&gt;
+&lt;li&gt;Occasionally she would also find a house she thought we would be interested in.&lt;&#x2F;li&gt;
+&lt;li&gt;The first week she picked about half the houses to get a feel for what we were interested in, and we brought some we found on our own.&lt;&#x2F;li&gt;
+&lt;li&gt;She would drive us around to these houses, because we refuse to buy a car and she is &lt;em&gt;very&lt;&#x2F;em&gt; nice.&lt;&#x2F;li&gt;
+&lt;li&gt;Mary would schedule a time for us to visit the house, around 30 minutes per house, during this time we were the only ones in the homes.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;As a card-carrying realtor Mary had special privileges not given to us normies, and information not found on public sites.
+For example:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Mary had a list of things disclosed about the house like &quot;It&#x27;s very full of asbestos&quot; or &quot;It&#x27;s full of radon&quot; or &quot;The roof caved in last year, just fixed&quot;.
+Info you would want to know before putting an offer on a house.&lt;&#x2F;li&gt;
+&lt;li&gt;She also had access to some cloak-and-dagger shit that let her into all of the houses on the market.
+Ever seen a lock-box on a for-sale house?
+She could open that lock-box and get the key out with an app on her phone.&lt;&#x2F;li&gt;
+&lt;li&gt;She also knew how to fill out the copious forms needed to put an offer on a house, but we&#x27;ll get to that in the next post.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;so-many-houses&quot;&gt;So. Many. Houses.&lt;&#x2F;h2&gt;
+&lt;p&gt;In total we were house shopping for about 5 weeks.
+We averaged visiting 10 houses per week, doing 1 to 2 trips per week and visiting 6 houses per trip.&lt;&#x2F;p&gt;
+&lt;p&gt;We saw a lot of houses.
+Some great houses in safe boring neighborhoods far from where we wanted to live.
+Some terrible houses that people kept calling &quot;fixer-uppers&quot; like they were in the pocket of big shitty house.&lt;&#x2F;p&gt;
+&lt;p&gt;A lot of houses that were great except for like... one really important thing.
+Some houses had a great location but were too small.
+Or the house was the perfect size but too far from our target location.
+Or the price and size were good but the neighbors were burning a literal pile of trash and they were like... very good at it, implying this wasn&#x27;t a one-off thing.&lt;&#x2F;p&gt;
+&lt;p&gt;My point is, there were a lot of houses.
+A lot that were good, many more that were non-starters.&lt;&#x2F;p&gt;
+&lt;p&gt;The first week or two was basically a mulligan.
+So many houses are so bad you start to think &lt;em&gt;all&lt;&#x2F;em&gt; houses are bad and you trick yourself into settling.
+DO NOT SETTLE.
+This is a huge freaking purchase, grind it out and you will find a house you like.
+It might be at the upper end of your budget, or it might be a &lt;em&gt;little bit of a fixer upper&lt;&#x2F;em&gt;, but you&#x27;ll know the perfect house when you find it.
+And you will &lt;em&gt;definitely&lt;&#x2F;em&gt; know when it&#x27;s &lt;em&gt;not&lt;&#x2F;em&gt; the right house.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;getting-on-your-knees-and-asking-the-bank-for-a-pre-approval&quot;&gt;Getting on your knees and asking the bank for a pre-approval&lt;&#x2F;h2&gt;
+&lt;p&gt;At this point in the story we haven&#x27;t bought any houses yet, but before you are allowed to &lt;em&gt;think&lt;&#x2F;em&gt; about buying a house you need to get a bank to say &quot;Yeah they&#x27;re good for it&quot;.
+This requires asking a bank pretty please, giving them like 3 years of financial, employment, and credit records.
+If you&#x27;re buying this with a partner they need to do the same thing.&lt;&#x2F;p&gt;
+&lt;p&gt;In our case we tried to get a super cheap loan but we were told our offer might get rejected if we didn&#x27;t have a &quot;local loan&quot; meaning a loan provided by a local Oregon company -- what year is it 1980?
+In the end all of our loan options were super cheap, even the local ones, so we shrugged and told ourselves the cheapest loan probably had a bunch of closing fees that would basically cancel out the higher mortgage rate.&lt;&#x2F;p&gt;
+&lt;p&gt;A &lt;em&gt;fun fact&lt;&#x2F;em&gt; about the loan process is that you get pre-approved for a loan up to some amount, which is used to put an offer on a house
+Once the offer is accepted you get the &lt;em&gt;real&lt;&#x2F;em&gt; loan for whatever the final loan amount ends up being.
+But we&#x27;re getting ahead of ourselves.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;the-offer-process&quot;&gt;The offer process&lt;&#x2F;h2&gt;
+&lt;p&gt;At some point you&#x27;ll make an offer on a house.
+This might &lt;em&gt;sound&lt;&#x2F;em&gt; like we&#x27;re buying a house, but trust me there are a lot more offers on houses than there are sales on houses.&lt;&#x2F;p&gt;
+&lt;p&gt;When you put in an offer on a house you basically roll for initiative and if you get a Nat-20 it gets accepted.
+You should still treat every offer as if it were to be accepted, because you can roll a Nat-20 on a persuasion check with a rat just as often as slaying a dragon.
+Offers are accepted and rejected basically at random, but each one is important and should be treated as &quot;the one&quot;.&lt;&#x2F;p&gt;
+&lt;p&gt;When putting an offer on a house you fill out a bunch of complicated legal-ese forms with your realtor.
+Taking your pre-approval you decide on an offer up to your pre-approval limit.
+In Portland right now we need to offer &lt;em&gt;way more&lt;&#x2F;em&gt; than the asking price which is bullshit and I hate
+it.&lt;&#x2F;p&gt;
+&lt;p&gt;You also fill out a bunch of details like when you want the sale to be complete (30 days), weather you&#x27;re planning on doing inspections (yes), and how much money you can put up &lt;em&gt;before your down payment&lt;&#x2F;em&gt;.
+That pre-down-payment is called Earnest Money and it&#x27;s often between 2k and 10k, it counts toward your down payment, and it can be refunded if the deal falls through.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;it-s-a-marathon-pace-yourself&quot;&gt;It&#x27;s a marathon, pace yourself&lt;&#x2F;h2&gt;
+&lt;p&gt;Lucy went into this expecting that buying a house was like buying anything else.
+You find what you like, offer a fair (or listed) price, and boom you get it.&lt;&#x2F;p&gt;
+&lt;p&gt;Unfortunately housing is not like buying a phone, or basically anything else most people spend money on.
+In Portland at least supply does not match demand, so prices are not only higher than they ought to be, but the prices are also &lt;em&gt;full of lies&lt;&#x2F;em&gt;.
+The asking price is often 10% below the final price -- if you&#x27;re lucky!
+Plus your offer on a house may be rejected for mysterious reasons.
+More than once we were asked to re-submit an offer and to give our &quot;highest and best&quot; offer whatever the fuck that means.&lt;&#x2F;p&gt;
+&lt;p&gt;Be prepared to visit at &lt;strong&gt;dozens&lt;&#x2F;strong&gt; of houses.
+Be prepared to make an offer on multiple houses.
+You will have your heart broken when you find the perfect house, just to have it swiped out of your hands by a bank, somebody paying all in cash, somebody waiving inspections, or just some jerk that got an offer in half an hour before you did -- that bastard.&lt;&#x2F;p&gt;
+&lt;p&gt;Take your time.
+This is a big purchase.
+It will pay off.
+It will get better.
+Your patience will be rewarded.&lt;&#x2F;p&gt;
+&lt;p&gt;Good luck.
+See you in the &lt;a href=&quot;&#x2F;buying-a-house-02-show-me-the-money&#x2F;&quot;&gt;part 2&lt;&#x2F;a&gt; where we get to buy a freaking house!&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="shortcut icon" href="&#x2F;favicon.ico"><title>Rust Ergonomics: Default and From | elijah.run</title>
+  <meta name="title" content="Rust Ergonomics: Default and From">
+<meta name="description" content="A blog about tech, media, and art">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="alternate" type="application/atom+xml" title="elijah.run" href="/atom.xml">
+  <style>
+    :root {
+    --width: 586px;
+    --font-main: Verdana, sans-serif;
+    --font-secondary: "Times New Roman", serif;
+    --font-scale: 1.1em;
+    --background-color: #fff;
+    --heading-color: #222;
+    --text-color: #444;
+    --link-color: #3273dc;
+    --visited-color: #8b6fcb;
+    --blockquote-color: #222;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background-color: #01242e;
+      --heading-color: #eee;
+      --text-color: #ddd;
+      --link-color: #8cc2dd;
+      --visited-color: #8b6fcb;
+      --blockquote-color: #ccc;
+    }
+  }
+
+  body {
+    font-family: var(--font-secondary);
+    font-size: var(--font-scale);
+    margin: auto;
+    padding: 20px;
+    max-width: var(--width);
+    text-align: left;
+    background-color: var(--background-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: var(--text-color);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-main);
+    color: var(--heading-color);
+  }
+
+  a {
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  nav a {
+    margin-right: 8px;
+  }
+
+  nav span.active {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  strong,
+  b {
+    color: var(--heading-color);
+  }
+
+  button {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  main {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px dashed;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  pre code {
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 0.875rem;
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: monospace;
+    padding: 2px;
+    border-radius: 3px;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: var(--code-color);
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px 0;
+    text-align: center;
+  }
+
+  .title:hover {
+    text-decoration: none;
+  }
+
+  .title h1 {
+    font-size: 1.5em;
+  }
+
+  .inline {
+    width: auto !important;
+  }
+
+  .highlight,
+  .code {
+    padding: 1px 15px;
+    background-color: var(--code-background-color);
+    color: var(--code-color);
+    border-radius: 3px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    overflow-x: auto;
+  }
+
+  /* blog post list */
+  ul.posts {
+    list-style-type: none;
+    padding: unset;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  ul.posts li {
+    line-height: 1;
+    margin: 0;
+  }
+
+  ul.posts li time {
+    margin-left: 0px;
+    font-size: 12px;
+  }
+
+  ul.posts li a:visited {
+    color: var(--visited-color);
+  }
+
+  li.post {
+    padding: 0px 0px 10px 0px;
+  }
+
+  span.tags {
+    font-size: smaller;
+  }
+
+  /* table of contents */
+  details ul {
+    list-style-type: circle;
+  }
+
+  </style>
+</head>
+<body>
+  <header>
+  <a href="/" class="title">
+    <h1>elijah.run</h1>
+  </a>
+  <nav aria-label="site">
+      <a href="/">(🏠 elijah.run)</a>
+      <a href="https:&#x2F;&#x2F;games.elijah.run">(🕹️ games)</a>
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;pop">(🐙 github 🐱)</a>
+      <a href="/Elijah Voigt.pdf">(👔 resume)</a>
+  </nav>
+</header>
+<h1>Rust Ergonomics: Default and From</h1>
+      <p>
+        <i>
+          <time datetime="2022-05-17T00:00:00+00:00" pubdate>Tue 17 May 2022</time>
+        </i>
+      </p>
+    <details open>
+      <summary>Table of contents</summary>
+    <ul>
+        <li>
+          <a href="/rust-default-from/#verbose-structs">Verbose Structs</a>
+        </li>
+        <li>
+          <a href="/rust-default-from/#default-fill-in-the-blanks">Default: Fill in the blanks</a>
+        </li>
+        <li>
+          <a href="/rust-default-from/#close-but-distinct-types">Close but Distinct Types</a>
+        </li>
+        <li>
+          <a href="/rust-default-from/#from-and-into-simple-type-coercion">From and into: Simple type coercion</a>
+        </li>
+        <li>
+          <a href="/rust-default-from/#from-simple-to-complex">From Simple to Complex</a>
+        </li>
+        <li>
+          <a href="/rust-default-from/#conclusion">Conclusion</a>
+        </li>
+    </ul>
+    </details>
+  <main>
+    <p>I've been writing Rust off and on since 2014 and consistently since 2019
+when I got into Rust Game Development. Once I started writing more Rust
+code I noticed it wasn't just more lines of code, but each part of the
+code was more verbose.</p>
+<p>Coming from Python where ideas <em>tend</em> to be pretty succinct, Rust forced
+you to spell everything out in intense detail. Of course you <em>got</em>
+something for that verbosity -- "if it compiles, it probably works" --
+but my hands were getting tired. There has to be a better way!</p>
+<h2 id="verbose-structs">Verbose Structs</h2>
+<p>There is a better way, but let's clarify what the problem <em>is</em> exactly.
+Take this example of a real struct from the <a href="https://bevyengine.org/">bevy game engine</a> <code>PbrBundle</code>:</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#ff5e5e;">pub </span><span style="font-style:italic;color:#fbdfb5;">type </span><span>PbrBundle </span><span style="color:#ff5e5e;">= </span><span>MaterialMeshBundle&lt;StandardMaterial&gt;;
+</span></code></pre>
+<p>It's a type-alias to a <code>MaterialMeshBundle</code>.
+Let's check that out:</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#ff5e5e;">pub </span><span style="font-style:italic;color:#fbdfb5;">struct </span><span>MaterialMeshBundle&lt;M&gt; where
+</span><span>    M: SpecializedMaterial,
+</span><span>{
+</span><span>    </span><span style="color:#ff5e5e;">pub </span><span style="color:#e9fdac;">mesh</span><span>: Handle&lt;Mesh&gt;,
+</span><span>    </span><span style="color:#ff5e5e;">pub </span><span style="color:#e9fdac;">material</span><span>: Handle&lt;M&gt;,
+</span><span>    </span><span style="color:#ff5e5e;">pub </span><span style="color:#e9fdac;">transform</span><span>: Transform,
+</span><span>    </span><span style="color:#ff5e5e;">pub </span><span style="color:#e9fdac;">global_transform</span><span>: GlobalTransform,
+</span><span>    </span><span style="color:#ff5e5e;">pub </span><span style="color:#e9fdac;">visibility</span><span>: Visibility,
+</span><span>    </span><span style="color:#ff5e5e;">pub </span><span style="color:#e9fdac;">computed_visibility</span><span>: ComputedVisibility,
+</span><span>}
+</span></code></pre>
+<p>Wow that's a fair number of struct members.</p>
+<p>If you wanted to create a <code>PbrBundle</code> by hand it would be a <em>tedious</em> process.</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="font-style:italic;color:#fbdfb5;">let</span><span> my_pbr </span><span style="color:#ff5e5e;">=</span><span> PbrBundle {
+</span><span>    mesh: </span><span style="color:#6699cc;">get_mesh_handle</span><span>(),
+</span><span>    material: </span><span style="color:#6699cc;">get_material_handle</span><span>(),
+</span><span>    transform: Transform {
+</span><span>        translation: Vec3::new(),
+</span><span>        rotation: Quat::new(),
+</span><span>        scale: Vec3::new(),
+</span><span>    },
+</span><span>    global_transform: GlobalTransform {
+</span><span>        translation: Vec3::new(),
+</span><span>        rotation: Quat::new(),
+</span><span>        scale: Vec3::new(),
+</span><span>    },
+</span><span>    visibility: Visibility {
+</span><span>        is_visibile: </span><span style="color:#ff8942;">true</span><span>,
+</span><span>    },
+</span><span>    computed_visibility: ComputedVisibility {
+</span><span>        is_visibile: </span><span style="color:#ff8942;">true</span><span>,
+</span><span>    },
+</span><span>}
+</span></code></pre>
+<p>Wow my fingers are already tired.</p>
+<p>Now, assuming you don't know the punchline, you're probably thinking:
+<em>Just use a constructor!</em></p>
+<p>That solves the use-case where the author of the code has a constructor for my use-case, something like this:</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="font-style:italic;color:#fbdfb5;">let</span><span> my_pbr </span><span style="color:#ff5e5e;">= </span><span>PbrBundle::new(mesh, material); </span><span style="color:#6d6d6d;">// Default Transform and Visibilty
+</span></code></pre>
+<p>But what if I want a <em>mostly</em> "default" <code>PbrBundle</code>, with say <code>is_visible = false</code>?
+Or I want to add a Transform with a custom scale but a default translation and rotation?</p>
+<p>Basically, what if I am <em>picky</em> and want the <em>flexibility</em> of struct initialization with the <em>convenience</em> of constructor methods?</p>
+<h2 id="default-fill-in-the-blanks">Default: Fill in the blanks</h2>
+<p>This is totally supported thanks to <a href="https://doc.rust-lang.org/std/default/trait.Default.html">Rust's "Default" Trait</a>.</p>
+<p>The usage is something like this from the previous example:</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="font-style:italic;color:#fbdfb5;">let</span><span> my_pbr </span><span style="color:#ff5e5e;">=</span><span> PbrBundle {
+</span><span>    mesh: </span><span style="color:#6699cc;">get_mesh_handle</span><span>(),
+</span><span>    material: </span><span style="color:#6699cc;">get_material_bundle</span><span>(),
+</span><span>    transform: Transform {
+</span><span>        scale: Vec3::new(</span><span style="color:#fdb082;">2.0</span><span>, </span><span style="color:#fdb082;">2.0</span><span>, </span><span style="color:#fdb082;">2.0</span><span>),
+</span><span>        </span><span style="color:#ff5e5e;">..</span><span style="color:#fbe3bf;">Default</span><span>::default()
+</span><span>    },
+</span><span>    visibility: Visibilty {
+</span><span>        is_visible: </span><span style="color:#ff8942;">true</span><span>,
+</span><span>    },
+</span><span>    </span><span style="color:#ff5e5e;">..</span><span style="color:#fbe3bf;">Default</span><span>::default()
+</span><span>}
+</span></code></pre>
+<p>This example shows creating a <code>PbrBundle</code> with a custom <code>mesh</code>, <code>material</code>, and <code>scale</code>, but everything else is a "Default" value.</p>
+<p>While this flexibility is totally possible with constructors, it would require some creativity, maybe something like this?</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="font-style:italic;color:#fbdfb5;">let</span><span> pbr_bundle </span><span style="color:#ff5e5e;">= </span><span>PbrBundle::new(mesh, material)
+</span><span>    .</span><span style="color:#6699cc;">with_scale</span><span>(Vec3::new(</span><span style="color:#fdb082;">2.0</span><span>, </span><span style="color:#fdb082;">2.0</span><span>, </span><span style="color:#fdb082;">2.0</span><span>))
+</span><span>    .</span><span style="color:#6699cc;">with_visibility</span><span>(</span><span style="color:#ff8942;">true</span><span>);
+</span></code></pre>
+<p>This is fine, but it is a <strong>lot</strong> of toil for the author.
+They need to add and maintain a method for each element of their nested struct, document those methods, probably write tests, and all to accomplish the goal of a "Fill in the rest for me" API.</p>
+<p>One nice part of <code>Default</code> is it can be automagically added to any struct whose members implement it via <code>#[derive(Default)]</code>.
+This means you get that "Fill in the rest for me" interface for free!</p>
+<h2 id="close-but-distinct-types">Close but Distinct Types</h2>
+<p>Another pain-point I found in Rust was converting between similar but distinct types.
+Unlike my last language Python, which was <em>very</em> forgiving about types (to a fault), Rust requires very precise type expressions.</p>
+<p>Let's take this example:</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#6d6d6d;">// Base Engine Color
+</span><span>#[</span><span style="color:#e9fdac;">derive</span><span>(Default, Debug, PartialEq)]
+</span><span style="font-style:italic;color:#fbdfb5;">struct </span><span>Color {
+</span><span>    </span><span style="color:#e9fdac;">red</span><span>: </span><span style="font-style:italic;color:#fbdfb5;">f32</span><span>,
+</span><span>    </span><span style="color:#e9fdac;">green</span><span>: </span><span style="font-style:italic;color:#fbdfb5;">f32</span><span>,
+</span><span>    </span><span style="color:#e9fdac;">blue</span><span>: </span><span style="font-style:italic;color:#fbdfb5;">f32</span><span>,
+</span><span>}
+</span><span>
+</span><span style="color:#6d6d6d;">/// Color for UI elements
+</span><span>#[</span><span style="color:#e9fdac;">derive</span><span>(Default, Debug, PartialEq)]
+</span><span style="font-style:italic;color:#fbdfb5;">struct </span><span>UiColor(Color);
+</span><span>
+</span><span style="color:#6d6d6d;">/// Just a demo function, not sure if this is useful...
+</span><span style="font-style:italic;color:#fbdfb5;">fn </span><span style="color:#8cdaff;">color_rotate</span><span>(</span><span style="font-style:italic;color:#fc9354;">color</span><span>: Color) -&gt; Color {
+</span><span>    Color {
+</span><span>        red: color.green,
+</span><span>        green: color.blue,
+</span><span>        blue: color.red,
+</span><span>    }
+</span><span>}
+</span><span>
+</span><span style="color:#6d6d6d;">// Does not compile!
+</span><span style="color:#6d6d6d;">// E0308: mismatched types expected struct `Color`, found struct `UiColor`
+</span><span style="font-style:italic;color:#fbdfb5;">fn </span><span style="color:#8cdaff;">main</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">let</span><span> a </span><span style="color:#ff5e5e;">=</span><span> UiColor(Color {
+</span><span>        red: </span><span style="color:#fdb082;">0.5</span><span>,
+</span><span>        </span><span style="color:#ff5e5e;">..</span><span style="color:#fbe3bf;">Default</span><span>::default()
+</span><span>    });
+</span><span>
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">let</span><span> b </span><span style="color:#ff5e5e;">= </span><span style="color:#6699cc;">color_rotate</span><span>(a);
+</span><span>}
+</span></code></pre>
+<p>Here we have a <code>UiColor</code> struct that wraps our base <code>Color</code> struct.
+We want to use a method made for <code>Color</code> values but we get an error that the compiler is expecting a <code>Color</code> but we gave it a <code>UiColor</code>!
+Come on Rust, just look inside the box!</p>
+<p>We can work around this issue like so:</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="font-style:italic;color:#fbdfb5;">fn </span><span style="color:#8cdaff;">main</span><span>() {
+</span><span>    </span><span style="color:#6d6d6d;">// ...
+</span><span>
+</span><span>
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">let</span><span> b </span><span style="color:#ff5e5e;">=</span><span> UiColor(</span><span style="color:#6699cc;">color_rotate</span><span>(a.</span><span style="color:#fdb082;">0</span><span>));
+</span><span>}
+</span></code></pre>
+<p>Which passes the inside of <code>a</code> to <code>color_rotate</code> and then wraps the return in a new <code>UiColor</code> struct.
+This works, but it's hard to read and more importantly it requires a keep our API in our head to write <em>any</em> code.</p>
+<h2 id="from-and-into-simple-type-coercion">From and <code>into</code>: Simple type coercion</h2>
+<p>The solution is to use the <a href="https://doc.rust-lang.org/std/convert/trait.From.html">"From"</a> and trait which provides the <code>into()</code> method.</p>
+<p>Extending the above example, we can implement <code>From Color -&gt; UiColor</code> and <code>From UiColor -&gt; Color</code> like so:</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="font-style:italic;color:#fbdfb5;">impl </span><span style="color:#fbe3bf;">From</span><span>&lt;Color&gt; </span><span style="color:#ff5e5e;">for </span><span>UiColor {
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">fn </span><span style="color:#8cdaff;">from</span><span>(</span><span style="font-style:italic;color:#fc9354;">input</span><span>: Color) -&gt; UiColor {
+</span><span>        UiColor(input)
+</span><span>    }
+</span><span>}
+</span><span>
+</span><span style="font-style:italic;color:#fbdfb5;">impl </span><span style="color:#fbe3bf;">From</span><span>&lt;UiColor&gt; </span><span style="color:#ff5e5e;">for </span><span>Color {
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">fn </span><span style="color:#8cdaff;">from</span><span>(</span><span style="font-style:italic;color:#fc9354;">input</span><span>: UiColor) -&gt; Color {
+</span><span>        input.</span><span style="color:#fdb082;">0
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>Unfortunately we can't do anything like <code>#[derive(From&lt;UiColor&gt;)]</code> (yet?) but implementing these traits is fairly straight forward and <em>very</em> powerful.</p>
+<p>Here we can see our <code>main</code> function is fixed with passing assertions.</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="font-style:italic;color:#fbdfb5;">fn </span><span style="color:#8cdaff;">main</span><span>() {
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">let</span><span> a </span><span style="color:#ff5e5e;">=</span><span> UiColor(Color {
+</span><span>        red: </span><span style="color:#fdb082;">0.5</span><span>,
+</span><span>        </span><span style="color:#ff5e5e;">..</span><span style="color:#fbe3bf;">Default</span><span>::default()
+</span><span>    });
+</span><span>    assert_eq!(a, UiColor(Color { red: </span><span style="color:#fdb082;">0.5</span><span>, green: </span><span style="color:#fdb082;">0.0</span><span>, blue: </span><span style="color:#fdb082;">0.0 </span><span>}));
+</span><span>
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">let</span><span> b: UiColor </span><span style="color:#ff5e5e;">= </span><span style="color:#6699cc;">color_rotate</span><span>(a.</span><span style="color:#6699cc;">into</span><span>()).</span><span style="color:#6699cc;">into</span><span>();
+</span><span>    assert_eq!(b, UiColor(Color { red: </span><span style="color:#fdb082;">0.0</span><span>, green: </span><span style="color:#fdb082;">0.0</span><span>, blue: </span><span style="color:#fdb082;">0.5 </span><span>}));
+</span><span>}
+</span></code></pre>
+<p>Rust was not only able to cast our <code>UiColor</code> to a <code>Color</code> in the call to <code>color_rotate</code> but we were able to coerce the result back to a <code>UiColor</code> by declaring the type of our <code>b</code> variable.</p>
+<p>Using <code>From</code> and <code>into()</code> is great because it allows you to ignore the specifics of the types you're working with while still getting the benefits of a strong type system.
+When you use it enough it can feel like parts of your code are "Duckly" typed, like Python and Ruby which have very ergonomic type interactions.</p>
+<h2 id="from-simple-to-complex">From Simple to Complex</h2>
+<p>Since learning about <code>From</code> started to abuse it to convert simplified types to more complex ones.</p>
+<p>Take for example this UI struct in Bevy:</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="color:#ff5e5e;">pub </span><span style="font-style:italic;color:#fbdfb5;">struct </span><span>NodeBundle {
+</span><span>    </span><span style="color:#ff5e5e;">pub </span><span style="color:#e9fdac;">node</span><span>: Node,
+</span><span>    </span><span style="color:#ff5e5e;">pub </span><span style="color:#e9fdac;">style</span><span>: Style,
+</span><span>    </span><span style="color:#ff5e5e;">pub </span><span style="color:#e9fdac;">color</span><span>: UiColor,
+</span><span>    </span><span style="color:#ff5e5e;">pub </span><span style="color:#e9fdac;">image</span><span>: UiImage,
+</span><span>    </span><span style="color:#ff5e5e;">pub </span><span style="color:#e9fdac;">focus_policy</span><span>: FocusPolicy,
+</span><span>    </span><span style="color:#ff5e5e;">pub </span><span style="color:#e9fdac;">transform</span><span>: Transform,
+</span><span>    </span><span style="color:#ff5e5e;">pub </span><span style="color:#e9fdac;">global_transform</span><span>: GlobalTransform,
+</span><span>    </span><span style="color:#ff5e5e;">pub </span><span style="color:#e9fdac;">visibility</span><span>: Visibility,
+</span><span>}
+</span></code></pre>
+<p>On it's own this isn't bad, but if you write enough UI code it can get tedious.
+Both <code>Node</code> and <code>Style</code> are nested structs that have a lot of complexity -- <code>Style</code> is a struct with 21 members! -- so using <code>Default</code> won't cut it here.</p>
+<p>Instead I made a "dumbed down" version like this:</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="font-style:italic;color:#fbdfb5;">struct </span><span>SimpleNodeBundle {
+</span><span>    </span><span style="color:#e9fdac;">position</span><span>: SimplePosition,
+</span><span>    </span><span style="color:#e9fdac;">color</span><span>: Color,
+</span><span>    </span><span style="color:#e9fdac;">size</span><span>: Vec2,
+</span><span>}
+</span><span>
+</span><span style="font-style:italic;color:#fbdfb5;">enum </span><span>SimplePosition {
+</span><span>    BottomLeft,
+</span><span>    BottomRight,
+</span><span>    TopLeft,
+</span><span>    TopRight,
+</span><span>}
+</span></code></pre>
+<p>This is maybe <em>too</em> simple, but you can add the complexity you need down the line. The important part is that our <code>Simple</code> struct is you know... less complex than what it's going to map to.</p>
+<p>Now that we have a simple struct that we can use to quickly write out some UI elements.</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="font-style:italic;color:#fbdfb5;">let</span><span> my_ui_element </span><span style="color:#ff5e5e;">=</span><span> SimpleNodeBundle {
+</span><span>    position: SimplePosition::TopRight,
+</span><span>    size: Vec2 { x: </span><span style="color:#fdb082;">25.0</span><span>, y: </span><span style="color:#fdb082;">100.0 </span><span>},
+</span><span>    color: Color::</span><span style="color:#fdb082;">RED</span><span>,
+</span><span>}
+</span></code></pre>
+<p>On it's own though this is useless.
+Bevy doesn't know what a <code>SimpleNodeBundle</code> is, we need to convert this to the "lower level" struct it's replacing.
+We need to cast it up to a Bevy <code>NodeBundle</code> with an implementation of <code>From&lt;SimpleNodeBundle&gt; for NodeBundle</code>:</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="font-style:italic;color:#fbdfb5;">impl </span><span style="color:#fbe3bf;">From</span><span>&lt;SimpleNodeBundle&gt; </span><span style="color:#ff5e5e;">for </span><span>NodeBundle {
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">impl </span><span>from(input: SimpleNodeBundle) -&gt; NodeBundle {
+</span><span>        NodeBundle {
+</span><span>            color: UiColor(input.color),
+</span><span>            style: Style {
+</span><span>                position: input.position.</span><span style="color:#6699cc;">into</span><span>(),
+</span><span>                size: input.size.</span><span style="color:#6699cc;">into</span><span>(),
+</span><span>                </span><span style="color:#ff5e5e;">..</span><span style="color:#fbe3bf;">Default</span><span>::default()
+</span><span>            }
+</span><span>            </span><span style="color:#ff5e5e;">..</span><span style="color:#fbe3bf;">Default</span><span>::default()
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span><span>
+</span><span style="color:#6d6d6d;">// NodeBundle&#39;s position is a Rect&lt;Val&gt; so we convert SimplePosition to Rect&lt;Val&gt;
+</span><span style="font-style:italic;color:#fbdfb5;">impl </span><span style="color:#fbe3bf;">From</span><span>&lt;SimplePosition&gt; </span><span style="color:#ff5e5e;">for </span><span>Rect&lt;Val&gt; {
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">impl </span><span>from(input: SimplePosition) -&gt; Rect&lt;Val&gt; {
+</span><span>        </span><span style="color:#ff5e5e;">use </span><span>SimplePosition::</span><span style="color:#ff5e5e;">*</span><span>;
+</span><span>        </span><span style="color:#ff5e5e;">match</span><span> input {
+</span><span>            BottomLeft  </span><span style="color:#ff5e5e;">=&gt;</span><span> Rect {
+</span><span>                bottom: </span><span style="color:#6699cc;">percent</span><span>(</span><span style="color:#fdb082;">0.0</span><span>),
+</span><span>                left: </span><span style="color:#6699cc;">percent</span><span>(</span><span style="color:#fdb082;">0.0</span><span>),
+</span><span>                </span><span style="color:#ff5e5e;">..</span><span style="color:#fbe3bf;">Default</span><span>::default()
+</span><span>            },
+</span><span>            BottomRight </span><span style="color:#ff5e5e;">=&gt;</span><span> Rect {
+</span><span>                bottom: </span><span style="color:#6699cc;">percent</span><span>(</span><span style="color:#fdb082;">0.0</span><span>),
+</span><span>                right: </span><span style="color:#6699cc;">percent</span><span>(</span><span style="color:#fdb082;">0.0</span><span>),
+</span><span>                </span><span style="color:#ff5e5e;">..</span><span style="color:#fbe3bf;">Default</span><span>::default()
+</span><span>            },
+</span><span>            TopLeft     </span><span style="color:#ff5e5e;">=&gt;</span><span> Rect {
+</span><span>                top: </span><span style="color:#6699cc;">percent</span><span>(</span><span style="color:#fdb082;">0.0</span><span>),
+</span><span>                left: </span><span style="color:#6699cc;">percent</span><span>(</span><span style="color:#fdb082;">0.0</span><span>),
+</span><span>                </span><span style="color:#ff5e5e;">..</span><span style="color:#fbe3bf;">Default</span><span>::default()
+</span><span>            },
+</span><span>            TopRight    </span><span style="color:#ff5e5e;">=&gt;</span><span> Rect {
+</span><span>                top: </span><span style="color:#6699cc;">percent</span><span>(</span><span style="color:#fdb082;">0.0</span><span>),
+</span><span>                right: </span><span style="color:#6699cc;">percent</span><span>(</span><span style="color:#fdb082;">0.0</span><span>),
+</span><span>                </span><span style="color:#ff5e5e;">..</span><span style="color:#fbe3bf;">Default</span><span>::default()
+</span><span>            },
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span><span>
+</span><span style="color:#6d6d6d;">// Similarly size is a Size&lt;Val&gt; but we have a Vec2, so we conver to the right type
+</span><span style="font-style:italic;color:#fbdfb5;">impl </span><span style="color:#fbe3bf;">From</span><span>&lt;Vec2&gt; </span><span style="color:#ff5e5e;">for </span><span>Size&lt;Val&gt; {
+</span><span>    </span><span style="font-style:italic;color:#fbdfb5;">impl </span><span>from(input: Vec2) -&gt; Size&lt;Val&gt; {
+</span><span>        Size {
+</span><span>            width: Val::Px(input.x),
+</span><span>            height: Val::Px(input.y),
+</span><span>        }
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<p>Putting this all together we get (pseudocode) something like this:</p>
+<pre data-lang="rust" style="background-color:#191919;color:#f8f8f2;" class="language-rust "><code class="language-rust" data-lang="rust"><span style="font-style:italic;color:#fbdfb5;">let</span><span> my_ui_element </span><span style="color:#ff5e5e;">=</span><span> SimpleNodeBundle {
+</span><span>    position: SimplePosition::TopRight,
+</span><span>    size: Vec2 { x: </span><span style="color:#fdb082;">25.0</span><span>, y: </span><span style="color:#fdb082;">100.0 </span><span>},
+</span><span>    color: Color::</span><span style="color:#fdb082;">RED</span><span>,
+</span><span>}
+</span><span>
+</span><span style="color:#6699cc;">some_bevy_ui_method</span><span>(my_ui_element.</span><span style="color:#6699cc;">into</span><span>());
+</span></code></pre>
+<p>Skeptical readers might be thinking "Wow that is awful.
+This is so much code just to convert one stuct to another slightly simpler struct".
+You're right that it's a lot of code, but I promise in practice this is a game changer.
+Instead of remembering how to express your ideas to your library of choice every single time, you can express a higher level concept and <code>.into()</code> your framework's lower-level structure.
+Being able to succinctly express yourself while still getting the flexibility of a strong expressive type system is a killer feature of Rust and the use of these traits.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Many of Rust's "pros" are also "cons".
+Memory safety results in frustratingly negotiating with the compiler.
+A strong type system with compile-time complexity results in slow (but improving) compile times.</p>
+<p>For the purposes of this post it is Rust's bias toward being explicit.
+Unlike other languages which automagically apply crazy changes to your code, Rust rarely <em>assumes</em> you want magic sprinkled everywhere.
+You can opt-in to that magic and all of the compile-time and runtime penalties that come with it, but it won't be secretly given to you for you to
+opt-out of.</p>
+<p>Rust can sprinkle magic on your code, but you have to explicitly call <code>.magic()</code> -- or in our case <code>.into()</code> and <code>.default()</code>.
+This is a nice middle ground between tedious code and black magic.
+When a language has <em>too much</em> magic it can result in wild performance implications from seemingly small code changes.
+While tedious code is just a pain to write, even if it is transparent about it's runtime performance.
+Here Rust is able to be transparent, you can audit every use of <code>.into()</code> and assess the runtime penalty, while still feeling magical.</p>
+
+  </main>
+  <p>
+        Tags:
+          <a href="/tags/rust/">#rust</a>
+  </p>
+<footer>
+  Made with <a href="https://www.getzola.org/">Zola</a>;
+  theme inspired by <a href="https://codeberg.org/alanpearce/zola-bearblog">Zola ʕ•ᴥ•ʔ Bear</a>.
+</footer>
+</body>
+</html>

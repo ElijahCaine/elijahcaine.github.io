@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>elijah.run - python</title>
+    <subtitle>A blog about tech, media, and art</subtitle>
+    <link rel="self" type="application/atom+xml" href="/tags/python/atom.xml"/>
+    <link rel="alternate" type="text/html" href="/"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2021-09-02T00:00:00+00:00</updated>
+    <id>/tags/python/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Dynamic Dispatch in Python</title>
+        <published>2021-09-02T00:00:00+00:00</published>
+        <updated>2021-09-02T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/python-dynamic-dispatch/"/>
+        <id>/python-dynamic-dispatch/</id>
+        
+        <content type="html" xml:base="/python-dynamic-dispatch/">&lt;p&gt;🦝 Hey want tO see a nEat PYtHoN triCK?&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span style=&quot;font-style:italic;color:#ff5e5e;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8cdaff;&quot;&gt;f&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fc9354;&quot;&gt;name&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;str&lt;&#x2F;span&gt;&lt;span&gt;):
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;hiya &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;{}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;format&lt;&#x2F;span&gt;&lt;span&gt;(name))
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;locals&lt;&#x2F;span&gt;&lt;span&gt;()[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;f&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;](&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;Spongebob&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;🐮 Oh cool, does that use the string &lt;code&gt;&quot;f&quot;&lt;&#x2F;code&gt; to find--&lt;&#x2F;p&gt;
+&lt;p&gt;🦝 DoEs It FiNd ThE fUnCtIoN &lt;code&gt;&quot;f&quot;&lt;&#x2F;code&gt; aNd CaLl iT?? yEaH It DoEs.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;$ python script.py
+&lt;&#x2F;span&gt;&lt;span&gt;hiya Spongebob
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;🐮 Oh that&#x27;s neat. I didn&#x27;t know you could do that with Python--&lt;&#x2F;p&gt;
+&lt;p&gt;🦝 whaTEveR i dON&#x27;t cArE wHaT YOU tHinK.&lt;&#x2F;p&gt;
+&lt;p&gt;🐮 You asked me --&lt;&#x2F;p&gt;
+&lt;p&gt;🦝 I sAiD sHuT uP. i&#x27;M dOiNg HoT gIrL sHiT.&lt;&#x2F;p&gt;
+&lt;p&gt;🐮 Are you ok? You&#x27;re yelling a lot about Python again--&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# shut up
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#ff5e5e;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8cdaff;&quot;&gt;test_patrick&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fc9354;&quot;&gt;context&lt;&#x2F;span&gt;&lt;span&gt;: TestContext):
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# do thing
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#ff5e5e;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8cdaff;&quot;&gt;test_crabs&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fc9354;&quot;&gt;context&lt;&#x2F;span&gt;&lt;span&gt;: TestContext):
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# do other thing
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;context &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;TestContext&lt;&#x2F;span&gt;&lt;span&gt;()
+&lt;&#x2F;span&gt;&lt;span&gt;tests &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;[]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;t &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;in &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;locals&lt;&#x2F;span&gt;&lt;span&gt;():
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;t.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;startswith&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;test_&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;):
+&lt;&#x2F;span&gt;&lt;span&gt;        tests.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;append&lt;&#x2F;span&gt;&lt;span&gt;(t)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;for &lt;&#x2F;span&gt;&lt;span&gt;test &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;in &lt;&#x2F;span&gt;&lt;span&gt;tests:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;test&lt;&#x2F;span&gt;&lt;span&gt;(context)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;🐮 Oh so you could...&lt;&#x2F;p&gt;
+&lt;p&gt;🦝 ...&lt;&#x2F;p&gt;
+&lt;p&gt;🐮 Are you going to interrupt me?&lt;&#x2F;p&gt;
+&lt;p&gt;🦝 Not yet.&lt;&#x2F;p&gt;
+&lt;p&gt;🐮 Ok... you could search your scope and find a bunch of functions with a name and common interface--&lt;&#x2F;p&gt;
+&lt;p&gt;🦝 AND CALL THEM! DYNAMIC DISPATCH!!&lt;&#x2F;p&gt;
+&lt;p&gt;🐮 That&#x27;s nice.&lt;&#x2F;p&gt;
+&lt;p&gt;🦝 YEAH IT IS COOL!&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Circular Imports</title>
+        <published>2021-01-31T00:00:00+00:00</published>
+        <updated>2021-01-31T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/circular-imports/"/>
+        <id>/circular-imports/</id>
+        
+        <content type="html" xml:base="/circular-imports/">&lt;p&gt;Don&#x27;t you hate when you&#x27;re writing a python program and you get hit with one of these?&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;Traceback (most recent call last):
+&lt;&#x2F;span&gt;&lt;span&gt;  File &amp;quot;a.py&amp;quot;, line 1, in &amp;lt;module&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    from b import g
+&lt;&#x2F;span&gt;&lt;span&gt;  File &amp;quot;&#x2F;home&#x2F;pop&#x2F;Projects&#x2F;src&#x2F;localhost&#x2F;circular&#x2F;b.py&amp;quot;, line 1, in &amp;lt;module&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    from a import f
+&lt;&#x2F;span&gt;&lt;span&gt;  File &amp;quot;&#x2F;home&#x2F;pop&#x2F;Projects&#x2F;src&#x2F;localhost&#x2F;circular&#x2F;a.py&amp;quot;, line 1, in &amp;lt;module&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    from b import g
+&lt;&#x2F;span&gt;&lt;span&gt;ImportError: cannot import name &amp;#39;g&amp;#39; from partially initialized module &amp;#39;b&amp;#39; (most likely due to a circular import) (&#x2F;home&#x2F;pop&#x2F;Projects&#x2F;src&#x2F;localhost&#x2F;circular&#x2F;b.py)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;What a drag.&lt;&#x2F;p&gt;
+&lt;p&gt;Circular imports are of course the literal devel in programming, but in a Godel Escher Bach sort of way they are all around us.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;welcome-to-my-ted-talk&quot;&gt;welcome to my ted talk&lt;&#x2F;h2&gt;
+&lt;p&gt;There are a lot of problems in the world that everybody agrees are problems&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#1&quot;&gt;1&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;, but we can sometimes disagree about what the solution is.&lt;&#x2F;p&gt;
+&lt;p&gt;Many of these problems stem can be thought of as emergent properties of other phenomena.&lt;&#x2F;p&gt;
+&lt;p&gt;Take for example, plastic.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;fuck-plastic&quot;&gt;fuck plastic&lt;&#x2F;h2&gt;
+&lt;p&gt;Remember the good old days in America when women tended to the house while PTSD ridden white men worked a 40 minute drive away and the ethnically, racially, sexually, abally discriminated minorities were repressed?&lt;&#x2F;p&gt;
+&lt;p&gt;Well something that actually was pretty sweet was milk delivery.&lt;&#x2F;p&gt;
+&lt;p&gt;Milk, delivered regularly in reusable glass bottles had incredibly ecological benefits compared with how we get milk&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#2&quot;&gt;2&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt; today.&lt;&#x2F;p&gt;
+&lt;p&gt;Deliveries are an incredibly efficient means of distriuting goods&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#3&quot;&gt;3&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt; and re-using glass bottles requires far less energy than say, melting a bottle down or worse creating a plastic single-use bottle.&lt;&#x2F;p&gt;
+&lt;p&gt;I really want to focus on the glass bottles because they are &lt;em&gt;so&lt;&#x2F;em&gt; efficient, why did we ever stop?&lt;&#x2F;p&gt;
+&lt;p&gt;Lobbying.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;from-plastics-import-lobbying&quot;&gt;from plastics import lobbying&lt;&#x2F;h2&gt;
+&lt;p&gt;That&#x27;s right: lobbying, not the free market, gave us the fucking horrific amount of single-use plastic we have today.&lt;&#x2F;p&gt;
+&lt;p&gt;For sure there are a million things we need to cut the fuck out if we want this planet to be anything close to what we were born into in 100 years, but plastics are worth spending a few hundred words.&lt;&#x2F;p&gt;
+&lt;p&gt;The plastics industry spent millions&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#4&quot;&gt;4&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt; lobbying to allow the use of single use plastics instead of reusable containers.&lt;&#x2F;p&gt;
+&lt;p&gt;Instead of identifying the inevitable crisis of too much fucking plastic and shutting that shit down, governments across the world wer just like &quot;yeah this is cool, pour up my dude&quot;.&lt;&#x2F;p&gt;
+&lt;p&gt;Congress, given no external input, very well could have legislated against the use of single-use plastics, but because they were convinced... with money... otherwise here we are in a world full of single use plastics, and just like a virus it&#x27;s spread so far that it feels impossible to slow it&#x27;s spread.&lt;&#x2F;p&gt;
+&lt;p&gt;So clearly we need to stop lobbying.
+We need to think of some clever way to prevent corruptable government officials from being bought off to vote against the interests of their constituents, their country, and future generations...&lt;&#x2F;p&gt;
+&lt;p&gt;Well that&#x27;s clearly impossible.&lt;&#x2F;p&gt;
+&lt;p&gt;Let&#x27;s dig deeper.
+What causes lobbying?&lt;&#x2F;p&gt;
+&lt;p&gt;Profit.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;from-lobbying-import-profit&quot;&gt;from lobbying import profit&lt;&#x2F;h2&gt;
+&lt;p&gt;It is clear that profit is the reason lobbying exists.&lt;&#x2F;p&gt;
+&lt;p&gt;Some lobbying is good. If you own a farm and you hear about legislation that will like... just straight up dump a bunch of nuclear waste on your property, you&#x27;re probably going to knock on some doors and grease some palms to prevent that from happening.&lt;&#x2F;p&gt;
+&lt;p&gt;Arithmetically it makes sense that lobbying is tied to profit.
+If a piece of legislation is projected to decrease profits by 30 million USD, you&#x27;re probably willing to spend 2 million USD to prevent it from going through.&lt;&#x2F;p&gt;
+&lt;p&gt;Lobbying, like swordfishing&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#5&quot;&gt;5&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt;, is a targeted, and therefore monetarily effective, way to influence change.&lt;&#x2F;p&gt;
+&lt;p&gt;Maximizing profit has a lot of other problems&lt;sup class=&quot;footnote-reference&quot;&gt;&lt;a href=&quot;#6&quot;&gt;6&lt;&#x2F;a&gt;&lt;&#x2F;sup&gt; like supressing wages despite productivity going up, and cock-blocking public alternatives to private services like healthcare... Where was I?&lt;&#x2F;p&gt;
+&lt;p&gt;Oh right, so this begs the question, where does profit come from?&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;from-profit-import&quot;&gt;from profit import ???&lt;&#x2F;h2&gt;
+&lt;h2 id=&quot;soapbox-intensifies&quot;&gt;soapbox intensifies&lt;&#x2F;h2&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;1&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;1&lt;&#x2F;sup&gt;
+&lt;p&gt;All &lt;em&gt;good faith actors&lt;&#x2F;em&gt; actors agree are a problem.&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;2&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;2&lt;&#x2F;sup&gt;
+&lt;p&gt;Yes, also mylks.&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;3&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;3&lt;&#x2F;sup&gt;
+&lt;p&gt;Citation needed?&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;4&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;4&lt;&#x2F;sup&gt;
+&lt;p&gt;... &lt;em&gt;sigh&lt;&#x2F;em&gt; citation needed.&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;5&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;5&lt;&#x2F;sup&gt;
+&lt;p&gt;The internet phishing scam not the oceanic activity.&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;footnote-definition&quot; id=&quot;6&quot;&gt;&lt;sup class=&quot;footnote-definition-label&quot;&gt;6&lt;&#x2F;sup&gt;
+&lt;p&gt;... citation... needed...?&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>How to Get the Most out of Your Python Exceptions</title>
+        <published>2016-04-03T00:00:00+00:00</published>
+        <updated>2016-04-03T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/python-exceptions/"/>
+        <id>/python-exceptions/</id>
+        
+        <content type="html" xml:base="/python-exceptions/">&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span&gt;var &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;input&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;Please enter a number not equal to 0: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;try&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    var &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fdb082;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;float&lt;&#x2F;span&gt;&lt;span&gt;(var)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;except &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;ZeroDivisionError &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;as &lt;&#x2F;span&gt;&lt;span&gt;e:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;Error: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;+ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;str&lt;&#x2F;span&gt;&lt;span&gt;(e))
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;You had one job!&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;span class=&quot;warning&quot;&gt;
+    &lt;span class=&quot;warning-title&quot;&gt;
+        Warning
+    &lt;&#x2F;span&gt;
+
+    &lt;span class=&quot;warning-body&quot;&gt;
+        &amp;lt;p&amp;gt;This post does not cover &amp;lt;em&amp;gt;what&amp;lt;&amp;#x2F;em&amp;gt; python exceptions are. If the above code
+doesn&amp;#x27;t make sense you should check out this &amp;lt;a href=&amp;quot;https:&amp;#x2F;&amp;#x2F;wiki.python.org&amp;#x2F;moin&amp;#x2F;HandlingExceptions&amp;quot;&amp;gt;Introduction to Python
+Exceptions&amp;lt;&amp;#x2F;a&amp;gt; from
+wiki.python.org before reading this post.&amp;lt;&amp;#x2F;p&amp;gt;
+
+    &lt;&#x2F;span&gt;
+&lt;&#x2F;span&gt;
+&lt;p&gt;If you&#x27;ve fallen in love with Python you&#x27;ve no doubt discovered exceptions:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;try&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# do a thing
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;except&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# thing did not work,
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# do something else
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;They are endlessly useful and help one to avoid writing checks upon checks upon checks before getting to the meat of your project.
+Just try a thing, catch the error, keep on rolling (or fail gracefully).&lt;&#x2F;p&gt;
+&lt;p&gt;As powerful as they can be, I have found a lot of folks (past me included) who don&#x27;t know how to find python exceptions and don&#x27;t know how to write their own exceptions! So let&#x27;s do that.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;finding-exceptions&quot;&gt;Finding Exceptions&lt;&#x2F;h2&gt;
+&lt;p&gt;When writing exception handling code it&#x27;s kosher to explicitly state &lt;em&gt;which&lt;&#x2F;em&gt; error you expect.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Bad:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;try&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# A thing that might not work
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;except&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Something else
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Good:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;try&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# A thing that might not work
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;except &lt;&#x2F;span&gt;&lt;span&gt;SpecificError &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;as &lt;&#x2F;span&gt;&lt;span&gt;err:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Maybe print(err)
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;# Something else
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;When I first found this out I thought &lt;em&gt;Golly that does sound useful; I always try to be explicit in my error handling -- but how??&lt;&#x2F;em&gt;
+Thankfully future me is here to answer questions like this.&lt;&#x2F;p&gt;
+&lt;p&gt;The exception you are looking for (for instance, &lt;code&gt;SpecificError&lt;&#x2F;code&gt; in the above pseudo-code) can be found in the python traceback:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;$ echo &amp;quot;open(&amp;#39;myfakefile.txt&amp;#39;, &amp;#39;r&amp;#39;).close()&amp;quot; &amp;gt; my-unhandled-script.py
+&lt;&#x2F;span&gt;&lt;span&gt;$ python my-unhandled-script.py
+&lt;&#x2F;span&gt;&lt;span&gt;Traceback (most recent call last):
+&lt;&#x2F;span&gt;&lt;span&gt;  File &amp;quot;&#x2F;tmp&#x2F;test.py&amp;quot;, line 1, in &amp;lt;module&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    open(&amp;#39;myfakefile.txt&amp;#39;, &amp;#39;r&amp;#39;).close()
+&lt;&#x2F;span&gt;&lt;span&gt;IOError: [Errno 2] No such file or directory: &amp;#39;myfakefile.txt&amp;#39;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;That bit on the last line &lt;code&gt;IOError&lt;&#x2F;code&gt; is the exception you&#x27;re looking for.
+So when you write your code you&#x27;ll say something like the following:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;try&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;open&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;myfakefile.txt&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;r&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;close&lt;&#x2F;span&gt;&lt;span&gt;()
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;except &lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;IOError &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;as &lt;&#x2F;span&gt;&lt;span&gt;e:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(e)
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;File `myfakefile.txt` does not exist&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;To recap, here is one way (and my preferred method for) &#x27;doing&#x27; python exception handling:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;Write breakable code.&lt;&#x2F;li&gt;
+&lt;li&gt;Run breakable code, see what exceptions python spits out.&lt;&#x2F;li&gt;
+&lt;li&gt;Wrap breakable code in explicit &lt;code&gt;try&#x2F;except&lt;&#x2F;code&gt; blocks.&lt;&#x2F;li&gt;
+&lt;li&gt;???&lt;&#x2F;li&gt;
+&lt;li&gt;Profit.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h2 id=&quot;writing-your-own-exceptions&quot;&gt;Writing Your Own Exceptions&lt;&#x2F;h2&gt;
+&lt;p&gt;You (who me?), yes &lt;em&gt;you&lt;&#x2F;em&gt; can write custom python exceptions.
+It&#x27;s dead easy too.&lt;&#x2F;p&gt;
+&lt;p&gt;The long and short of it is you define an exception class which either inherits from the &lt;code&gt;Exception&lt;&#x2F;code&gt; class or another pre-existing exception.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;python&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-python &quot;&gt;&lt;code class=&quot;language-python&quot; data-lang=&quot;python&quot;&gt;&lt;span style=&quot;font-style:italic;color:#ff5e5e;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;color:#8cdaff;&quot;&gt;CusssstomError&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;text-decoration:underline;font-style:italic;color:#8cdaff;&quot;&gt;Exception&lt;&#x2F;span&gt;&lt;span&gt;):
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6d6d6d;&quot;&gt;&amp;#39;&amp;#39;&amp;#39;Raise when snakes&amp;#39;&amp;#39;&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#ff5e5e;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;__init__&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fc9354;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fc9354;&quot;&gt;message&lt;&#x2F;span&gt;&lt;span&gt;):
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;self&lt;&#x2F;span&gt;&lt;span&gt;.message &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span&gt;message
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#ff5e5e;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8cdaff;&quot;&gt;check_for_snakes&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;font-style:italic;color:#fc9354;&quot;&gt;foo&lt;&#x2F;span&gt;&lt;span&gt;):
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;snake&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;in &lt;&#x2F;span&gt;&lt;span&gt;foo.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;lower&lt;&#x2F;span&gt;&lt;span&gt;():
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;raise &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;CusssstomError&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;Snakes! I hate snakes!&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;try&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    foo &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;input&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;Just don&amp;#39;t mention snakes: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#e9fdac;&quot;&gt;check_for_snakes&lt;&#x2F;span&gt;&lt;span&gt;(foo)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;except &lt;&#x2F;span&gt;&lt;span&gt;CusssstomError &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;as &lt;&#x2F;span&gt;&lt;span&gt;e:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(e.message)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ff5e5e;&quot;&gt;else&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#6699cc;&quot;&gt;print&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#fbe3bf;&quot;&gt;Thanks. I appreciate it.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ffffff;&quot;&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The above code defines the &lt;code&gt;CusssstomError&lt;&#x2F;code&gt; exception class which you can &lt;code&gt;raise&lt;&#x2F;code&gt;.
+Very neat and &lt;a href=&quot;https:&#x2F;&#x2F;docs.python.org&#x2F;2&#x2F;glossary.html#term-pythonic&quot;&gt;pythonic&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;further-reading&quot;&gt;Further Reading&lt;&#x2F;h2&gt;
+&lt;p&gt;Here are a few references I suggest you check out to get an even better grasp on exception handling and custom exceptions:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;This Stack Overflow post: &lt;a href=&quot;http:&#x2F;&#x2F;stackoverflow.com&#x2F;questions&#x2F;1319615&#x2F;proper-way-to-declare-custom-exceptions-in-modern-python&quot;&gt;Proper way to declare custom exceptions in modern Python?&lt;&#x2F;a&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;This Python doc: &lt;a href=&quot;https:&#x2F;&#x2F;docs.python.org&#x2F;2&#x2F;library&#x2F;exceptions.html&quot;&gt;Built-in Exceptions&lt;&#x2F;a&gt;.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;And as always, search engines are your friends.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

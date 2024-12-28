@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="shortcut icon" href="&#x2F;favicon.ico"><title>Deploying Buildbot on Kubernetes | elijah.run</title>
+  <meta name="title" content="Deploying Buildbot on Kubernetes">
+<meta name="description" content="A blog about tech, media, and art">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="alternate" type="application/atom+xml" title="elijah.run" href="/atom.xml">
+  <style>
+    :root {
+    --width: 586px;
+    --font-main: Verdana, sans-serif;
+    --font-secondary: "Times New Roman", serif;
+    --font-scale: 1.1em;
+    --background-color: #fff;
+    --heading-color: #222;
+    --text-color: #444;
+    --link-color: #3273dc;
+    --visited-color: #8b6fcb;
+    --blockquote-color: #222;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background-color: #01242e;
+      --heading-color: #eee;
+      --text-color: #ddd;
+      --link-color: #8cc2dd;
+      --visited-color: #8b6fcb;
+      --blockquote-color: #ccc;
+    }
+  }
+
+  body {
+    font-family: var(--font-secondary);
+    font-size: var(--font-scale);
+    margin: auto;
+    padding: 20px;
+    max-width: var(--width);
+    text-align: left;
+    background-color: var(--background-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: var(--text-color);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-main);
+    color: var(--heading-color);
+  }
+
+  a {
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  nav a {
+    margin-right: 8px;
+  }
+
+  nav span.active {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  strong,
+  b {
+    color: var(--heading-color);
+  }
+
+  button {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  main {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px dashed;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  pre code {
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 0.875rem;
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: monospace;
+    padding: 2px;
+    border-radius: 3px;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: var(--code-color);
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px 0;
+    text-align: center;
+  }
+
+  .title:hover {
+    text-decoration: none;
+  }
+
+  .title h1 {
+    font-size: 1.5em;
+  }
+
+  .inline {
+    width: auto !important;
+  }
+
+  .highlight,
+  .code {
+    padding: 1px 15px;
+    background-color: var(--code-background-color);
+    color: var(--code-color);
+    border-radius: 3px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    overflow-x: auto;
+  }
+
+  /* blog post list */
+  ul.posts {
+    list-style-type: none;
+    padding: unset;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  ul.posts li {
+    line-height: 1;
+    margin: 0;
+  }
+
+  ul.posts li time {
+    margin-left: 0px;
+    font-size: 12px;
+  }
+
+  ul.posts li a:visited {
+    color: var(--visited-color);
+  }
+
+  li.post {
+    padding: 0px 0px 10px 0px;
+  }
+
+  span.tags {
+    font-size: smaller;
+  }
+
+  /* table of contents */
+  details ul {
+    list-style-type: circle;
+  }
+
+  </style>
+</head>
+<body>
+  <header>
+  <a href="/" class="title">
+    <h1>elijah.run</h1>
+  </a>
+  <nav aria-label="site">
+      <a href="/">(🏠 elijah.run)</a>
+      <a href="https:&#x2F;&#x2F;games.elijah.run">(🕹️ games)</a>
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;pop">(🐙 github 🐱)</a>
+      <a href="/Elijah Voigt.pdf">(👔 resume)</a>
+  </nav>
+</header>
+<h1>Deploying Buildbot on Kubernetes</h1>
+      <p>
+        <i>
+          <time datetime="2016-12-12T00:00:00+00:00" pubdate>Mon 12 Dec 2016</time>
+        </i>
+      </p>
+    <details open>
+      <summary>Table of contents</summary>
+    <ul>
+        <li>
+          <a href="/buildbot-on-kubernetes/#preamble">Preamble</a>
+        </li>
+        <li>
+          <a href="/buildbot-on-kubernetes/#first-pass">First Pass</a>
+        </li>
+        <li>
+          <a href="/buildbot-on-kubernetes/#storage">Storage</a>
+        </li>
+        <li>
+          <a href="/buildbot-on-kubernetes/#autoscaling">Autoscaling</a>
+        </li>
+        <li>
+          <a href="/buildbot-on-kubernetes/#debrief">Debrief</a>
+        </li>
+        <li>
+          <a href="/buildbot-on-kubernetes/#errata">Errata</a>
+        </li>
+    </ul>
+    </details>
+  <main>
+    <p><img src="/images/buildbot-on-k8s/kubernetes-logo.png" alt="kubernetes logo" /></p>
+<hr />
+<blockquote>
+<p><strong>TLDR:</strong> If you just want to see the end-result of this post, the results can be found at this GitHub Repository: <a href="https://github.com/ElijahCaine/buildbot-on-kubernetes">https://github.com/ElijahCaine/buildbot-on-kubernetes</a></p>
+</blockquote>
+<h2 id="preamble">Preamble</h2>
+<p>I'm learning Kubernetes (K8s) for work and decided to try my hand at deploying Buildbot with K8s because we all know the universal law discovered made by Science McSmartyPants in the 1758 which stated: <strong>doing cool shit &gt; reading docs</strong> <sup class="footnote-reference"><a href="#docs-should">1</a></sup>.
+I would describe K8s and Buildbot, but they each already did that:</p>
+<blockquote>
+<p>"Buildbot is an open-source framework for automating software build, test, and release processes."</p>
+<p>- <a href="http://buildbot.net/">Buildbot.net</a></p>
+</blockquote>
+<hr />
+<blockquote>
+<p>Kubernetes is an open-source system for automating deployment,
+scaling, and management of containerized applications.</p>
+<p>- <a href="http://kubernetes.io/">Kubernetes.io</a></p>
+</blockquote>
+<hr />
+<p>If that still didn't make sense, don't worry you should keep reading.
+This is a fun post.</p>
+<blockquote>
+<p><strong>NOTE:</strong> As you read this post keep in mind: <em>it might walk like a
+tutorial, quack like a tutorial, and even read like a tutorial, but I
+promise you that it is in fact</em> <strong>not</strong> <em>a tutorial.</em></p>
+<p><strong>This post is an adventure.</strong></p>
+</blockquote>
+<h3 id="squad-goals">Squad Goals</h3>
+<p>Here's a quick rundown of what I want to achieve:</p>
+<ul>
+<li>Deploy an instance of Buildbot on K8s.</li>
+<li>Have that instance scale it's number of workers automagically
+depending on the amount of work being asked of it.</li>
+<li>Share all relevant storage between replicated containers (e.g.,
+databases, builds, etc).</li>
+</ul>
+<h3 id="why">Why?</h3>
+<p>I have never deployed Buildbot ever for anything. I have also not really
+worked with K8s until starting my recent jorb at
+<a href="https://coreos.com">CoreOS</a>. Why Buildbot and why K8s?</p>
+<ol>
+<li>
+<p>I have to learn K8s sooner or later for work.</p>
+</li>
+<li>
+<p>I want to deploy something a little more complicated than Nginx. As
+fun as that is, every K8s tutorial uses that as an example and it's
+getting <em>oooooold</em>.</p>
+</li>
+<li>
+<p>Buildbot seems like a good K8s challenge b/c:</p>
+<ol>
+<li>It has 3 moving parts (master, worker, database)</li>
+<li>It could benefit from the fancy-dancy auto-scaling features
+built into K8s (e.g., high workload -&gt; add more workers)</li>
+</ol>
+</li>
+</ol>
+<p>Anyway, let's get started.</p>
+<h3 id="my-sick-rig">My sick rig</h3>
+<p>I'm using the latest version of K8s and
+<a href="https://github.com/kubernetes/minikube#minikube">Minikube</a>, which is
+backed by Virtualbox on a 2014 MacBook Pro running OSX.</p>
+<p>Minikube version and associated OS:</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ minikube version
+</span><span>minikube version: v0.13.1
+</span><span>$ minikube ssh
+</span><span>...
+</span><span>Boot2Docker version 1.11.1, build master : 901340f - Fri Jul  1 22:52:19 UTC 2016
+</span><span>Docker version 1.11.1, build 5604cbe
+</span><span>docker@minikube:~$
+</span></code></pre>
+<p>There's some Minikube-specific semantics in this post, but you can
+probably get by with whatever K8s back-end you want/have lying around.</p>
+<p>Kubernetes version:</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl version
+</span><span>Client Version: version.Info{Major:&quot;1&quot;, Minor:&quot;4&quot;, GitVersion:&quot;v1.4.6&quot;, GitCommit:&quot;e569a27d02001e343cb68086bc06d47804f62af6&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2016-11-12T05:22:15Z&quot;, GoVersion:&quot;go1.7.1&quot;, Compiler:&quot;gc&quot;, Platform:&quot;darwin/amd64&quot;}
+</span><span>Server Version: version.Info{Major:&quot;1&quot;, Minor:&quot;4&quot;, GitVersion:&quot;v1.4.6&quot;, GitCommit:&quot;e569a27d02001e343cb68086bc06d47804f62af6&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;1970-01-01T00:00:00Z&quot;, GoVersion:&quot;go1.7.1&quot;, Compiler:&quot;gc&quot;, Platform:&quot;linux/amd64&quot;}
+</span></code></pre>
+<p>Between finishing editing and pushing this post the above versions will
+probably be out of date. <em>SHRUG</em>. What are you gonna do. Software,
+amirite?</p>
+<p>Virtualbox version:</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ virtualbox --help
+</span><span>Oracle VM VirtualBox Manager 5.1.6
+</span><span>...
+</span></code></pre>
+<p>OSX Version and hardware:</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ sw_vers
+</span><span>ProductName:    Mac OS X
+</span><span>ProductVersion: 10.10.5
+</span><span>BuildVersion:   14F1912
+</span><span>$ system_profiler
+</span><span>...
+</span><span>    Hardware Overview:
+</span><span>      Model Name: MacBook Pro
+</span><span>      Model Identifier: MacBookPro11,1
+</span><span>      Processor Name: Intel Core i5
+</span><span>      Processor Speed: 2.6 GHz
+</span><span>      Number of Processors: 1
+</span><span>      Total Number of Cores: 2
+</span><span>      ...
+</span><span>      Memory: 16 GB
+</span><span>      ...
+</span><span>...
+</span></code></pre>
+<p>The hardware and Virtualbox versions are a little less important, but
+might as well be included for completeness.</p>
+<h2 id="first-pass">First Pass</h2>
+<p>The Buildbot project is nice enough to provide <a href="https://docs.buildbot.net/current/tutorial/docker.html">some Buidlbot Docker
+infrastructure</a>
+to start working with. It uses a <a href="https://docs.docker.com/compose/">Docker
+Compose</a> YAML file to deploy one
+worker container, one master service, and one PostgreSQL service, each
+of which is linked together and <em>just works™</em></p>
+<p>Great!
+In theory <sup class="footnote-reference"><a href="#theory-vs-practice">2</a></sup> we can just translate the options in <code>docker-compose.yml</code> to K8s options to get a simple cluster up and running.
+Which, to clarify, isn't an established <strong>thing</strong>, it's just a process I'm guessing should work based on the fact that Docker Compose and K8s are both orchestration tools.
+One is <strong>way</strong> more complicated and robust, but At least <strong>some</strong> of their features should over-lap in that Venn diagram.</p>
+<p>Once we've got a nieve translated-docker-compose k8s setup running then we can (hopefully) tweak some knobs and get persistent storage and auto-scaling working <sup class="footnote-reference"><a href="#why">3</a></sup>.</p>
+<h3 id="throw-some-containers-at-the-wall-and-see-what-sticks">Throw some containers at the wall and see what sticks</h3>
+<p>Let's start really basic and just try to get something running with <code>kubectl run</code>.
+We'll use K8s to deploy a Buildbot <code>master</code> container mentioned in that <code>docker-compose.yml</code> with translated configuration options from that file.
+Remember, we're just mapping a <code>docker-compose.yml</code> into a K8s setup to begin.
+Nothing fancy, no pre-emptive optimizations, just this:</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl run master \
+</span><span>    --image=buildbot/buildbot-master:master \
+</span><span>    --env=&quot;BUILDBOT_CONFIG_DIR=config&quot; \
+</span><span>    --env=&quot;BUILDBOT_CONFIG_URL=https://github.com/buildbot/buildbot-docker-example-config/archive/master.tar.gz&quot; \
+</span><span>    --env=&quot;BUILDBOT_WORKER_PORT=9989&quot; \
+</span><span>    --env=&quot;BUILDBOT_WEB_URL=http://localhost:8080/&quot; \
+</span><span>    --env=&quot;BUILDBOT_WEB_PORT=8080&quot; \
+</span><span>    --port=8080
+</span></code></pre>
+<p>Some reading later and I can tell you that command started a <em>Deployment</em> of <em>Pods</em>.
+To see if it worked, let's run <code>kubect get pods</code>.</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl get pods
+</span><span>NAME                               READY     STATUS             RESTARTS   AGE
+</span><span>master-4259088255-afsfk            1/1       Running            1          10s
+</span></code></pre>
+<p>This looks pretty good...</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl get pods
+</span><span>NAME                               READY     STATUS             RESTARTS   AGE
+</span><span>master-4259088255-afsfk            0/1       CrashLoopBackOff   2          1m
+</span></code></pre>
+<p>... nooo!
+The thing was at 1/1 and now it's at 0/1 <strong>and</strong> it says <strong>CrashLoopBackOff</strong>.
+Numbers going down when they're supposed to stay the same is never a good sign, and crashing is almost never what you want.</p>
+<p>If I've learned <em>anything</em> about fixing stuff that's broke it's <em>always check the logs</em>.</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl logs po/master-4259088255-afsfk
+</span><span>[...]
+</span><span>2016-12-09 22:31:42+0000 [-] Setting up database with URL &#39;sqlite:&#39;
+</span><span>2016-12-09 22:31:42+0000 [-] The Buildmaster database needs to be upgraded before this version of
+</span><span>[...]
+</span><span>2016-12-09 22:31:42+0000 [-] BuildMaster startup failed
+</span><span>2016-12-09 22:31:42+0000 [-] BuildMaster is stopped
+</span><span>2016-12-09 22:31:42+0000 [-] Main loop terminated.
+</span><span>2016-12-09 22:31:42+0000 [-] Server Shut Down.
+</span></code></pre>
+<p>Gross, but probably useful.
+How?
+Good question:</p>
+<ol>
+<li>I saw the word <code>database</code>.</li>
+<li>We <em>didn't</em> deploy a database.</li>
+<li>QED let's do that.</li>
+</ol>
+<h3 id="add-one-cup-of-postgres-to-the-mix">Add one cup of Postgres to the mix</h3>
+<p>Just like with the <code>master</code> container, we're just going to use CLI arguments to get a database running.</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl run postgres \
+</span><span>    --image=postgres:9.4\
+</span><span>    --env=&quot;POSTGRES_PASSWORD=change_me&quot; \
+</span><span>    --env=&quot;POSTGRES_USER=buildbot&quot; \
+</span><span>    --env=&quot;POSTGRES_DB=buildbot&quot; \
+</span><span>    --env=&quot;BUILDBOT_DB_URL=postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}@db/{POSTGRES_DB}&quot;\
+</span><span>    --port=5432
+</span></code></pre>
+<p>Cross fingers aaand...</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl get pods
+</span><span>NAME                               READY     STATUS             RESTARTS   AGE
+</span><span>master-4259088255-afsfk            0/1       CrashLoopBackOff   6          9m
+</span><span>postgres-2443857112-3ermh          0/1       ContainerCreating  0          15s
+</span></code></pre>
+<p><em>/me holds breath</em></p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl get pods
+</span><span>NAME                               READY     STATUS             RESTARTS   AGE
+</span><span>master-4259088255-afsfk            0/1       CrashLoopBackOff   6          9m
+</span><span>postgres-2443857112-3ermh          1/1       Running            0          54s
+</span></code></pre>
+<p>Yuss! Wait, for real?</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl logs postgres-2443857112-3ermh
+</span><span>[... hey look a bunch of useful Postgres garbage ...]
+</span><span>PostgreSQL init process complete; ready for start up.
+</span><span>[... some more useful Postgres garbage ...]
+</span></code></pre>
+<p>Good 'nuff.
+Now how does this database plug into the master container?</p>
+<p>Well, in the Docker Compose world, containers talked to one-another on a private network with the <code>link</code> directive.
+There's probably some way to do we do that with K8s right?</p>
+<h3 id="welcome-yaml-config-files-to-the-class">Welcome YAML config files to the class</h3>
+<p>Running Command-Line Interface (CLI) commands is fun, but the easiest way to get this system running seems to be with configuration files.
+I'm sure I <em>can</em> use CLI commands to orchestrate this entire project, but... honestly all the tutorials talk about how to do things in YAML so we're doing it in YAML now.</p>
+<p>Some research later it looks like declaring a <a href="http://kubernetes.io/docs/user-guide/pods/">Pod</a> is the way to go?
+For context, here's where I got the idea from the K8s docs:</p>
+<blockquote>
+<p>A pod (as in a pod of whales or pea pod) is a group of one or more containers (such as Docker containers), the shared storage for those containers, and options about how to run the containers.</p>
+</blockquote>
+<p>Well that sounds <em>roughly</em> like what we're doing.
+I've got some containers, I want them to be able to talk to each other, and they're
+all logically connected to one another.
+Let's go down this rabbit hole.</p>
+<p><img src="/images/buildbot-on-k8s/alice-down.gif" alt="Alice down the rabbit hole..." /></p>
+<p>Here I have Frankensteined this config <code>buildbot.yaml</code> from examples in the configs:</p>
+<pre data-lang="yaml" style="background-color:#191919;color:#f8f8f2;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#ff5e5e;">apiVersion</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">v1</span><span style="color:#ffffff;">&#39;
+</span><span style="color:#ff5e5e;">kind</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">Pod</span><span style="color:#ffffff;">&#39;
+</span><span style="color:#ff5e5e;">metadata</span><span>:
+</span><span>  </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">buildbot</span><span style="color:#ffffff;">&#39;
+</span><span>  </span><span style="color:#ff5e5e;">labels</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">app</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">buildbot</span><span style="color:#ffffff;">&#39;
+</span><span style="color:#ff5e5e;">spec</span><span>:
+</span><span>  </span><span style="color:#ff5e5e;">containers</span><span>:
+</span><span>    - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">master</span><span style="color:#ffffff;">&#39;
+</span><span>      </span><span style="color:#ff5e5e;">image</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">buildbot/buildbot-master:master</span><span style="color:#ffffff;">&#39;
+</span><span>      </span><span style="color:#ff5e5e;">ports</span><span>:
+</span><span>        - </span><span style="color:#ff5e5e;">containerPort</span><span>: </span><span style="color:#fdb082;">8080
+</span><span>      </span><span style="color:#ff5e5e;">env</span><span>:
+</span><span>      - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">BUILDBOT_CONFIG_DIR</span><span style="color:#ffffff;">&#39;
+</span><span>        </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">config</span><span style="color:#ffffff;">&#39;
+</span><span>      - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">BUILDBOT_CONFIG_URL</span><span style="color:#ffffff;">&#39;
+</span><span>        </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">https://github.com/buildbot/buildbot-docker-example-config/archive/master.tar.gz</span><span style="color:#ffffff;">&#39;
+</span><span>      - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">BUILDBOT_WORKER_PORT</span><span style="color:#ffffff;">&#39;
+</span><span>        </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">9989</span><span style="color:#ffffff;">&#39;
+</span><span>      - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">BUILDBOT_WEB_URL</span><span style="color:#ffffff;">&#39;
+</span><span>        </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">http://localhost:8080/</span><span style="color:#ffffff;">&#39;
+</span><span>      - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">BUILDBOT_WEB_PORT</span><span style="color:#ffffff;">&#39;
+</span><span>        </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">8080</span><span style="color:#ffffff;">&#39;
+</span><span>      - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">POSTGRES_PASSWORD</span><span style="color:#ffffff;">&#39;
+</span><span>        </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">change_me</span><span style="color:#ffffff;">&#39;
+</span><span>      - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">POSTGRES_USER</span><span style="color:#ffffff;">&#39;
+</span><span>        </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">buildbot</span><span style="color:#ffffff;">&#39;
+</span><span>      - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">POSTGRES_DB</span><span style="color:#ffffff;">&#39;
+</span><span>        </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">buildbot</span><span style="color:#ffffff;">&#39;
+</span><span>      - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">BUILDBOT_DB_URL</span><span style="color:#ffffff;">&#39;
+</span><span>        </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}@db/{POSTGRES_DB}</span><span style="color:#ffffff;">&#39;
+</span><span>    - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">postgres</span><span style="color:#ffffff;">&#39;
+</span><span>      </span><span style="color:#ff5e5e;">image</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">postgres:9.4</span><span style="color:#ffffff;">&#39;
+</span><span>      </span><span style="color:#ff5e5e;">ports</span><span>:
+</span><span>        - </span><span style="color:#ff5e5e;">containerPort</span><span>: </span><span style="color:#fdb082;">5432
+</span><span>      </span><span style="color:#ff5e5e;">env</span><span>:
+</span><span>      - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">POSTGRES_PASSWORD</span><span style="color:#ffffff;">&#39;
+</span><span>        </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">change_me</span><span style="color:#ffffff;">&#39;
+</span><span>      - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">POSTGRES_USER</span><span style="color:#ffffff;">&#39;
+</span><span>        </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">buildbot</span><span style="color:#ffffff;">&#39;
+</span><span>      - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">POSTGRES_DB</span><span style="color:#ffffff;">&#39;
+</span><span>        </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">buildbot</span><span style="color:#ffffff;">&#39;
+</span><span>      - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">BUILDBOT_DB_URL</span><span style="color:#ffffff;">&#39;
+</span><span>        </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}@db/{POSTGRES_DB}</span><span style="color:#ffffff;">&#39;
+</span></code></pre>
+<p>What happens when we run it?</p>
+<p>Well first we need to clean up that CLI-created garbage we were doing
+earlier.</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl delete deployment master postgres
+</span><span>deployment &quot;master&quot; deleted
+</span><span>deployment &quot;postgres&quot; deleted
+</span></code></pre>
+<p>Then deploy the new pod:</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl create -f buildbot.yaml
+</span><span>pod &quot;buildbot&quot; created
+</span></code></pre>
+<p>Aaaand:</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl get pods
+</span><span>buildbot   2/2       Running   0          23s
+</span></code></pre>
+<p>I'm suspicious...</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl logs po/buildbot master
+</span><span>checking basedir
+</span><span>/usr/lib/python2.7/site-packages/buildbot/config.py:85: ConfigWarning: [0.9.0 and later] `buildbotNetUsageData` is not configured and defaults to basic
+</span><span>[...]
+</span><span>Failure: sqlalchemy.exc.OperationalError: (psycopg2.OperationalError) could not translate host name &quot;db&quot; to address: Try again
+</span><span>[...]
+</span><span>problem while upgrading!:
+</span><span>Traceback (most recent call last):
+</span><span>[... python traceback ...]
+</span><span>OperationalError: (psycopg2.OperationalError) could not translate host name &quot;db&quot; to address: Try again
+</span></code></pre>
+<p>Whelp let's play 'Where do I fix <em>that</em>?'</p>
+<p>Is the problem in:</p>
+<ol>
+<li>The <code>buildbot-master</code> image</li>
+<li>The <code>postgres</code> image</li>
+<li>The <code>buildbot.yml</code> file</li>
+</ol>
+<p>If you guessed <strong>c</strong> you would be right so let's start in
+<code>buildbot.yaml</code>.</p>
+<p>Based on my experience with databases, specifically the startup time of database containers like Postgres and MariaDB, I'd <em>guess</em> that the database was taking too long to start.
+After some digging around, I found out that Pods were the entirely wrong way to go. Here's how that discovery went:</p>
+<ul>
+<li><strong>Q</strong>: Does K8s have anything like docker-compose's <code>depends_on:</code>.</li>
+<li><strong>A</strong>: No.</li>
+<li><strong>Q</strong>: Okay, so how... actually, is there anything like what I'm doing already out there?</li>
+<li><strong>A</strong>: Yes.</li>
+<li><strong>Q</strong>: ... Where?</li>
+<li><strong>A</strong>: <a href="https://github.com/kubernetes/kubernetes/tree/master/examples/mysql-wordpress-pd">https://github.com/kubernetes/kubernetes/tree/master/examples/mysql-wordpress-pd</a></li>
+<li><strong>Q</strong>: Noice. So the <em>Pods</em> thing was the wrong rabbit hole to go down?</li>
+<li><strong>A</strong>: Right.</li>
+<li><strong>Q</strong>: Right like correct or right like...?</li>
+<li><strong>A</strong>: Stop.</li>
+</ul>
+<h3 id="yay-examples">Yay examples</h3>
+<p>So let's run that example to make sure it all works fine.</p>
+<ol>
+<li>Clone repo</li>
+<li><code>cd</code> to example</li>
+<li>Follow README instructions</li>
+</ol>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl create -f local-volumes.yaml
+</span><span>persistentvolume &quot;local-pv-1&quot; created
+</span><span>persistentvolume &quot;local-pv-2&quot; created
+</span><span>$ kubectl create -f mysql-deployment.yaml
+</span><span>service &quot;wordpress-mysql&quot; created
+</span><span>persistentvolumeclaim &quot;mysql-pv-claim&quot; created
+</span><span>deployment &quot;wordpress-mysql&quot; created
+</span><span>$ kubectl create -f wordpress-deployment.yaml
+</span><span>service &quot;wordpress&quot; created
+</span><span>persistentvolumeclaim &quot;wp-pv-claim&quot; created
+</span><span>deployment &quot;wordpress&quot; created
+</span><span>$ kubectl get all
+</span><span>NAME                  CLUSTER-IP   EXTERNAL-IP   PORT(S)    AGE
+</span><span>svc/kubernetes        10.0.0.1     &lt;none&gt;        443/TCP    2h
+</span><span>svc/wordpress         10.0.0.28    &lt;pending&gt;     80/TCP     5s
+</span><span>svc/wordpress-mysql   None         &lt;none&gt;        3306/TCP   17s
+</span><span>NAME                                  READY     STATUS              RESTARTS   AGE
+</span><span>po/buildbot                           2/2       Running             0          8m
+</span><span>po/wordpress-1618093523-4if9k         0/1       ContainerCreating   0          5s
+</span><span>po/wordpress-mysql-2379610080-mqvll   0/1       ContainerCreating   0          17s
+</span><span>NAME                 STATUS    VOLUME       CAPACITY   ACCESSMODES   AGE
+</span><span>pvc/mysql-pv-claim   Bound     local-pv-1   20Gi       RWO           17s
+</span><span>pvc/wp-pv-claim      Bound     local-pv-2   20Gi       RWO           5s
+</span></code></pre>
+<p>And I can go to the site?</p>
+<p><img src="/images/buildbot-on-k8s/wordpress-working.png" alt="Wordpress working correctly" /></p>
+<p>Great.</p>
+<h3 id="now-use-the-example">Now Use the example</h3>
+<p>Now we need to morph <code>wordpress-deployment.yaml</code> into <code>postgres.yaml</code>, and <code>wordpress-deployment.yaml</code> into <code>master.yaml</code>
+Also, let's ignore <code>local-volumes.yaml</code> for now, just to be safe.
+Don't forget: we're not doing anything fancy yet.</p>
+<p><code>master.yaml</code>:</p>
+<pre data-lang="yaml" style="background-color:#191919;color:#f8f8f2;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#ff5e5e;">apiVersion</span><span>: </span><span style="color:#fbe3bf;">v1
+</span><span style="color:#ff5e5e;">kind</span><span>: </span><span style="color:#fbe3bf;">Service
+</span><span style="color:#ff5e5e;">metadata</span><span>:
+</span><span>  </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">master
+</span><span>  </span><span style="color:#ff5e5e;">labels</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">app</span><span>: </span><span style="color:#fbe3bf;">buildbot
+</span><span style="color:#ff5e5e;">spec</span><span>:
+</span><span>  </span><span style="color:#ff5e5e;">ports</span><span>:
+</span><span>    - </span><span style="color:#ff5e5e;">port</span><span>: </span><span style="color:#fdb082;">8080
+</span><span>      </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">frontend
+</span><span>  </span><span style="color:#ff5e5e;">selector</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">app</span><span>: </span><span style="color:#fbe3bf;">buildbot
+</span><span>    </span><span style="color:#ff5e5e;">tier</span><span>: </span><span style="color:#fbe3bf;">master
+</span><span>  </span><span style="color:#ff5e5e;">type</span><span>: </span><span style="color:#fbe3bf;">NodePort
+</span><span>---
+</span><span style="color:#ff5e5e;">apiVersion</span><span>: </span><span style="color:#fbe3bf;">extensions/v1beta1
+</span><span style="color:#ff5e5e;">kind</span><span>: </span><span style="color:#fbe3bf;">Deployment
+</span><span style="color:#ff5e5e;">metadata</span><span>:
+</span><span>  </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">master
+</span><span>  </span><span style="color:#ff5e5e;">labels</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">app</span><span>: </span><span style="color:#fbe3bf;">buildbot
+</span><span style="color:#ff5e5e;">spec</span><span>:
+</span><span>  </span><span style="color:#ff5e5e;">strategy</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">type</span><span>: </span><span style="color:#fbe3bf;">Recreate
+</span><span>  </span><span style="color:#ff5e5e;">template</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">metadata</span><span>:
+</span><span>      </span><span style="color:#ff5e5e;">labels</span><span>:
+</span><span>        </span><span style="color:#ff5e5e;">app</span><span>: </span><span style="color:#fbe3bf;">buildbot
+</span><span>        </span><span style="color:#ff5e5e;">tier</span><span>: </span><span style="color:#fbe3bf;">master
+</span><span>    </span><span style="color:#ff5e5e;">spec</span><span>:
+</span><span>      </span><span style="color:#ff5e5e;">containers</span><span>:
+</span><span>      - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">master
+</span><span>        </span><span style="color:#ff5e5e;">image</span><span>: </span><span style="color:#fbe3bf;">buildbot/buildbot-master:master
+</span><span>        </span><span style="color:#ff5e5e;">env</span><span>:
+</span><span>        - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">BUILDBOT_CONFIG_DIR
+</span><span>          </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#fbe3bf;">config
+</span><span>        - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">BUILDBOT_CONFIG_URL
+</span><span>          </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">https://raw.githubusercontent.com/buildbot/buildbot-docker-example-config/master/master.cfg</span><span style="color:#ffffff;">&#39;
+</span><span>        - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">BUILDBOT_WORKER_PORT
+</span><span>          </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">9989</span><span style="color:#ffffff;">&#39;
+</span><span>        - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">BUILDBOT_WEB_URL
+</span><span>          </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">http://localhost:8080/</span><span style="color:#ffffff;">&#39;
+</span><span>        - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">BUILDBOT_WEB_PORT
+</span><span>          </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">8080</span><span style="color:#ffffff;">&#39;
+</span><span>        - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">POSTGRES_PASSWORD
+</span><span>          </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#fbe3bf;">change_me
+</span><span>        - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">POSTGRES_USER
+</span><span>          </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#fbe3bf;">buildbot
+</span><span>        - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">POSTGRES_DB
+</span><span>          </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#fbe3bf;">buildbot
+</span><span>        - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">POSTGRES_DB_HOST
+</span><span>          </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#fbe3bf;">postgres
+</span><span>        - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">BUILDBOT_DB_URL
+</span><span>          </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_DB_HOST}/{POSTGRES_DB}</span><span style="color:#ffffff;">&#39;
+</span><span>        </span><span style="color:#ff5e5e;">ports</span><span>:
+</span><span>        - </span><span style="color:#ff5e5e;">containerPort</span><span>: </span><span style="color:#fdb082;">8080
+</span><span>          </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">frontend
+</span></code></pre>
+<p><code>postgres.yaml:</code></p>
+<pre data-lang="yaml" style="background-color:#191919;color:#f8f8f2;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#ff5e5e;">apiVersion</span><span>: </span><span style="color:#fbe3bf;">v1
+</span><span style="color:#ff5e5e;">kind</span><span>: </span><span style="color:#fbe3bf;">Service
+</span><span style="color:#ff5e5e;">metadata</span><span>:
+</span><span>  </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">postgres
+</span><span>  </span><span style="color:#ff5e5e;">labels</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">app</span><span>: </span><span style="color:#fbe3bf;">buildbot
+</span><span style="color:#ff5e5e;">spec</span><span>:
+</span><span>  </span><span style="color:#ff5e5e;">ports</span><span>:
+</span><span>  - </span><span style="color:#ff5e5e;">port</span><span>: </span><span style="color:#fdb082;">5432
+</span><span>    </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">postgres
+</span><span>  </span><span style="color:#ff5e5e;">selector</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">app</span><span>: </span><span style="color:#fbe3bf;">buildbot
+</span><span>    </span><span style="color:#ff5e5e;">tier</span><span>: </span><span style="color:#fbe3bf;">postgres
+</span><span>  </span><span style="color:#ff5e5e;">clusterIP</span><span>: </span><span style="color:#fbe3bf;">None
+</span><span>---
+</span><span style="color:#ff5e5e;">apiVersion</span><span>: </span><span style="color:#fbe3bf;">extensions/v1beta1
+</span><span style="color:#ff5e5e;">kind</span><span>: </span><span style="color:#fbe3bf;">Deployment
+</span><span style="color:#ff5e5e;">metadata</span><span>:
+</span><span>  </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">postgres
+</span><span>  </span><span style="color:#ff5e5e;">labels</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">app</span><span>: </span><span style="color:#fbe3bf;">buildbot
+</span><span style="color:#ff5e5e;">spec</span><span>:
+</span><span>  </span><span style="color:#ff5e5e;">strategy</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">type</span><span>: </span><span style="color:#fbe3bf;">Recreate
+</span><span>  </span><span style="color:#ff5e5e;">template</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">metadata</span><span>:
+</span><span>      </span><span style="color:#ff5e5e;">labels</span><span>:
+</span><span>        </span><span style="color:#ff5e5e;">app</span><span>: </span><span style="color:#fbe3bf;">buildbot
+</span><span>        </span><span style="color:#ff5e5e;">tier</span><span>: </span><span style="color:#fbe3bf;">postgres
+</span><span>    </span><span style="color:#ff5e5e;">spec</span><span>:
+</span><span>      </span><span style="color:#ff5e5e;">containers</span><span>:
+</span><span>      - </span><span style="color:#ff5e5e;">image</span><span>: </span><span style="color:#fbe3bf;">postgres:9.4
+</span><span>        </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">postgres
+</span><span>        </span><span style="color:#ff5e5e;">env</span><span>:
+</span><span>        - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">POSTGRES_PASSWORD
+</span><span>          </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#fbe3bf;">change_me
+</span><span>        - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">POSTGRES_USER
+</span><span>          </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#fbe3bf;">buildbot
+</span><span>        - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">POSTGRES_DB
+</span><span>          </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#fbe3bf;">buildbot
+</span><span>        - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">POSTGRES_DB_HOST
+</span><span>          </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#fbe3bf;">postgres
+</span><span>        - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">BUILDBOT_DB_URL
+</span><span>          </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_DB_HOST}/{POSTGRES_DB}</span><span style="color:#ffffff;">&#39;
+</span><span>        </span><span style="color:#ff5e5e;">ports</span><span>:
+</span><span>        - </span><span style="color:#ff5e5e;">containerPort</span><span>: </span><span style="color:#fdb082;">5432
+</span><span>          </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">postgres
+</span></code></pre>
+<p>And with a flick of my wand:</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl delete pods,deployment,service --all  # cleanup the old stuff
+</span><span>pod &quot;buildbot&quot; deleted
+</span><span>pod &quot;wordpress-1618093523-4if9k&quot; deleted
+</span><span>pod &quot;wordpress-mysql-2379610080-mqvll&quot; deleted
+</span><span>deployment &quot;wordpress&quot; deleted
+</span><span>deployment &quot;wordpress-mysql&quot; deleted
+</span><span>service &quot;kubernetes&quot; deleted
+</span><span>service &quot;wordpress&quot; deleted
+</span><span>service &quot;wordpress-mysql&quot; deleted
+</span><span>$ kubectl create -f postrges.yml
+</span><span>service &quot;postgres&quot; created
+</span><span>deployment &quot;postgres&quot; created
+</span><span>$ kubectl create -f master.yml
+</span><span>service &quot;master&quot; created
+</span><span>deployment &quot;master&quot; created
+</span><span>$ minikube service master
+</span></code></pre>
+<p>Opens up this wonderful site:</p>
+<p><img src="/images/buildbot-on-k8s/buildbot-working.png" alt="Buildbot working" /></p>
+<p>Great, they can talk <sup class="footnote-reference"><a href="#same-app-note">4</a></sup>.</p>
+<h3 id="hire-a-worker">Hire a worker</h3>
+<p>So we've got a website and a database, but we're not actually running any builds yet. Let's fix that.</p>
+<p>Based on what the <code>docker-compose.yml</code> says we should be able to throw this together and have it work:</p>
+<p><code>worker.yaml</code>:</p>
+<pre data-lang="yaml" style="background-color:#191919;color:#f8f8f2;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#ff5e5e;">apiVersion</span><span>: </span><span style="color:#fbe3bf;">v1
+</span><span style="color:#ff5e5e;">kind</span><span>: </span><span style="color:#fbe3bf;">Service
+</span><span style="color:#ff5e5e;">metadata</span><span>:
+</span><span>  </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">worker
+</span><span>  </span><span style="color:#ff5e5e;">labels</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">app</span><span>: </span><span style="color:#fbe3bf;">buildbot
+</span><span style="color:#ff5e5e;">spec</span><span>:
+</span><span>  </span><span style="color:#ff5e5e;">ports</span><span>:
+</span><span>  - </span><span style="color:#ff5e5e;">port</span><span>: </span><span style="color:#fdb082;">9989
+</span><span>    </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">worker
+</span><span>  </span><span style="color:#ff5e5e;">selector</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">app</span><span>: </span><span style="color:#fbe3bf;">buildbot
+</span><span>    </span><span style="color:#ff5e5e;">tier</span><span>: </span><span style="color:#fbe3bf;">worker
+</span><span>  </span><span style="color:#ff5e5e;">clusterIP</span><span>: </span><span style="color:#fbe3bf;">None
+</span><span>---
+</span><span style="color:#ff5e5e;">apiVersion</span><span>: </span><span style="color:#fbe3bf;">extensions/v1beta1
+</span><span style="color:#ff5e5e;">kind</span><span>: </span><span style="color:#fbe3bf;">Deployment
+</span><span style="color:#ff5e5e;">metadata</span><span>:
+</span><span>  </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">worker
+</span><span>  </span><span style="color:#ff5e5e;">labels</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">app</span><span>: </span><span style="color:#fbe3bf;">buildbot
+</span><span style="color:#ff5e5e;">spec</span><span>:
+</span><span>  </span><span style="color:#ff5e5e;">strategy</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">type</span><span>: </span><span style="color:#fbe3bf;">Recreate
+</span><span>  </span><span style="color:#ff5e5e;">template</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">metadata</span><span>:
+</span><span>      </span><span style="color:#ff5e5e;">labels</span><span>:
+</span><span>        </span><span style="color:#ff5e5e;">app</span><span>: </span><span style="color:#fbe3bf;">buildbot
+</span><span>        </span><span style="color:#ff5e5e;">tier</span><span>: </span><span style="color:#fbe3bf;">worker
+</span><span>    </span><span style="color:#ff5e5e;">spec</span><span>:
+</span><span>      </span><span style="color:#ff5e5e;">containers</span><span>:
+</span><span>      - </span><span style="color:#ff5e5e;">image</span><span>: </span><span style="color:#ffffff;">&quot;</span><span style="color:#fbe3bf;">buildbot/buildbot-worker:master</span><span style="color:#ffffff;">&quot;
+</span><span>        </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">worker
+</span><span>        </span><span style="color:#ff5e5e;">env</span><span>:
+</span><span>        - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">BUILDMASTER
+</span><span>          </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#fbe3bf;">master
+</span><span>        - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">BUILDMASTER_PORT
+</span><span>          </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">9989</span><span style="color:#ffffff;">&#39;
+</span><span>        - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">WORKERNAME
+</span><span>          </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#fbe3bf;">example-worker
+</span><span>        - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">WORKERPASS
+</span><span>          </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#fbe3bf;">pass
+</span><span>        - </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">WORKER_ENVIRONMENT_BLACKLIST
+</span><span>          </span><span style="color:#ff5e5e;">value</span><span>: </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">DOCKER_BUILDBOT* BUILDBOT_ENV_* BUILDBOT_1* WORKER_ENVIRONMENT_BLACKLIST</span><span style="color:#ffffff;">&#39;
+</span><span>        </span><span style="color:#ff5e5e;">ports</span><span>:
+</span><span>        - </span><span style="color:#ff5e5e;">containerPort</span><span>: </span><span style="color:#fdb082;">9989
+</span><span>          </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">worker
+</span></code></pre>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl create -f worker.yaml
+</span><span>service &quot;worker&quot; created
+</span><span>deployment &quot;worker&quot; created
+</span><span>$ kubectl get -f worker.yaml
+</span><span>NAME                  CLUSTER-IP   EXTERNAL-IP   PORT(S)    AGE
+</span><span>svc/worker            None         &lt;none&gt;        9989/TCP   44s
+</span><span>NAME                     DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+</span><span>deploy/worker            1         1         1            0           44s
+</span></code></pre>
+<p>Looks promising...</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl get pods -l tier=worker
+</span><span>NAME                               READY     STATUS    RESTARTS   AGE
+</span><span>worker-3607067131-qdpfd   1/1       Running   0          1m
+</span><span>$ kubectl logs worker-3607067131-ke4zb -f
+</span><span>2016-11-21 19:46:45+0000 [-] Loading buildbot.tac...
+</span><span>2016-11-21 19:46:45+0000 [-] Loaded.
+</span><span>2016-11-21 19:46:45+0000 [-] twistd 16.5.0 (/usr/bin/python 2.7.12) starting up.
+</span><span>2016-11-21 19:46:45+0000 [-] reactor class: twisted.internet.epollreactor.EPollReactor.  2016-11-21 19:46:45+0000 [-] Starting Worker -- version: latest
+</span><span>2016-11-21 19:46:45+0000 [-] recording hostname in twistd.hostname
+</span><span>2016-11-21 19:46:45+0000 [-] Starting factory &lt;buildbot_worker.pb.BotFactory instance at 0x7fd8c2339cf8&gt;
+</span><span>2016-11-21 19:46:45+0000 [-] Connecting to buildbot:9989
+</span><span>2016-11-21 19:46:56+0000 [Uninitialized] Connection to buildbot:9989 failed: Connection Refused
+</span><span>2016-11-21 19:46:56+0000 [Uninitialized] &lt;twisted.internet.tcp.Connector instance at 0x7fd8c233a170&gt; will retry in 2 seconds
+</span><span>2016-11-21 19:46:56+0000 [-] Stopping factory &lt;buildbot_worker.pb.BotFactory instance at 0x7fd8c2339cf8&gt;
+</span><span>2016-11-21 19:46:59+0000 [-] Starting factory &lt;buildbot_worker.pb.BotFactory instance at 0x7fd8c2339cf8&gt;
+</span><span>2016-11-21 19:46:59+0000 [-] Connecting to buildbot:9989
+</span><span>2016-11-21 19:47:29+0000 [-] Connection to buildbot:9989 failed: [Failure instance: Traceback (failure with no frames): &lt;class &#39;twisted.internet.error.TimeoutError&#39;&gt;: User timeout caused connection failure.
+</span><span>    ]
+</span><span>2016-11-21 19:47:29+0000 [-] &lt;twisted.internet.tcp.Connector instance at 0x7fd8c233a170&gt; will retry in 5 seconds
+</span><span>2016-11-21 19:47:29+0000 [-] Stopping factory &lt;buildbot_worker.pb.BotFactory instance at 0x7fd8c2339cf8&gt;
+</span></code></pre>
+<p>Khaaaaaan!</p>
+<h3 id="connection-issues">Connection issues</h3>
+<p>Fine, let's get to work debugging.
+First we'll login to the worker pod and try to ping the <code>buildbot</code> pod since the output makes it seem like there was a timeout between the host and the worker.
+This usually means they can't reach each other.</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl exec -it worker-3607067131-qdpfd bash
+</span><span>buildbot@worker-3607067131-qdpfd:/buildbot$ ping master
+</span><span>bash: ping: command not found
+</span></code></pre>
+<p>Uhh...</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>buildbot@worker-3607067131-ke4zb:/buildbot$ curl http://master:8080
+</span><span>&lt;!DOCTYPE html&gt;[... definitely actually a webpage ...]
+</span></code></pre>
+<p>So the worker can reach the master, but can the master reach the worker?</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl get pods -l tier=master
+</span><span>NAME                                 READY     STATUS    RESTARTS   AGE
+</span><span>master-2152810066-9ip8b              1/1       Running   0          21m
+</span><span>$ kubectl exec -it master-2152810066-9ip8b sh
+</span><span>/var/lib/buildbot # ping worker
+</span><span>PING worker (172.17.0.6): 56 data bytes
+</span><span>64 bytes from 172.17.0.6: seq=0 ttl=64 time=0.083 ms
+</span><span>64 bytes from 172.17.0.6: seq=1 ttl=64 time=0.101 ms
+</span><span>^C
+</span><span>--- worker ping statistics ---
+</span><span>2 packets transmitted, 2 packets received, 0% packet loss
+</span><span>round-trip min/avg/max = 0.083/0.092/0.101 ms
+</span></code></pre>
+<p>Okay, so they can connect to one-another.
+What's the problem then?
+My best guess is that the <code>master</code> pod needs to have it's special worker port (<code>9989</code>) exposed.
+So let's add those lines to <code>master.yaml</code>:</p>
+<pre data-lang="diff" style="background-color:#191919;color:#f8f8f2;" class="language-diff "><code class="language-diff" data-lang="diff"><span style="color:#75715e;">--- a/blogpost/updated-master.yaml
+</span><span style="color:#75715e;">+++ b/blogpost/updated-master.yaml
+</span><span style="color:#75715e;">@@ -8,6 +8,8 @@ spec:
+</span><span>   ports:
+</span><span>     - port: 8080
+</span><span>       name: frontend
+</span><span style="color:#a6e22e;">+    - port: 9989
+</span><span style="color:#a6e22e;">+      name: worker
+</span><span>   selector:
+</span><span>     app: buildbot
+</span><span>     tier: master
+</span><span style="color:#75715e;">@@ -55,3 +57,5 @@ spec:
+</span><span>         ports:
+</span><span>         - containerPort: 8080
+</span><span>           name: frontend
+</span><span style="color:#a6e22e;">+        - containerPort: 9989
+</span><span style="color:#a6e22e;">+          name: worker
+</span></code></pre>
+<p>And after tearing everything down and bringing it back up:</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl get pods -l tier=worker
+</span><span>NAME                               READY     STATUS    RESTARTS   AGE
+</span><span>worker-2552724660-l4kmv            1/1       Running   0          12s
+</span><span>$ kubectl logs worker-2552724660-l4kmv
+</span><span>[... logs logs logs ...]
+</span><span>2016-12-09 23:30:18+0000 [-] Connecting to master:9989
+</span><span>2016-12-09 23:30:18+0000 [HangCheckProtocol,client] message from master: attached
+</span><span>2016-12-09 23:30:18+0000 [HangCheckProtocol,client] message from master: attached
+</span><span>2016-12-09 23:30:18+0000 [HangCheckProtocol,client] Connected to master:9989; worker is ready
+</span><span>2016-12-09 23:30:18+0000 [HangCheckProtocol,client] sending application-level keepalives every 600 seconds
+</span></code></pre>
+<p>Hey that looks like success to me!
+How does the front-end look?</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl get pods -l tier=master
+</span><span>NAME                               READY     STATUS    RESTARTS   AGE
+</span><span>master-3038604518-jim6q            1/1       Running   0          2m
+</span><span>$ kubectl port-forward master-3038604518-jim6q 8080
+</span></code></pre>
+<p>And in a browser:</p>
+<p><img src="/images/buildbot-on-k8s/build-success.png" alt="Buildbot still working." /></p>
+<p>You may now do a happy dance.</p>
+<p><img src="/images/buildbot-on-k8s/happy-dance.gif" alt="Happy Dance .gif" /></p>
+<h2 id="storage">Storage</h2>
+<p>We've got the three core moving parts of our system, next on our list is adding some persistent storage.
+Thankfully, we can recycle the MySQL+Wordpress example we used before.
+Yay examples.</p>
+<p>So let's add the storage bits back in that we ignored before.
+This results in configs that look like so (abbreviated for your scrollbar's convenience):</p>
+<p><code>volumes.yaml</code>:</p>
+<pre data-lang="yaml" style="background-color:#191919;color:#f8f8f2;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#ff5e5e;">apiVersion</span><span>: </span><span style="color:#fbe3bf;">v1
+</span><span style="color:#ff5e5e;">kind</span><span>: </span><span style="color:#fbe3bf;">PersistentVolume
+</span><span style="color:#ff5e5e;">metadata</span><span>:
+</span><span>  </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">local-pv-1
+</span><span>  </span><span style="color:#ff5e5e;">labels</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">type</span><span>: </span><span style="color:#fbe3bf;">local
+</span><span style="color:#ff5e5e;">spec</span><span>:
+</span><span>  </span><span style="color:#ff5e5e;">capacity</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">storage</span><span>: </span><span style="color:#fbe3bf;">1Gi
+</span><span>  </span><span style="color:#ff5e5e;">accessModes</span><span>:
+</span><span>    - </span><span style="color:#fbe3bf;">ReadWriteOnce
+</span><span>  </span><span style="color:#ff5e5e;">persistentVolumeReclaimPolicy</span><span>: </span><span style="color:#fbe3bf;">Recycle
+</span><span>  </span><span style="color:#ff5e5e;">hostPath</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">path</span><span>: </span><span style="color:#fbe3bf;">/data/pv-1
+</span><span>---
+</span><span style="color:#ff5e5e;">apiVersion</span><span>: </span><span style="color:#fbe3bf;">v1
+</span><span style="color:#ff5e5e;">kind</span><span>: </span><span style="color:#fbe3bf;">PersistentVolume
+</span><span style="color:#ff5e5e;">metadata</span><span>:
+</span><span>  </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">local-pv-2
+</span><span>  </span><span style="color:#ff5e5e;">labels</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">type</span><span>: </span><span style="color:#fbe3bf;">local
+</span><span style="color:#ff5e5e;">spec</span><span>:
+</span><span>  </span><span style="color:#ff5e5e;">capacity</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">storage</span><span>: </span><span style="color:#fbe3bf;">5Gi
+</span><span>  </span><span style="color:#ff5e5e;">accessModes</span><span>:
+</span><span>    - </span><span style="color:#fbe3bf;">ReadWriteOnce
+</span><span>  </span><span style="color:#ff5e5e;">persistentVolumeReclaimPolicy</span><span>: </span><span style="color:#fbe3bf;">Recycle
+</span><span>  </span><span style="color:#ff5e5e;">hostPath</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">path</span><span>: </span><span style="color:#fbe3bf;">/data/pv-2
+</span><span>---
+</span><span style="color:#ff5e5e;">apiVersion</span><span>: </span><span style="color:#fbe3bf;">v1
+</span><span style="color:#ff5e5e;">kind</span><span>: </span><span style="color:#fbe3bf;">PersistentVolume
+</span><span style="color:#ff5e5e;">metadata</span><span>:
+</span><span>  </span><span style="color:#ff5e5e;">name</span><span>: </span><span style="color:#fbe3bf;">local-pv-3
+</span><span>  </span><span style="color:#ff5e5e;">labels</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">type</span><span>: </span><span style="color:#fbe3bf;">local
+</span><span style="color:#ff5e5e;">spec</span><span>:
+</span><span>  </span><span style="color:#ff5e5e;">capacity</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">storage</span><span>: </span><span style="color:#fbe3bf;">5Gi
+</span><span>  </span><span style="color:#ff5e5e;">accessModes</span><span>:
+</span><span>    - </span><span style="color:#fbe3bf;">ReadWriteOnce
+</span><span>  </span><span style="color:#ff5e5e;">persistentVolumeReclaimPolicy</span><span>: </span><span style="color:#fbe3bf;">Recycle
+</span><span>  </span><span style="color:#ff5e5e;">hostPath</span><span>:
+</span><span>    </span><span style="color:#ff5e5e;">path</span><span>: </span><span style="color:#fbe3bf;">/data/pv-3
+</span></code></pre>
+<p><code>master.yaml</code>:</p>
+<pre data-lang="diff" style="background-color:#191919;color:#f8f8f2;" class="language-diff "><code class="language-diff" data-lang="diff"><span>diff --git a/blogpost/volumes-master.yaml b/blogpost/volumes-master.yaml
+</span><span>index 7cbffd7..c7479e3 100644
+</span><span style="color:#75715e;">--- a/blogpost/volumes-master.yaml
+</span><span style="color:#75715e;">+++ b/blogpost/volumes-master.yaml
+</span><span style="color:#75715e;">@@ -15,6 +15,19 @@ spec:
+</span><span>     tier: master
+</span><span>   type: NodePort
+</span><span> ---
+</span><span style="color:#a6e22e;">+apiVersion: v1
+</span><span style="color:#a6e22e;">+kind: PersistentVolumeClaim
+</span><span style="color:#a6e22e;">+metadata:
+</span><span style="color:#a6e22e;">+  name: master-pv-claim
+</span><span style="color:#a6e22e;">+  labels:
+</span><span style="color:#a6e22e;">+    app: buildbot
+</span><span style="color:#a6e22e;">+spec:
+</span><span style="color:#a6e22e;">+  accessModes:
+</span><span style="color:#a6e22e;">+    - ReadWriteOnce
+</span><span style="color:#a6e22e;">+  resources:
+</span><span style="color:#a6e22e;">+    requests:
+</span><span style="color:#a6e22e;">+      storage: 1Gi
+</span><span style="color:#a6e22e;">+---
+</span><span> apiVersion: extensions/v1beta1
+</span><span> kind: Deployment
+</span><span> metadata:
+</span><span style="color:#75715e;">@@ -37,7 +50,7 @@ spec:
+</span><span>         - name: BUILDBOT_CONFIG_DIR
+</span><span>           value: config
+</span><span>         - name: BUILDBOT_CONFIG_URL
+</span><span style="color:#f92672;">-          value: &#39;https://raw.githubusercontent.com/buildbot/buildbot-docker-example-config/master/master.cfg&#39;
+</span><span style="color:#a6e22e;">+          value: &#39;https://raw.githubusercontent.com/ElijahCaine/buildbot-on-kubernetes/master/simple/master.cfg&#39;
+</span><span>         - name: BUILDBOT_WORKER_PORT
+</span><span>           value: &#39;9989&#39;
+</span><span>         - name: BUILDBOT_WEB_URL
+</span><span style="color:#75715e;">@@ -59,3 +72,10 @@ spec:
+</span><span>           name: frontend
+</span><span>         - containerPort: 9989
+</span><span>           name: worker
+</span><span style="color:#a6e22e;">+        volumeMounts:
+</span><span style="color:#a6e22e;">+        - name: master-persistent-storage
+</span><span style="color:#a6e22e;">+          mountPath: /var/lib/buildbot/builds
+</span><span style="color:#a6e22e;">+      volumes:
+</span><span style="color:#a6e22e;">+      - name: master-persistent-storage
+</span><span style="color:#a6e22e;">+        persistentVolumeClaim:
+</span><span style="color:#a6e22e;">+          claimName: master-pv-claim
+</span></code></pre>
+<p><code>postgres.yaml</code>:</p>
+<pre data-lang="diff" style="background-color:#191919;color:#f8f8f2;" class="language-diff "><code class="language-diff" data-lang="diff"><span style="color:#75715e;">--- a/blogpost/volumes-postgres.yaml
+</span><span style="color:#75715e;">+++ b/blogpost/volumes-postgres.yaml
+</span><span style="color:#75715e;">@@ -13,6 +13,19 @@ spec:
+</span><span>     tier: postgres
+</span><span>   clusterIP: None
+</span><span> ---
+</span><span style="color:#a6e22e;">+apiVersion: v1
+</span><span style="color:#a6e22e;">+kind: PersistentVolumeClaim
+</span><span style="color:#a6e22e;">+metadata:
+</span><span style="color:#a6e22e;">+  name: postgres-pv-claim
+</span><span style="color:#a6e22e;">+  labels:
+</span><span style="color:#a6e22e;">+    app: buildbot
+</span><span style="color:#a6e22e;">+spec:
+</span><span style="color:#a6e22e;">+  accessModes:
+</span><span style="color:#a6e22e;">+    - ReadWriteOnce
+</span><span style="color:#a6e22e;">+  resources:
+</span><span style="color:#a6e22e;">+    requests:
+</span><span style="color:#a6e22e;">+      storage: 5Gi
+</span><span style="color:#a6e22e;">+---
+</span><span> apiVersion: extensions/v1beta1
+</span><span> kind: Deployment
+</span><span> metadata:
+</span><span style="color:#75715e;">@@ -45,3 +58,10 @@ spec:
+</span><span>         ports:
+</span><span>         - containerPort: 5432
+</span><span>           name: postgres
+</span><span style="color:#a6e22e;">+        volumeMounts:
+</span><span style="color:#a6e22e;">+        - name: postgres-persistent-storage
+</span><span style="color:#a6e22e;">+          mountPath: /var/lib/postgresql
+</span><span style="color:#a6e22e;">+      volumes:
+</span><span style="color:#a6e22e;">+      - name: postgres-persistent-storage
+</span><span style="color:#a6e22e;">+        persistentVolumeClaim:
+</span><span style="color:#a6e22e;">+          claimName: postgres-pv-claim
+</span></code></pre>
+<p><code>worker.yaml</code>:</p>
+<pre data-lang="diff" style="background-color:#191919;color:#f8f8f2;" class="language-diff "><code class="language-diff" data-lang="diff"><span style="color:#75715e;">--- a/blogpost/volumes-worker.yaml
+</span><span style="color:#75715e;">+++ b/blogpost/volumes-worker.yaml
+</span><span style="color:#75715e;">@@ -13,6 +13,19 @@ spec:
+</span><span>     tier: worker
+</span><span>   clusterIP: None
+</span><span> ---
+</span><span style="color:#a6e22e;">+apiVersion: v1
+</span><span style="color:#a6e22e;">+kind: PersistentVolumeClaim
+</span><span style="color:#a6e22e;">+metadata:
+</span><span style="color:#a6e22e;">+  name: worker-pv-claim
+</span><span style="color:#a6e22e;">+  labels:
+</span><span style="color:#a6e22e;">+    app: buidlbot
+</span><span style="color:#a6e22e;">+spec:
+</span><span style="color:#a6e22e;">+  accessModes:
+</span><span style="color:#a6e22e;">+    - ReadWriteOnce
+</span><span style="color:#a6e22e;">+  resources:
+</span><span style="color:#a6e22e;">+    requests:
+</span><span style="color:#a6e22e;">+      storage: 5Gi
+</span><span style="color:#a6e22e;">+---
+</span><span> apiVersion: extensions/v1beta1
+</span><span> kind: Deployment
+</span><span> metadata:
+</span><span style="color:#75715e;">@@ -45,3 +58,10 @@ spec:
+</span><span>         ports:
+</span><span>         - containerPort: 9989
+</span><span>           name: worker
+</span><span style="color:#a6e22e;">+        volumeMounts:
+</span><span style="color:#a6e22e;">+        - name: worker-persistent-storage
+</span><span style="color:#a6e22e;">+          mountPath: /buildbot/builds
+</span><span style="color:#a6e22e;">+      volumes:
+</span><span style="color:#a6e22e;">+      - name: worker-persistent-storage
+</span><span style="color:#a6e22e;">+        persistentVolumeClaim:
+</span><span style="color:#a6e22e;">+          claimName: worker-pv-claim
+</span></code></pre>
+<p>And of lastly we edit the Buildbot <code>master.cfg</code> to use our custom paths
+for storing and carrying out builds:</p>
+<pre data-lang="diff" style="background-color:#191919;color:#f8f8f2;" class="language-diff "><code class="language-diff" data-lang="diff"><span>diff --git a/blogpost/volumes-master.cfg b/blogpost/volumes-master.cfg
+</span><span>index 06ad65b..36212ea 100644
+</span><span style="color:#75715e;">--- a/blogpost/volumes-master.cfg
+</span><span style="color:#75715e;">+++ b/blogpost/volumes-master.cfg
+</span><span style="color:#75715e;">@@ -78,7 +78,9 @@ c[&#39;builders&#39;] = []
+</span><span> c[&#39;builders&#39;].append(
+</span><span>     util.BuilderConfig(name=&quot;runtests&quot;,
+</span><span>       workernames=[&quot;example-worker&quot;],
+</span><span style="color:#f92672;">-      factory=factory))
+</span><span style="color:#a6e22e;">+      factory=factory,
+</span><span style="color:#a6e22e;">+      builddir=&#39;builds&#39;,
+</span><span style="color:#a6e22e;">+      workerbuilddir=&#39;builds&#39;))
+</span><span>
+</span><span> ####### STATUS TARGETS
+</span><span>
+</span></code></pre>
+<p>This is just an edited version of the original <code>master.cfg</code> you can find
+in the original Buildbot docker-compose example repository.</p>
+<p>So this <em>should</em> just work, right?
+We request a volume of a given size, the volume exists and is the correct size, badda bing badda boom, do the thing like this:</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl delete service,deployment,pods --all
+</span><span>service &quot;master&quot; deleted
+</span><span>service &quot;postgres&quot; deleted
+</span><span>service &quot;worker&quot; deleted
+</span><span>service &quot;kubernetes&quot; deleted
+</span><span>deployment &quot;master&quot; deleted
+</span><span>deployment &quot;postgres&quot; deleted
+</span><span>deployment &quot;worker&quot; deleted
+</span><span>$ kubectl create -f volumes.yaml
+</span><span>persistentvolume &quot;local-pv-1&quot; created
+</span><span>persistentvolume &quot;local-pv-2&quot; created
+</span><span>persistentvolume &quot;local-pv-3&quot; created
+</span><span>$ kubectl create -f postgres.yaml
+</span><span>service &quot;postgres&quot; created
+</span><span>persistentvolumeclaim &quot;postgres-pv-claim&quot; created
+</span><span>deployment &quot;postgres&quot; created
+</span><span>$ kubectl create -f master.yaml
+</span><span>service &quot;master&quot; created
+</span><span>persistentvolumeclaim &quot;master-pv-claim&quot; created
+</span><span>deployment &quot;master&quot; created
+</span><span>$ kubectl create -f worker.yaml
+</span><span>service &quot;-worker&quot; created
+</span><span>persistentvolumeclaim &quot;worker-pv-claim&quot; created
+</span><span>deployment &quot;worker&quot; created
+</span><span>$ kubectl get pods -l tier=master
+</span><span>NAME                        READY     STATUS    RESTARTS   AGE
+</span><span>master-3176013930-gvy2i   1/1       Running   0          1m
+</span><span>$ kubectl port-forward master-3176013930-gvy2i 8080
+</span><span>Forwarding from 127.0.0.1:8080 -&gt; 8080
+</span><span>Forwarding from [::1]:8080 -&gt; 8080
+</span></code></pre>
+<p>That kinda works, but it kept getting weird arbitrary errors which
+looked suspicious.</p>
+<p><img src="/images/buildbot-on-k8s/permissions-build-fail.png"
+class="align-center" style="width:100.0%"
+alt="Permissions fail in buildbot" /></p>
+<p>Since the only thing that had really changed was the volumes I figured I
+might as well login to the host and investigate.</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ minikube ssh
+</span><span>docker@minikube:~$ ls -alh /data/
+</span><span>total 20
+</span><span>drwxr-xr-x    5 root     root        4.0K Dec 11 02:21 ./
+</span><span>drwxr-xr-x    6 root     root        4.0K Dec 11 01:48 ../
+</span><span>drwxr-xr-x    2 root     root        4.0K Dec 11 02:20 pv-1/
+</span><span>drwxr-xr-x    2 root     root        4.0K Dec 11 02:33 pv-2/
+</span><span>drwxr-xr-x    3 root     root        4.0K Dec 11 02:33 pv-3/
+</span></code></pre>
+<p>Ahah!
+That's the problem, root owns everything but the builds are run by the <code>buildbot</code> user (<code>uid: 1000</code>) <em>/me shakes fist at permissions errors.</em>
+The last first place you think to look.</p>
+<p>So is there any way to change the permissions of a volume as you claim it (i.e., in <code>volumes.yaml</code>)?
+We can both go through this journey together or I can share with you a quote from my coworker Barak Michener, the BAMF that works on <a href="https://github.com/coreos/torus">Torus</a>.</p>
+<blockquote>
+<p><em>Barak Michener</em></p>
+<p>yeah, hostPath is completely hands-off from k8s perspective
+so you just chmod the underlying dir
+to whatever uid you're using inside the pod</p>
+</blockquote>
+<p>Turns out the problem was with my <code>type</code> of storage in <code>volumes.yaml</code>.
+As of yet there is no type-agnostic way to assign permissions for mounted volumes.
+Storage, why you gotta be like that?</p>
+<p>So after digging around and asking Barak I finally concluded that I had to had to login to my host and set the correct permissions on the directories being reserved.
+Here's how you do that on Minikube:</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ minikube ssh
+</span><span>docker@minikube$ sudo chown -R 1000:1000 /data/pv*
+</span></code></pre>
+<p>In this case we could just chown the one volume that's going to be used by the <code>worker</code> pod, since the other ones run their services as <code>root</code>, but much like Debra from accounting, <code>root</code> doesn't give a fuck.
+Might as well.</p>
+<p>So if we try the build again with the correct permissions, what happens?</p>
+<p><img src="/images/buildbot-on-k8s/build-success-perms.png" alt="Buildbot with permissions fixed" /></p>
+<p>Huzah</p>
+<h2 id="autoscaling">Autoscaling</h2>
+<p>At last we have what I suspect will be the <em>hardest</em> part of the project: autoscaling.
+Here's what we want in a perfect world:</p>
+<ul>
+<li>When a lot of builds get requested, spin up more <code>worker</code> nodes.</li>
+<li>When fewer builds are requested, destroy those extra <code>worker</code> nodes.</li>
+</ul>
+<h3 id="asking-the-question">Asking the question</h3>
+<p>This task is actually a pretty tough cookie to crack.
+We want enough workers to each deal with 1/N requests in a queue of N builds, essentially scaling the building service to deal with usage spikes.
+It sounds straight forward enough, but how do we test it?</p>
+<h3 id="creating-a-test-case">Creating a test-case</h3>
+<p>For this we need to add a few projects to our instance of Buildbot, each of which will have a hefty workload.
+To do this we need to host a Buildbot <code>master.cfg</code> config file at some public location and refer to this in the <code>master.yaml</code> config file.
+I used the GitHub repo that accompanies this blogpost <sup class="footnote-reference"><a href="#accompanying-repo">5</a></sup>, but you could use GitHub Gists or a pastebin; just make sure you're referring to the <strong>raw</strong> file or a <code>.tar.gz</code> with the <code>master.cfg</code> file at the base of the tarball.</p>
+<p>So let's pull a project out of a hat that takes a while to build, how about... <a href="https://github.com/rust-lang/cargo">Cargo</a>.
+Any objections?
+Great, let's roll.</p>
+<p>To get started we'll need a custom <code>worker</code> container can build Cargo.
+A small adventure later and we have this Dockerfile which has all of the dependencies to build what we want:</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>FROM buildbot/buildbot-worker:master
+</span><span>
+</span><span>RUN curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly
+</span><span>RUN echo &#39;PATH=$PATH:$HOME/.cargo/bin&#39; &gt;&gt; $HOME/.bashrc
+</span><span>
+</span><span>USER root
+</span><span>RUN apt update -y
+</span><span>RUN apt install -y cmake pkg-config
+</span><span>
+</span><span>USER buildbot
+</span></code></pre>
+<p>I set this to auto-build on <a href="https://quay.io/">quay.io</a>, hosted at the docker-pull url <code>quay.io/elijahcaine/buidlbot-rust-worker</code>.</p>
+<p>Now that we have a capable worker container, we need to create an arbitrary workload.
+To do that we'll use this Buildbot <code>master.cfg</code>:</p>
+<pre data-lang="diff" style="background-color:#191919;color:#f8f8f2;" class="language-diff "><code class="language-diff" data-lang="diff"><span>diff --git a/blogpost/robust-master.cfg b/blogpost/robust-master.cfg
+</span><span>index 06ad65b..892188b 100644
+</span><span style="color:#75715e;">--- a/blogpost/robust-master.cfg
+</span><span style="color:#75715e;">+++ b/blogpost/robust-master.cfg
+</span><span style="color:#75715e;">@@ -18,7 +18,7 @@ c = BuildmasterConfig = {}
+</span><span> # a Worker object, specifying a unique worker name and password.  The same
+</span><span> # worker name and password must be configured on the worker.
+</span><span>
+</span><span style="color:#f92672;">-c[&#39;workers&#39;] = [worker.Worker(&quot;example-worker&quot;, &#39;pass&#39;)]
+</span><span style="color:#a6e22e;">+c[&#39;workers&#39;] = [worker.Worker(&quot;rust-worker&quot;, &#39;pass&#39;)]
+</span><span>
+</span><span> if &#39;BUILDBOT_MQ_URL&#39; in os.environ:
+</span><span>     c[&#39;mq&#39;] = {
+</span><span style="color:#75715e;">@@ -43,7 +43,7 @@ c[&#39;protocols&#39;] = {&#39;pb&#39;: {&#39;port&#39;: os.environ.get(&quot;BUILDBOT_WORKER_PORT&quot;, 9989)}}
+</span><span>
+</span><span> c[&#39;change_source&#39;] = []
+</span><span> c[&#39;change_source&#39;].append(changes.GitPoller(
+</span><span style="color:#f92672;">-        &#39;git://github.com/buildbot/pyflakes.git&#39;,
+</span><span style="color:#a6e22e;">+        &#39;git://github.com/rust-lang/cargo.git&#39;,
+</span><span>         workdir=&#39;gitpoller-workdir&#39;, branch=&#39;master&#39;,
+</span><span>         pollinterval=300))
+</span><span>
+</span><span style="color:#75715e;">@@ -57,10 +57,10 @@ c[&#39;schedulers&#39;].append(schedulers.SingleBranchScheduler(
+</span><span>                             name=&quot;all&quot;,
+</span><span>                             change_filter=util.ChangeFilter(branch=&#39;master&#39;),
+</span><span>                             treeStableTimer=None,
+</span><span style="color:#f92672;">-                            builderNames=[&quot;runtests&quot;]))
+</span><span style="color:#a6e22e;">+                            builderNames=[&quot;cargo1-runtests&quot;, &quot;cargo2-runtests&quot;, &quot;cargo3-runtests&quot;]))
+</span><span> c[&#39;schedulers&#39;].append(schedulers.ForceScheduler(
+</span><span>                             name=&quot;force&quot;,
+</span><span style="color:#f92672;">-                            builderNames=[&quot;runtests&quot;]))
+</span><span style="color:#a6e22e;">+                            builderNames=[&quot;cargo1-runtests&quot;, &quot;cargo2-runtests&quot;, &quot;cargo3-runtests&quot;]))
+</span><span>
+</span><span> ####### BUILDERS
+</span><span>
+</span><span style="color:#75715e;">@@ -68,17 +68,30 @@ c[&#39;schedulers&#39;].append(schedulers.ForceScheduler(
+</span><span> # what steps, and which workers can execute them.  Note that any particular build will
+</span><span> # only take place on one worker.
+</span><span>
+</span><span style="color:#f92672;">-factory = util.BuildFactory()
+</span><span style="color:#f92672;">-# check out the source
+</span><span style="color:#f92672;">-factory.addStep(steps.Git(repourl=&#39;http://github.com/buildbot/pyflakes.git&#39;, mode=&#39;incremental&#39;))
+</span><span style="color:#f92672;">-# run the tests (note that this will require that &#39;trial&#39; is installed)
+</span><span style="color:#f92672;">-factory.addStep(steps.ShellCommand(command=[&quot;trial&quot;, &quot;pyflakes&quot;]))
+</span><span style="color:#a6e22e;">+f = {}
+</span><span style="color:#a6e22e;">+f[&#39;cargo&#39;] = util.BuildFactory()
+</span><span style="color:#a6e22e;">+f[&#39;cargo&#39;].addStep(steps.Git(repourl=&#39;git://github.com/rust-lang/cargo.git&#39;, mode=&#39;full&#39;, method=&#39;fresh&#39;))
+</span><span style="color:#a6e22e;">+f[&#39;cargo&#39;].addStep(steps.ShellCommand(command=[&quot;/home/buildbot/.cargo/bin/cargo&quot;, &quot;build&quot;, &quot;--release&quot;]))
+</span><span>
+</span><span> c[&#39;builders&#39;] = []
+</span><span> c[&#39;builders&#39;].append(
+</span><span style="color:#f92672;">-    util.BuilderConfig(name=&quot;runtests&quot;,
+</span><span style="color:#f92672;">-      workernames=[&quot;example-worker&quot;],
+</span><span style="color:#f92672;">-      factory=factory))
+</span><span style="color:#a6e22e;">+    util.BuilderConfig(name=&quot;cargo1-runtests&quot;,
+</span><span style="color:#a6e22e;">+      workernames=[&quot;rust-worker&quot;],
+</span><span style="color:#a6e22e;">+      factory=f[&#39;cargo&#39;],
+</span><span style="color:#a6e22e;">+      builddir=&#39;builds/cargo1&#39;,
+</span><span style="color:#a6e22e;">+      workerbuilddir=&#39;builds/cargo1&#39;))
+</span><span style="color:#a6e22e;">+c[&#39;builders&#39;].append(
+</span><span style="color:#a6e22e;">+    util.BuilderConfig(name=&quot;cargo2-runtests&quot;,
+</span><span style="color:#a6e22e;">+      workernames=[&quot;rust-worker&quot;],
+</span><span style="color:#a6e22e;">+      factory=f[&#39;cargo&#39;],
+</span><span style="color:#a6e22e;">+      builddir=&#39;builds/cargo2&#39;,
+</span><span style="color:#a6e22e;">+      workerbuilddir=&#39;builds/cargo2&#39;))
+</span><span style="color:#a6e22e;">+c[&#39;builders&#39;].append(
+</span><span style="color:#a6e22e;">+    util.BuilderConfig(name=&quot;cargo3-runtests&quot;,
+</span><span style="color:#a6e22e;">+      workernames=[&quot;rust-worker&quot;],
+</span><span style="color:#a6e22e;">+      factory=f[&#39;cargo&#39;],
+</span><span style="color:#a6e22e;">+      builddir=&#39;builds/cargo3&#39;,
+</span><span style="color:#a6e22e;">+      workerbuilddir=&#39;builds/cargo3&#39;))
+</span><span>
+</span><span> ####### STATUS TARGETS
+</span><span>
+</span><span style="color:#75715e;">@@ -93,8 +106,8 @@ c[&#39;status&#39;] = []
+</span><span> # the &#39;title&#39; string will appear at the top of this buildbot installation&#39;s
+</span><span> # home pages (linked to the &#39;titleURL&#39;).
+</span><span>
+</span><span style="color:#f92672;">-c[&#39;title&#39;] = &quot;Pyflakes&quot;
+</span><span style="color:#f92672;">-c[&#39;titleURL&#39;] = &quot;https://launchpad.net/pyflakes&quot;
+</span><span style="color:#a6e22e;">+c[&#39;title&#39;] = &quot;Rusty Stuffy&quot;
+</span><span style="color:#a6e22e;">+c[&#39;titleURL&#39;] = &quot;https://www.rust-lang.org/en-US/&quot;
+</span><span>
+</span><span> # the &#39;buildbotURL&#39; string should point to the location where the buildbot&#39;s
+</span><span> # internal web server is visible. This typically uses the port number set in
+</span></code></pre>
+<p>And deploy it with this <code>master.yaml</code>:</p>
+<pre data-lang="diff" style="background-color:#191919;color:#f8f8f2;" class="language-diff "><code class="language-diff" data-lang="diff"><span>diff --git a/blogpost/robust-master.yaml b/blogpost/robust-master.yaml
+</span><span>index c7479e3..f75b4d6 100644
+</span><span style="color:#75715e;">--- a/blogpost/robust-master.yaml
+</span><span style="color:#75715e;">+++ b/blogpost/robust-master.yaml
+</span><span style="color:#75715e;">@@ -50,7 +50,7 @@ spec:
+</span><span>         - name: BUILDBOT_CONFIG_DIR
+</span><span>           value: config
+</span><span>         - name: BUILDBOT_CONFIG_URL
+</span><span style="color:#f92672;">-          value: &#39;https://raw.githubusercontent.com/ElijahCaine/buildbot-on-kubernetes/master/simple/master.cfg&#39;
+</span><span style="color:#a6e22e;">+          value: &#39;https://raw.githubusercontent.com/ElijahCaine/buildbot-on-kubernetes/master/robust/master.cfg&#39;
+</span><span>         - name: BUILDBOT_WORKER_PORT
+</span><span>           value: &#39;9989&#39;
+</span><span>         - name: BUILDBOT_WEB_URL
+</span></code></pre>
+<p>When we look at our setup in Buildbot it looks like this:</p>
+<p><img src="/images/buildbot-on-k8s/ample-workload.png" alt="Buildbot wih ample workload" /></p>
+<p>When each build is run it completely wipes away the old git clone and starts from scratch, which is <em>suuuper</em> wasteful, but exactly what we want here.
+The purpose of this test is to create a heavy workload for our nodes to perform, and with this each build will <em>definitely</em> be heavy.</p>
+<h3 id="kubectl-autoscale">kubectl autoscale</h3>
+<p>Now to start scaling that build.
+In a perfect world we'd get a request, that would start hogging our resources, and K8s would spin up a new worker instance to handle the next build in the queue.
+Based on the output of <code>kubectl --help</code> it looks like <code>kubectl autoscale deployment worker</code> is the command we want... so let's do that:</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl autoscale deployment worker --max=5 --min=1 --cpu-percent=50
+</span><span>deployment &quot;worker&quot; autoscaled
+</span><span>$ kubectl describe hpa
+</span><span>Name:               worker
+</span><span>Namespace:          default
+</span><span>Labels:             &lt;none&gt;
+</span><span>Annotations:            &lt;none&gt;
+</span><span>CreationTimestamp:      Fri, 09 Dec 2016 11:13:15 -0800
+</span><span>Reference:          Deployment/worker
+</span><span>Target CPU utilization:     50%
+</span><span>Current CPU utilization:    &lt;unset&gt;
+</span><span>Min replicas:           1
+</span><span>Max replicas:           5
+</span><span>Events:
+</span><span>  FirstSeen LastSeen    Count   From                SubobjectPath   Type        Reason          Message
+</span><span>  --------- --------    -----   ----                -------------   --------    ------          -------
+</span><span>  37s       11s     6   {horizontal-pod-autoscaler }            Warning     FailedGetMetrics    failed to get CPU consumption and request: failed to get pods metrics: the server could not find the requested resource (get services http:heapster:)
+</span><span>  37s       11s     6   {horizontal-pod-autoscaler }            Warning     FailedComputeReplicas   failed to get CPU utilization: failed to get CPU consumption and request: failed to get pods metrics: the server could not find the requested resource (get services http:heapster:)
+</span></code></pre>
+<p>Hmm... that output looks like things aren't working.
+Let's look around the internet and see if we find anything useful.
+I'll go East, you go West, and we'll meet back here in 20.</p>
+<p>Great, what did you find? Me? Oh I found a bunch of Github issues <sup class="footnote-reference"><a href="#hpa-gh">6</a></sup> and Stack Overflow posts <sup class="footnote-reference"><a href="#hpa-so">7</a></sup>; lot of people mentioned this Heapster thing.
+The <a href="https://github.com/kubernetes/heapster">Heapster GitHub page</a> says it does <em>Compute Resource Usage Analysis and Monitoring of Container Clusters</em>, which sounds like what we want.
+I also found the <a href="http://kubernetes.io/docs/user-guide/horizontal-pod-autoscaling/">K8s Autoscaling</a> docs that point to a <a href="http://kubernetes.io/docs/user-guide/horizontal-pod-autoscaling/">K8s Autoscaling Tutorial</a>.
+That sounds super useful and confirms the suspicion that Heapster is useful.
+<strong>TLDR</strong> things are pointing toward setting up Heapster.</p>
+<p>As it turns out there is a <a href="https://github.com/kubernetes/minikube/blob/master/README.md#add-ons">Heapster addon for Minikube</a> <sup class="footnote-reference"><a href="#heapster-release">8</a></sup>, so let's get that setup.</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ minikube addons enable heapster
+</span><span>heapster was successfully enabled
+</span><span>$ minikube addons open heapster
+</span><span>Opening kubernetes service kube-system/monitoring-grafana in default browser...
+</span></code></pre>
+<p><img src="/images/buildbot-on-k8s/hello-heapster.png" alt="Heapster working" /></p>
+<p>Neato!</p>
+<p>So now we've got Heapster running, what's next?</p>
+<p>Well the tutorial runs this line:</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl run php-apache --image=gcr.io/google_containers/hpa-example --requests=cpu=200m --expose --port=80
+</span></code></pre>
+<p>Which we can appropriate to get some YAML to shove in our <code>worker.yaml</code> to get a good template for our Buildbot worker Deployment.</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl run test --image=busybox --requests=cpu=200m -o yaml
+</span><span>apiVersion: extensions/v1beta1
+</span><span>...
+</span><span>spec:
+</span><span>  ...
+</span><span>  template:
+</span><span>    ...
+</span><span>    spec:
+</span><span>      containers:
+</span><span>      - args:
+</span><span>        ...
+</span><span>        resources:
+</span><span>          requests:
+</span><span>            cpu: 200m
+</span><span>...
+</span></code></pre>
+<p>So I added that section to <code>worker.yaml</code>...</p>
+<pre data-lang="diff" style="background-color:#191919;color:#f8f8f2;" class="language-diff "><code class="language-diff" data-lang="diff"><span>diff --git a/blogpost/robust-worker.yaml b/blogpost/robust-worker.yaml
+</span><span>index e57db12..de52320 100644
+</span><span style="color:#75715e;">--- a/blogpost/robust-worker.yaml
+</span><span style="color:#75715e;">+++ b/blogpost/robust-worker.yaml
+</span><span style="color:#75715e;">@@ -42,15 +42,18 @@ spec:
+</span><span>         tier: worker
+</span><span>     spec:
+</span><span>       containers:
+</span><span style="color:#f92672;">-      - image: &quot;buildbot/buildbot-worker:master&quot;
+</span><span style="color:#a6e22e;">+      - image: &quot;quay.io/elijahcaine/buildbot-rust-worker:master&quot;
+</span><span>         name: worker
+</span><span style="color:#a6e22e;">+        resources:
+</span><span style="color:#a6e22e;">+          requests:
+</span><span style="color:#a6e22e;">+            cpu: 200m
+</span><span>         env:
+</span><span>         - name: BUILDMASTER
+</span><span>           value: master
+</span><span>         - name: BUILDMASTER_PORT
+</span><span>           value: &#39;9989&#39;
+</span><span>         - name: WORKERNAME
+</span><span style="color:#f92672;">-          value: example-worker
+</span><span style="color:#a6e22e;">+          value: rust-worker
+</span><span>         - name: WORKERPASS
+</span><span>           value: pass
+</span><span>         - name: WORKER_ENVIRONMENT_BLACKLIST
+</span></code></pre>
+<p>... and ran <code>kubectl replace -f worker.yaml</code>, but did it work?
+Well, if you're impatient like me you'll keep refreshing, it won't look like it's working, and then you'll pull your hair out.
+If that happens to you, just wait.
+Wait like... a minute.
+Just get some tea, stare out the window for a second, <em>then</em> see if it worked or not.</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>$ kubectl get hpa worker
+</span><span>NAME              REFERENCE                    TARGET    CURRENT   MINPODS   MAXPODS   AGE
+</span><span>worker            Deployment/worker            50%       0%        1         5         2m
+</span></code></pre>
+<p>There.
+That looks good.
+Let's throw some work at it!</p>
+<p>A few builds:</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>NAME              REFERENCE                    TARGET    CURRENT   MINPODS   MAXPODS   AGE
+</span><span>worker            Deployment/worker            50%       536%      1         5         6m
+</span></code></pre>
+<p>Great!
+Let's check up on Buildbot:</p>
+<p><img src="/images/buildbot-on-k8s/replicas-didnt-work.png" alt="replication failing" /></p>
+<p>Ruh-roh that's not good...</p>
+<p>Let's dig in a bit.</p>
+<p><img src="/images/buildbot-on-k8s/failed-build.png" alt="replication failing -- zoom, enhance" /></p>
+<p>That's not good...</p>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>[... end of git pull ...]
+</span><span>75  security_updates_as_of=2016-10-07
+</span><span>76  using PTY: False
+</span><span>77  Cloning into &#39;.&#39;...
+</span><span>78
+</span><span>79  command interrupted, attempting to kill
+</span><span>80  process killed by signal 15
+</span><span>81  program finished with exit code -1
+</span><span>82  elapsedTime=2.051445
+</span></code></pre>
+<pre style="background-color:#191919;color:#f8f8f2;"><code><span>[... entirety of &#39;cancelled&#39; logs ...]
+</span><span>0  no reason
+</span></code></pre>
+<p>Well, it looks like that plan didn't work.</p>
+<p>I did a bit more digging and I can say with certainty that the approach I took to scaling the workload did <em>not</em> work.
+I can't say <em>why</em> for sure, and I definitely can't say how to fix it, but honestly... it's late.
+I'm tired and right now I'm okay with throwing in the towel for now.
+Maybe we'll solve this in a <strong>Part 2</strong>.</p>
+<h2 id="debrief">Debrief</h2>
+<blockquote>
+<p>First: This blogpost has a repo associated with it: <a href="https://github.com/elijahcaine/buildbot-on-kubernetes">https://github.com/elijahcaine/buildbot-on-kubernetes</a>.</p>
+<p>Please check that out, see what it has to offer, and make issues/pull requests.
+Right now it's just a copy of the configs used in this project and a little bit of documentation.</p>
+<p>Happy hacking!</p>
+</blockquote>
+<p>I'm terrible at endings so I'm just gonna braindump some stuff here and let you, the beautiful and charming reader, find your own closure from all of this.</p>
+<h3 id="failure-its-what-s-on-the-menu">Failure: its what's on the menu</h3>
+<p>That's right, I didn't do what I set out to achieve.
+Is that a bad thing?
+<strong>Of course not!</strong> To quote the great Jake the Dog:</p>
+<p><img src="/images/buildbot-on-k8s/sucking-quote.jpg" alt="Sucking at something is the first step to being kinda good at something" /></p>
+<p>Sure we didn't get the <em>perfect</em> BuildBot+K8s but we learned a ton and got <em>really</em> close!</p>
+<h3 id="some-stuff-we-learned">Some stuff we learned</h3>
+<p>So what are some things we learned that we should probably write down?
+This is a pretty open question and if you followed along you'll <em>probably</em> get a drastically different list than I have.
+Here's the big things I feel like I'm walking away with:</p>
+<ul>
+<li><code>kubectl &lt;command&gt; --dry-run -o yaml</code> is very useful for file-izing your infrastructure.</li>
+<li>K8s is very well documented <strong>if</strong> you are a very patient individual.</li>
+<li>Storage in K8s is still not a perfectly solved problem [^storage].</li>
+<li>K8s applications share private networking.</li>
+<li>K8s Pods are really just containers.</li>
+</ul>
+<p>I'm sure there's a ton more I've internalized and can't recall.
+I tried to take thorough notes during this entire experience to capture the failures as well as the successes, which is a harder skill than I expected.</p>
+<h3 id="useful-resources">Useful resources</h3>
+<p>Beyond searching for specific answers these are <em>honestly</em> the websites I kept going back to throughout this project.</p>
+<ul>
+<li><a href="http://kubernetes.io/docs/">http://kubernetes.io/docs/</a> The main K8s docs.
+A bit dense and sparse in key areas, a problem I'm actively I'm working on.
+Includes API docs and user-guides which are useful for those patient enough to read them.</li>
+<li><a href="http://k8s.info/">http://k8s.info/</a> A community-run resource with some useful links and a 'cheat sheet'.</li>
+<li><a href="https://github.com/kubernetes/community">https://github.com/kubernetes/community</a> Includes a bunch of very useful design documentation.
+I'm not usually the kind of person that enjoys reading design docs, but sometimes a feature is too new to have a usable user-guide.
+When it's the best you've got, take it.</li>
+</ul>
+<p>As far as Buildbot-specific stuff I honestly just used the <a href="https://docs.buildbot.net/current/">official Buildbot docs</a> which were more than enough.</p>
+<h3 id="whats-next">Whats next?</h3>
+<p>I'm sure I'll be posting more about K8s going forward.
+It is a very useful tool because of/despite it's complexities.
+As I use it I'll post more about it.</p>
+<p>If you have any feedback on this post feel free to get in contact with me <a href="https://twitter.com/pastywhitenoise">@PastyWhiteNoise</a> on Twitter, <code>pop</code> on <a href="https://webchat.freenode.net/">irc.freenode.net</a> <sup class="footnote-reference"><a href="#irc">9</a></sup>, you can make an issue on <a href="https://github.com/elijahcaine/elijahcaine.github.io">this website's Github Repository</a>, and of course I can be reached by Carrier Pigeon..</p>
+<h2 id="errata">Errata</h2>
+<div class="footnote-definition" id="GIFEE"><sup class="footnote-definition-label">10</sup>
+<p>Google Infrastructure for Everyone Else</p>
+</div>
+<div class="footnote-definition" id="accompanying-repo"><sup class="footnote-definition-label">5</sup>
+<p><a href="https://github.com/ElijahCaine/buildbot-on-kubernetes">https://github.com/ElijahCaine/buildbot-on-kubernetes</a></p>
+</div>
+<div class="footnote-definition" id="docs-should"><sup class="footnote-definition-label">1</sup>
+<p>My job, at least a big part of it, is writing documentation.
+Docs are a notable part of my identify, and I have a belief in the power of good documentation, but at the end of the day they <strong>are</strong> just a means to an end.</p>
+<p>In a perfect world docs wouldn't <em>need</em> to exist, so all docs should be enough to get whoever's readin them to the point where they can do cool shit on their own.
+Just like a great cinematographer is so good you don't notice the camera in a movie, great docs should be so good you don't <strong>notice</strong> how good they are.</p>
+<p>So that's why I like <strong>doing</strong> cool shit over <strong>reading</strong> about it.</p>
+<p>It's also fun to play with toys! Even if those toys are software.</p>
+</div>
+<div class="footnote-definition" id="heapster-release"><sup class="footnote-definition-label">8</sup>
+<p>Authors Note: The heapster addon was added to Minikube <strong>during the writing of this post</strong>. How convenient!</p>
+</div>
+<div class="footnote-definition" id="hpa-gh"><sup class="footnote-definition-label">6</sup>
+<p><a href="https://github.com/openshift/origin/issues/6239">https://github.com/openshift/origin/issues/6239</a> - <a href="https://github.com/kubernetes/kubernetes/issues/18652">https://github.com/kubernetes/kubernetes/issues/18652</a></p>
+</div>
+<div class="footnote-definition" id="hpa-so"><sup class="footnote-definition-label">7</sup>
+<p><a href="http://stackoverflow.com/questions/38874145/autoscaling-hpa-failed-to-get-cpu-consumption-cannot-unmarshal-object-into-go">http://stackoverflow.com/questions/38874145/autoscaling-hpa-failed-to-get-cpu-consumption-cannot-unmarshal-object-into-go</a> - <a href="http://stackoverflow.com/questions/37631008/kubernetes-hpa-cannot-get-cpu-consumption">http://stackoverflow.com/questions/37631008/kubernetes-hpa-cannot-get-cpu-consumption</a></p>
+</div>
+<div class="footnote-definition" id="irc"><sup class="footnote-definition-label">9</sup>
+<p>I usually hang out in the <code>#osu-lug</code> channel. They're cool people, you should hang out with us!</p>
+</div>
+<div class="footnote-definition" id="same-app-note"><sup class="footnote-definition-label">4</sup>
+<p>It wasn't painfully obvious to me so it's worth elaborating that for K8s services to communicate with one-another they need to be part of the same <code>app</code>. In the example the <code>postgres</code>, <code>worker</code>, and <code>master</code> containers are all part of the same <code>buildbot</code> app.</p>
+<p>It's not a terribly well documented <strong>key</strong> piece of information so it
+seemed worth mentioning.</p>
+</div>
+<div class="footnote-definition" id="storge"><sup class="footnote-definition-label">11</sup>
+<p>But neither is storage in general so who can blame 'em?</p>
+</div>
+<div class="footnote-definition" id="theory-vs-practice"><sup class="footnote-definition-label">2</sup>
+<p>If you read that and thought "You know what they say about theory versus
+practice!" then <em>yes</em> -- but you're getting ahead of me.</p>
+</div>
+<div class="footnote-definition" id="why"><sup class="footnote-definition-label">3</sup>
+<p>Might as well clarify <em>why</em> we want persistent storage and auto-scaling
+since these are usually desired features in an orchestrator but nobody
+explains <em>why</em> they're desireable.</p>
+<p>Autoscaling:
+Autoscaling is important is because we've got a whole data-center (in
+theory) and we want to maximize how we use that data-center's
+computational abilities. In a perfect world we would use exactly as much
+of the data-center as is demanded by users, but in practice this is
+super hard!</p>
+<p>Say your website gets linked on Hacker News, you get tons of requests
+pouring in, but your poor little 2004 server falls on it's face when you
+<em>look</em> at it wrong, and <strong>that</strong> is where the exact page was hosted. If
+you don't <strong>know</strong> that server fell down you'll never fix the problem or
+even <strong>know</strong> about the problem.</p>
+<p>With an orchestrator we can (in theory) specify how much we want to
+utilize a our data-center's resources and under what conditions we want
+to use more or less resources. If our service is creating a light load,
+only have one container up; if it's got a metric fuck-ton then spin up
+20 containers across our entire cluster. You say what you want and the
+load-balancer + scheduler + monitor take care of the rest.</p>
+<p>Persistent Storage:
+The reason persistent storage is a useful feature is for two reasons</p>
+<p>The first is that containers are ephemeral. They can be created,
+destroyed, and upgraded <em>all</em> the time, basically making them the polar
+opposite of a 'Special Snowflake' service.</p>
+<p>This is nice, but what about state? As nice as it'd be to make an
+entirely stateless data-center, cat pictures and builds aren't going to
+store themselves!</p>
+<p>The solution to this problem is -- well it's not solved, but there's a
+clear direction things are going in. The TLDR is that we create some
+block device in the cloud and mount it to each identical container at
+the same mount-point, so each container (K8s 'Pod') shares some amount
+of state. Sorta like... I'm bad at examples actually. I'll think of one
+eventually.</p>
+<p>Piggy-backing off of this, not only do we preserve state between
+container upgrades/deletes/additions, but we can also share state
+between scaled services (i.e., a set of identical containers across a
+datacenter). Essentially we can have one worker pod carry out a build
+and another pod perform some action on that build (uploading it, verify
+it, archive it, etc). When the first worker pod gets deleted the build
+lives on in the shared state.</p>
+<p>This allows us to treat our state the same way we treat computing
+resources in the world of GIFFEE</p>
+</div>
+<div class="footnote-definition" id="GIFEE"><sup class="footnote-definition-label">10</sup>
+<p>Create some block device for the service, mount it to this point, and let your orchestrator take care of the rest.</p>
+</div>
+
+  </main>
+  <p>
+        Tags:
+          <a href="/tags/kubernetes/">#kubernetes</a>
+  </p>
+<footer>
+  Made with <a href="https://www.getzola.org/">Zola</a>;
+  theme inspired by <a href="https://codeberg.org/alanpearce/zola-bearblog">Zola ʕ•ᴥ•ʔ Bear</a>.
+</footer>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>elijah.run - git</title>
+    <subtitle>A blog about tech, media, and art</subtitle>
+    <link rel="self" type="application/atom+xml" href="/tags/git/atom.xml"/>
+    <link rel="alternate" type="text/html" href="/"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2021-07-07T00:00:00+00:00</updated>
+    <id>/tags/git/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Nuggit: Manually change your default branch name</title>
+        <published>2021-07-07T00:00:00+00:00</published>
+        <updated>2021-07-07T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/git-main-branch/"/>
+        <id>/git-main-branch/</id>
+        
+        <content type="html" xml:base="/git-main-branch/">&lt;p&gt;So I was on my laptop running an ancient release of Linux called Fedora 30 -- so old COVID wasn&#x27;t even a twinkle in a bat&#x27;s eye when it was released.&lt;&#x2F;p&gt;
+&lt;p&gt;On this ancient OS I&#x27;m have &lt;code&gt;git 2.21.3&lt;&#x2F;code&gt; which is like 13 versions behind.
+I ask yum -- err &lt;em&gt;dnf&lt;&#x2F;em&gt; -- if there is an upgrade and it&#x27;s like &quot;nope&quot;.
+Nothing makes me feel older than software.&lt;&#x2F;p&gt;
+&lt;p&gt;I&#x27;ve gotten into the habit of naming my default branches &lt;code&gt;main&lt;&#x2F;code&gt; instead of &lt;code&gt;master&lt;&#x2F;code&gt; because every time I say &quot;master&quot; I need to take a shower.
+I&#x27;m pretty sure the latest git names the default branch &lt;code&gt;main&lt;&#x2F;code&gt; out of the box, but git from April 2019 was not aware of problematic language choices.&lt;&#x2F;p&gt;
+&lt;p&gt;So as one does I&#x27;m starting a new repo and I decide before updating &lt;code&gt;git&lt;&#x2F;code&gt;, which is gonna require like 3 Fedora upgrades, I&#x27;m just going to rename the branch.
+I know I&#x27;ll get woke-git if I upgrade Fedora, but I want to write this post first so we&#x27;re gonna find a workaround.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;[branch:master]$ git branch -m main
+&lt;&#x2F;span&gt;&lt;span&gt;error: refname refs&#x2F;heads&#x2F;master not found
+&lt;&#x2F;span&gt;&lt;span&gt;fatal: Branch rename failed
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Hmm.
+So on a bare repo you can&#x27;t rename the starting branch because there&#x27;s no objects in the repo... or something like that &lt;em&gt;waves hands&lt;&#x2F;em&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Umm... I guess we&#x27;ll go spelunking into the &lt;code&gt;.git&lt;&#x2F;code&gt; directory to see if we can manually force our &lt;code&gt;main&lt;&#x2F;code&gt; branch naming.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;[branch:master]$ cd .git
+&lt;&#x2F;span&gt;&lt;span&gt;[.git]$ tree -F
+&lt;&#x2F;span&gt;&lt;span&gt;.
+&lt;&#x2F;span&gt;&lt;span&gt;├── branches&#x2F;
+&lt;&#x2F;span&gt;&lt;span&gt;├── config
+&lt;&#x2F;span&gt;&lt;span&gt;├── description
+&lt;&#x2F;span&gt;&lt;span&gt;├── HEAD
+&lt;&#x2F;span&gt;&lt;span&gt;├── hooks&#x2F;
+&lt;&#x2F;span&gt;&lt;span&gt;│   ├── A bunch of sample scripts
+&lt;&#x2F;span&gt;&lt;span&gt;├── info&#x2F;
+&lt;&#x2F;span&gt;&lt;span&gt;│   └── exclude
+&lt;&#x2F;span&gt;&lt;span&gt;├── objects&#x2F;
+&lt;&#x2F;span&gt;&lt;span&gt;│   ├── info&#x2F;
+&lt;&#x2F;span&gt;&lt;span&gt;│   └── pack&#x2F;
+&lt;&#x2F;span&gt;&lt;span&gt;└── refs&#x2F;
+&lt;&#x2F;span&gt;&lt;span&gt;    ├── heads&#x2F;
+&lt;&#x2F;span&gt;&lt;span&gt;    └── tags&#x2F;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Well unsurprisingly we have a bunch of empty directories and some sample scripts.&lt;&#x2F;p&gt;
+&lt;p&gt;The only files that &lt;em&gt;might&lt;&#x2F;em&gt; be worth looking at are &lt;code&gt;config&lt;&#x2F;code&gt;, &lt;code&gt;description&lt;&#x2F;code&gt;, and &lt;code&gt;HEAD&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;&#x2F;&#x2F; config
+&lt;&#x2F;span&gt;&lt;span&gt;[core]
+&lt;&#x2F;span&gt;&lt;span&gt;    repositoryformatversion = 0
+&lt;&#x2F;span&gt;&lt;span&gt;    filemode = true
+&lt;&#x2F;span&gt;&lt;span&gt;    bare = false
+&lt;&#x2F;span&gt;&lt;span&gt;    logallrefupdates = true
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This seems to be config options for this repo, none of which mention branch naming so it&#x27;s a skip for me.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;&#x2F;&#x2F; description
+&lt;&#x2F;span&gt;&lt;span&gt;Unnamed repository; edit this file &amp;#39;description&amp;#39; to name the repository.
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;I had no idea this feature existed.
+I have never seen it be used -- but fun facts!&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;&#x2F;&#x2F; HEAD
+&lt;&#x2F;span&gt;&lt;span&gt;ref: refs&#x2F;heads&#x2F;master
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;And the money shot. Let&#x27;s change that bad boy to &lt;code&gt;refs&#x2F;heads&#x2F;main&lt;&#x2F;code&gt; and see if my magical git prompt picks it up:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;[.git]$ cd ..&#x2F;
+&lt;&#x2F;span&gt;&lt;span&gt;[branch:main]$
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Heyo!
+There you have it. How to manually change the name of your main branch in a fresh git repo.&lt;&#x2F;p&gt;
+&lt;p&gt;Sanity check, this won&#x27;t fuck up if we commit right?&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;$ cargo init .
+&lt;&#x2F;span&gt;&lt;span&gt;$ git add . &amp;amp;&amp;amp; git commit -m &amp;quot;initial commit&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;[main (root-commit) ebecbee] initial commit
+&lt;&#x2F;span&gt;&lt;span&gt; 3 files changed, 12 insertions(+)
+&lt;&#x2F;span&gt;&lt;span&gt; create mode 100644 .gitignore
+&lt;&#x2F;span&gt;&lt;span&gt; create mode 100644 Cargo.toml
+&lt;&#x2F;span&gt;&lt;span&gt; create mode 100644 src&#x2F;main.rs
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;note&quot;&gt;Note...&lt;&#x2F;h2&gt;
+&lt;p&gt;After anxiously upgrading to Fedora 34 I confirmed that git fixed a lot of this:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;[pop@lappy foo]$ git init
+&lt;&#x2F;span&gt;&lt;span&gt;hint: Using &amp;#39;master&amp;#39; as the name for the initial branch. This default branch name
+&lt;&#x2F;span&gt;&lt;span&gt;hint: is subject to change. To configure the initial branch name to use in all
+&lt;&#x2F;span&gt;&lt;span&gt;hint: of your new repositories, which will suppress this warning, call:
+&lt;&#x2F;span&gt;&lt;span&gt;hint:
+&lt;&#x2F;span&gt;&lt;span&gt;hint:   git config --global init.defaultBranch &amp;lt;name&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;hint:
+&lt;&#x2F;span&gt;&lt;span&gt;hint: Names commonly chosen instead of &amp;#39;master&amp;#39; are &amp;#39;main&amp;#39;, &amp;#39;trunk&amp;#39; and
+&lt;&#x2F;span&gt;&lt;span&gt;hint: &amp;#39;development&amp;#39;. The just-created branch can be renamed via this command:
+&lt;&#x2F;span&gt;&lt;span&gt;hint:
+&lt;&#x2F;span&gt;&lt;span&gt;hint:   git branch -m &amp;lt;name&amp;gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;And yes, &lt;code&gt;git branch -m &amp;lt;name&amp;gt;&lt;&#x2F;code&gt; does work on an empty repo.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Git Does a Lot of Things</title>
+        <published>2016-07-27T00:00:00+00:00</published>
+        <updated>2016-07-27T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            
+              Unknown
+            
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="/git-does-a-lot-of-things/"/>
+        <id>/git-does-a-lot-of-things/</id>
+        
+        <content type="html" xml:base="/git-does-a-lot-of-things/">&lt;p&gt;I should make a tool that extends &lt;code&gt;git&lt;&#x2F;code&gt; to delete all of the files matched by the &lt;code&gt;.gitginore&lt;&#x2F;code&gt;.
+I spend way too much time crafting &lt;code&gt;find &amp;lt;...&amp;gt; | xargs rm&lt;&#x2F;code&gt; commands. I know, I&#x27;ll call it &lt;code&gt;git clean&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Well... before I get too far I&#x27;ll just make sure it doesn&#x27;t already exist.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;$ man git clean
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;GIT-CLEAN(1)                  Git Manual                       GIT-CLEAN(1)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;NAME
+&lt;&#x2F;span&gt;&lt;span&gt;       git-clean - Remove untracked files from the working tree
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;SYNOPSIS
+&lt;&#x2F;span&gt;&lt;span&gt;    git clean [-d] [-f] [-i] [-n] [-q] [-e &amp;lt;pattern&amp;gt;] [-x | -X] [--]
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;lt;path&amp;gt;...
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;DESCRIPTION
+&lt;&#x2F;span&gt;&lt;span&gt;    Cleans the working tree by recursively removing files that are not
+&lt;&#x2F;span&gt;&lt;span&gt;    under version control, starting from the current directory.
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    ...
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Huh... well I... that&#x27;s pretty much exactly how I would have done it...&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;git&lt;&#x2F;code&gt; &lt;em&gt;tab tab&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;txt&quot; style=&quot;background-color:#191919;color:#f8f8f2;&quot; class=&quot;language-txt &quot;&gt;&lt;code class=&quot;language-txt&quot; data-lang=&quot;txt&quot;&gt;&lt;span&gt;add                  filter-branch        relink
+&lt;&#x2F;span&gt;&lt;span&gt;am                   format-patch         remote
+&lt;&#x2F;span&gt;&lt;span&gt;annotate             fsck                 repack
+&lt;&#x2F;span&gt;&lt;span&gt;apply                gc                   replace
+&lt;&#x2F;span&gt;&lt;span&gt;archive              get-tar-commit-id    request-pull
+&lt;&#x2F;span&gt;&lt;span&gt;bisect               grep                 reset
+&lt;&#x2F;span&gt;&lt;span&gt;blame                help                 revert
+&lt;&#x2F;span&gt;&lt;span&gt;branch               imap-send            review
+&lt;&#x2F;span&gt;&lt;span&gt;bundle               init                 rm
+&lt;&#x2F;span&gt;&lt;span&gt;checkout             instaweb             send-email
+&lt;&#x2F;span&gt;&lt;span&gt;cherry               interpret-trailers   shortlog
+&lt;&#x2F;span&gt;&lt;span&gt;cherry-pick          log                  show
+&lt;&#x2F;span&gt;&lt;span&gt;clean                merge                show-branch
+&lt;&#x2F;span&gt;&lt;span&gt;clone                mergetool            stage
+&lt;&#x2F;span&gt;&lt;span&gt;column               mv                   stash
+&lt;&#x2F;span&gt;&lt;span&gt;commit               name-rev             status
+&lt;&#x2F;span&gt;&lt;span&gt;config               notes                submodule
+&lt;&#x2F;span&gt;&lt;span&gt;credential           p4                   svn
+&lt;&#x2F;span&gt;&lt;span&gt;describe             pull                 tag
+&lt;&#x2F;span&gt;&lt;span&gt;diff                 push                 verify-commit
+&lt;&#x2F;span&gt;&lt;span&gt;difftool             rebase               whatchanged
+&lt;&#x2F;span&gt;&lt;span&gt;fetch                reflog               worktree
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Ah, okay.
+I get it now.
+Git &lt;em&gt;does&lt;&#x2F;em&gt; do a lot of things.&lt;&#x2F;p&gt;
+&lt;span class=&quot;note&quot;&gt;
+    &lt;span class=&quot;note-title&quot;&gt;
+        Note
+    &lt;&#x2F;span&gt;
+
+    &lt;span class=&quot;note-body&quot;&gt;
+        &amp;lt;p&amp;gt;The above output is from &amp;lt;code&amp;gt;git 2.8.2&amp;lt;&amp;#x2F;code&amp;gt;&amp;lt;&amp;#x2F;p&amp;gt;
+
+    &lt;&#x2F;span&gt;
+&lt;&#x2F;span&gt;
+</content>
+        
+    </entry>
+</feed>

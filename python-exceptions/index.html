@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="shortcut icon" href="&#x2F;favicon.ico"><title>How to Get the Most out of Your Python Exceptions | elijah.run</title>
+  <meta name="title" content="How to Get the Most out of Your Python Exceptions">
+<meta name="description" content="A blog about tech, media, and art">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="alternate" type="application/atom+xml" title="elijah.run" href="/atom.xml">
+  <style>
+    :root {
+    --width: 586px;
+    --font-main: Verdana, sans-serif;
+    --font-secondary: "Times New Roman", serif;
+    --font-scale: 1.1em;
+    --background-color: #fff;
+    --heading-color: #222;
+    --text-color: #444;
+    --link-color: #3273dc;
+    --visited-color: #8b6fcb;
+    --blockquote-color: #222;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background-color: #01242e;
+      --heading-color: #eee;
+      --text-color: #ddd;
+      --link-color: #8cc2dd;
+      --visited-color: #8b6fcb;
+      --blockquote-color: #ccc;
+    }
+  }
+
+  body {
+    font-family: var(--font-secondary);
+    font-size: var(--font-scale);
+    margin: auto;
+    padding: 20px;
+    max-width: var(--width);
+    text-align: left;
+    background-color: var(--background-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: var(--text-color);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-main);
+    color: var(--heading-color);
+  }
+
+  a {
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  nav a {
+    margin-right: 8px;
+  }
+
+  nav span.active {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  strong,
+  b {
+    color: var(--heading-color);
+  }
+
+  button {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  main {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px dashed;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  pre code {
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 0.875rem;
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: monospace;
+    padding: 2px;
+    border-radius: 3px;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: var(--code-color);
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px 0;
+    text-align: center;
+  }
+
+  .title:hover {
+    text-decoration: none;
+  }
+
+  .title h1 {
+    font-size: 1.5em;
+  }
+
+  .inline {
+    width: auto !important;
+  }
+
+  .highlight,
+  .code {
+    padding: 1px 15px;
+    background-color: var(--code-background-color);
+    color: var(--code-color);
+    border-radius: 3px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    overflow-x: auto;
+  }
+
+  /* blog post list */
+  ul.posts {
+    list-style-type: none;
+    padding: unset;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  ul.posts li {
+    line-height: 1;
+    margin: 0;
+  }
+
+  ul.posts li time {
+    margin-left: 0px;
+    font-size: 12px;
+  }
+
+  ul.posts li a:visited {
+    color: var(--visited-color);
+  }
+
+  li.post {
+    padding: 0px 0px 10px 0px;
+  }
+
+  span.tags {
+    font-size: smaller;
+  }
+
+  /* table of contents */
+  details ul {
+    list-style-type: circle;
+  }
+
+  </style>
+</head>
+<body>
+  <header>
+  <a href="/" class="title">
+    <h1>elijah.run</h1>
+  </a>
+  <nav aria-label="site">
+      <a href="/">(🏠 elijah.run)</a>
+      <a href="https:&#x2F;&#x2F;games.elijah.run">(🕹️ games)</a>
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;pop">(🐙 github 🐱)</a>
+      <a href="/Elijah Voigt.pdf">(👔 resume)</a>
+  </nav>
+</header>
+<h1>How to Get the Most out of Your Python Exceptions</h1>
+      <p>
+        <i>
+          <time datetime="2016-04-03T00:00:00+00:00" pubdate>Sun 03 Apr 2016</time>
+        </i>
+      </p>
+    <details open>
+      <summary>Table of contents</summary>
+    <ul>
+        <li>
+          <a href="/python-exceptions/#finding-exceptions">Finding Exceptions</a>
+        </li>
+        <li>
+          <a href="/python-exceptions/#writing-your-own-exceptions">Writing Your Own Exceptions</a>
+        </li>
+        <li>
+          <a href="/python-exceptions/#further-reading">Further Reading</a>
+        </li>
+    </ul>
+    </details>
+  <main>
+    <pre data-lang="python" style="background-color:#191919;color:#f8f8f2;" class="language-python "><code class="language-python" data-lang="python"><span>var </span><span style="color:#ff5e5e;">= </span><span style="color:#6699cc;">input</span><span>(</span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">Please enter a number not equal to 0: </span><span style="color:#ffffff;">&#39;</span><span>)
+</span><span style="color:#ff5e5e;">try</span><span>:
+</span><span>    var </span><span style="color:#ff5e5e;">= </span><span style="color:#fdb082;">1</span><span style="color:#ff5e5e;">/</span><span style="color:#fbe3bf;">float</span><span>(var)
+</span><span style="color:#ff5e5e;">except </span><span style="color:#fbe3bf;">ZeroDivisionError </span><span style="color:#ff5e5e;">as </span><span>e:
+</span><span>    </span><span style="color:#6699cc;">print</span><span>(</span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">Error: </span><span style="color:#ffffff;">&#39; </span><span style="color:#ff5e5e;">+ </span><span style="color:#fbe3bf;">str</span><span>(e))
+</span><span>    </span><span style="color:#6699cc;">print</span><span>(</span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">You had one job!</span><span style="color:#ffffff;">&#39;</span><span>)
+</span></code></pre>
+<span class="warning">
+    <span class="warning-title">
+        Warning
+    </span>
+
+    <span class="warning-body">
+        &lt;p&gt;This post does not cover &lt;em&gt;what&lt;&#x2F;em&gt; python exceptions are. If the above code
+doesn&#x27;t make sense you should check out this &lt;a href=&quot;https:&#x2F;&#x2F;wiki.python.org&#x2F;moin&#x2F;HandlingExceptions&quot;&gt;Introduction to Python
+Exceptions&lt;&#x2F;a&gt; from
+wiki.python.org before reading this post.&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<p>If you've fallen in love with Python you've no doubt discovered exceptions:</p>
+<pre data-lang="python" style="background-color:#191919;color:#f8f8f2;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#ff5e5e;">try</span><span>:
+</span><span>    </span><span style="color:#6d6d6d;"># do a thing
+</span><span style="color:#ff5e5e;">except</span><span>:
+</span><span>    </span><span style="color:#6d6d6d;"># thing did not work,
+</span><span>    </span><span style="color:#6d6d6d;"># do something else
+</span></code></pre>
+<p>They are endlessly useful and help one to avoid writing checks upon checks upon checks before getting to the meat of your project.
+Just try a thing, catch the error, keep on rolling (or fail gracefully).</p>
+<p>As powerful as they can be, I have found a lot of folks (past me included) who don't know how to find python exceptions and don't know how to write their own exceptions! So let's do that.</p>
+<h2 id="finding-exceptions">Finding Exceptions</h2>
+<p>When writing exception handling code it's kosher to explicitly state <em>which</em> error you expect.</p>
+<pre data-lang="python" style="background-color:#191919;color:#f8f8f2;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#6d6d6d;"># Bad:
+</span><span style="color:#ff5e5e;">try</span><span>:
+</span><span>    </span><span style="color:#6d6d6d;"># A thing that might not work
+</span><span style="color:#ff5e5e;">except</span><span>:
+</span><span>    </span><span style="color:#6d6d6d;"># Something else
+</span><span>
+</span><span style="color:#6d6d6d;"># Good:
+</span><span style="color:#ff5e5e;">try</span><span>:
+</span><span>    </span><span style="color:#6d6d6d;"># A thing that might not work
+</span><span style="color:#ff5e5e;">except </span><span>SpecificError </span><span style="color:#ff5e5e;">as </span><span>err:
+</span><span>    </span><span style="color:#6d6d6d;"># Maybe print(err)
+</span><span>    </span><span style="color:#6d6d6d;"># Something else
+</span></code></pre>
+<p>When I first found this out I thought <em>Golly that does sound useful; I always try to be explicit in my error handling -- but how??</em>
+Thankfully future me is here to answer questions like this.</p>
+<p>The exception you are looking for (for instance, <code>SpecificError</code> in the above pseudo-code) can be found in the python traceback:</p>
+<pre data-lang="txt" style="background-color:#191919;color:#f8f8f2;" class="language-txt "><code class="language-txt" data-lang="txt"><span>$ echo &quot;open(&#39;myfakefile.txt&#39;, &#39;r&#39;).close()&quot; &gt; my-unhandled-script.py
+</span><span>$ python my-unhandled-script.py
+</span><span>Traceback (most recent call last):
+</span><span>  File &quot;/tmp/test.py&quot;, line 1, in &lt;module&gt;
+</span><span>    open(&#39;myfakefile.txt&#39;, &#39;r&#39;).close()
+</span><span>IOError: [Errno 2] No such file or directory: &#39;myfakefile.txt&#39;
+</span></code></pre>
+<p>That bit on the last line <code>IOError</code> is the exception you're looking for.
+So when you write your code you'll say something like the following:</p>
+<pre data-lang="python" style="background-color:#191919;color:#f8f8f2;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#ff5e5e;">try</span><span>:
+</span><span>    </span><span style="color:#6699cc;">open</span><span>(</span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">myfakefile.txt</span><span style="color:#ffffff;">&#39;</span><span>, </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">r</span><span style="color:#ffffff;">&#39;</span><span>).</span><span style="color:#e9fdac;">close</span><span>()
+</span><span style="color:#ff5e5e;">except </span><span style="color:#fbe3bf;">IOError </span><span style="color:#ff5e5e;">as </span><span>e:
+</span><span>    </span><span style="color:#6699cc;">print</span><span>(e)
+</span><span>    </span><span style="color:#6699cc;">print</span><span>(</span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">File `myfakefile.txt` does not exist</span><span style="color:#ffffff;">&#39;</span><span>)
+</span></code></pre>
+<p>To recap, here is one way (and my preferred method for) 'doing' python exception handling:</p>
+<ol>
+<li>Write breakable code.</li>
+<li>Run breakable code, see what exceptions python spits out.</li>
+<li>Wrap breakable code in explicit <code>try/except</code> blocks.</li>
+<li>???</li>
+<li>Profit.</li>
+</ol>
+<h2 id="writing-your-own-exceptions">Writing Your Own Exceptions</h2>
+<p>You (who me?), yes <em>you</em> can write custom python exceptions.
+It's dead easy too.</p>
+<p>The long and short of it is you define an exception class which either inherits from the <code>Exception</code> class or another pre-existing exception.</p>
+<pre data-lang="python" style="background-color:#191919;color:#f8f8f2;" class="language-python "><code class="language-python" data-lang="python"><span style="font-style:italic;color:#ff5e5e;">class </span><span style="text-decoration:underline;color:#8cdaff;">CusssstomError</span><span>(</span><span style="text-decoration:underline;font-style:italic;color:#8cdaff;">Exception</span><span>):
+</span><span>    </span><span style="color:#6d6d6d;">&#39;&#39;&#39;Raise when snakes&#39;&#39;&#39;
+</span><span>    </span><span style="font-style:italic;color:#ff5e5e;">def </span><span style="color:#6699cc;">__init__</span><span>(</span><span style="font-style:italic;color:#fc9354;">self</span><span>, </span><span style="font-style:italic;color:#fc9354;">message</span><span>):
+</span><span>        </span><span style="color:#e9fdac;">self</span><span>.message </span><span style="color:#ff5e5e;">= </span><span>message
+</span><span>
+</span><span style="font-style:italic;color:#ff5e5e;">def </span><span style="color:#8cdaff;">check_for_snakes</span><span>(</span><span style="font-style:italic;color:#fc9354;">foo</span><span>):
+</span><span>    </span><span style="color:#ff5e5e;">if </span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">snake</span><span style="color:#ffffff;">&#39; </span><span style="color:#ff5e5e;">in </span><span>foo.</span><span style="color:#e9fdac;">lower</span><span>():
+</span><span>        </span><span style="color:#ff5e5e;">raise </span><span style="color:#e9fdac;">CusssstomError</span><span>(</span><span style="color:#ffffff;">&#39;</span><span style="color:#fbe3bf;">Snakes! I hate snakes!</span><span style="color:#ffffff;">&#39;</span><span>)
+</span><span>
+</span><span style="color:#ff5e5e;">try</span><span>:
+</span><span>    foo </span><span style="color:#ff5e5e;">= </span><span style="color:#6699cc;">input</span><span>(</span><span style="color:#ffffff;">&quot;</span><span style="color:#fbe3bf;">Just don&#39;t mention snakes: </span><span style="color:#ffffff;">&quot;</span><span>)
+</span><span>    </span><span style="color:#e9fdac;">check_for_snakes</span><span>(foo)
+</span><span style="color:#ff5e5e;">except </span><span>CusssstomError </span><span style="color:#ff5e5e;">as </span><span>e:
+</span><span>    </span><span style="color:#6699cc;">print</span><span>(e.message)
+</span><span style="color:#ff5e5e;">else</span><span>:
+</span><span>    </span><span style="color:#6699cc;">print</span><span>(</span><span style="color:#ffffff;">&quot;</span><span style="color:#fbe3bf;">Thanks. I appreciate it.</span><span style="color:#ffffff;">&quot;</span><span>)
+</span></code></pre>
+<p>The above code defines the <code>CusssstomError</code> exception class which you can <code>raise</code>.
+Very neat and <a href="https://docs.python.org/2/glossary.html#term-pythonic">pythonic</a></p>
+<h2 id="further-reading">Further Reading</h2>
+<p>Here are a few references I suggest you check out to get an even better grasp on exception handling and custom exceptions:</p>
+<ul>
+<li>This Stack Overflow post: <a href="http://stackoverflow.com/questions/1319615/proper-way-to-declare-custom-exceptions-in-modern-python">Proper way to declare custom exceptions in modern Python?</a>.</li>
+<li>This Python doc: <a href="https://docs.python.org/2/library/exceptions.html">Built-in Exceptions</a>.</li>
+</ul>
+<p>And as always, search engines are your friends.</p>
+
+  </main>
+  <p>
+        Tags:
+          <a href="/tags/python/">#python</a>
+  </p>
+<footer>
+  Made with <a href="https://www.getzola.org/">Zola</a>;
+  theme inspired by <a href="https://codeberg.org/alanpearce/zola-bearblog">Zola ʕ•ᴥ•ʔ Bear</a>.
+</footer>
+</body>
+</html>

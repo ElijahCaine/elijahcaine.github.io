@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="shortcut icon" href="&#x2F;favicon.ico"><title>Conceptual hurdles in programming | elijah.run</title>
+  <meta name="title" content="Conceptual hurdles in programming">
+<meta name="description" content="A blog about tech, media, and art">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="alternate" type="application/atom+xml" title="elijah.run" href="/atom.xml">
+  <style>
+    :root {
+    --width: 586px;
+    --font-main: Verdana, sans-serif;
+    --font-secondary: "Times New Roman", serif;
+    --font-scale: 1.1em;
+    --background-color: #fff;
+    --heading-color: #222;
+    --text-color: #444;
+    --link-color: #3273dc;
+    --visited-color: #8b6fcb;
+    --blockquote-color: #222;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background-color: #01242e;
+      --heading-color: #eee;
+      --text-color: #ddd;
+      --link-color: #8cc2dd;
+      --visited-color: #8b6fcb;
+      --blockquote-color: #ccc;
+    }
+  }
+
+  body {
+    font-family: var(--font-secondary);
+    font-size: var(--font-scale);
+    margin: auto;
+    padding: 20px;
+    max-width: var(--width);
+    text-align: left;
+    background-color: var(--background-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+    color: var(--text-color);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-main);
+    color: var(--heading-color);
+  }
+
+  a {
+    color: var(--link-color);
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  nav a {
+    margin-right: 8px;
+  }
+
+  nav span.active {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  strong,
+  b {
+    color: var(--heading-color);
+  }
+
+  button {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  main {
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px dashed;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  pre code {
+    display: block;
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 0.875rem;
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: monospace;
+    padding: 2px;
+    border-radius: 3px;
+  }
+
+  blockquote {
+    border-left: 1px solid #999;
+    color: var(--code-color);
+    padding-left: 20px;
+    font-style: italic;
+  }
+
+  footer {
+    padding: 25px 0;
+    text-align: center;
+  }
+
+  .title:hover {
+    text-decoration: none;
+  }
+
+  .title h1 {
+    font-size: 1.5em;
+  }
+
+  .inline {
+    width: auto !important;
+  }
+
+  .highlight,
+  .code {
+    padding: 1px 15px;
+    background-color: var(--code-background-color);
+    color: var(--code-color);
+    border-radius: 3px;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    overflow-x: auto;
+  }
+
+  /* blog post list */
+  ul.posts {
+    list-style-type: none;
+    padding: unset;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+
+  ul.posts li {
+    line-height: 1;
+    margin: 0;
+  }
+
+  ul.posts li time {
+    margin-left: 0px;
+    font-size: 12px;
+  }
+
+  ul.posts li a:visited {
+    color: var(--visited-color);
+  }
+
+  li.post {
+    padding: 0px 0px 10px 0px;
+  }
+
+  span.tags {
+    font-size: smaller;
+  }
+
+  /* table of contents */
+  details ul {
+    list-style-type: circle;
+  }
+
+  </style>
+</head>
+<body>
+  <header>
+  <a href="/" class="title">
+    <h1>elijah.run</h1>
+  </a>
+  <nav aria-label="site">
+      <a href="/">(🏠 elijah.run)</a>
+      <a href="https:&#x2F;&#x2F;games.elijah.run">(🕹️ games)</a>
+      <a href="https:&#x2F;&#x2F;github.com&#x2F;pop">(🐙 github 🐱)</a>
+      <a href="/Elijah Voigt.pdf">(👔 resume)</a>
+  </nav>
+</header>
+<h1>Conceptual hurdles in programming</h1>
+      <p>
+        <i>
+          <time datetime="2016-08-21T00:00:00+00:00" pubdate>Sun 21 Aug 2016</time>
+        </i>
+      </p>
+    <details open>
+      <summary>Table of contents</summary>
+    <ul>
+        <li>
+          <a href="/programming-hurdles/#data-structures">Data Structures</a>
+        </li>
+        <li>
+          <a href="/programming-hurdles/#objects-classes">Objects&#x2F;Classes</a>
+        </li>
+        <li>
+          <a href="/programming-hurdles/#functional-programming">Functional Programming</a>
+        </li>
+        <li>
+          <a href="/programming-hurdles/#frameworks">Frameworks</a>
+        </li>
+        <li>
+          <a href="/programming-hurdles/#testing">Testing</a>
+        </li>
+        <li>
+          <a href="/programming-hurdles/#troubleshooting">Troubleshooting</a>
+        </li>
+    </ul>
+    </details>
+  <main>
+    <p>I've been actively learning programming for almost five years now.
+I started by taking a C++ class at Portland Community College.
+That class was the best thing to happen to my engineering career because it taught me that <em>programming is very hard, and I am not naturally good at it</em>, but it was also very rewarding so I stuck with it.</p>
+<p>I'm not special either, most of us aren't very good at programming because it's so abstract and hard to grasp, like Math and Infinite Jest.
+There are of course the people that seem like <em>programming gods</em>, but nine times out of ten those people have been programming since they were eight and it's really not fair to compare yourself to them.
+That's like comparing your sporting abilities to <em>any olympic athlete</em>.
+Don't be so hard on yourself.</p>
+<p>In learning to program, and now teaching others how to program, I've identified a few <strong>hurdles</strong> (mountains, cliffs, obstacles, w/e) that folks tend to hit and have trouble crossing.
+They always get past these hurdles eventually (or they quit CS ☹), but not without a bit of unnecessary struggle.
+Struggling builds character, and I don't want to cheat anybody out of that, but I do want to help those that want it.</p>
+<p>This post will in no way guarantee your success in overcoming these obstacles but it should at least give you a head start to help you understand what you're learning and point you in the right direction when you want to ask a question.</p>
+<h2 id="data-structures">Data Structures</h2>
+<p>Understanding that <strong>a lot of programming is basically manipulating data to fit a need</strong> is pretty important.
+A social network can be thought of as a bunch of people's personal information plugged into a bunch of algorithms to make connecting easier.
+A word processor is really just a front-end for some <a href="https://en.wikipedia.org/wiki/Microsoft_Office_XML_formats">XML under the hood</a>, which is itself <a href="https://en.wikipedia.org/wiki/XML">just a way to represent structured data</a>.</p>
+<p>When handling data try to keep in mind what you are trying to accomplish and the best way to structure the data in the pursuit of that goal.</p>
+<span class="define">
+    <span class="define-word">
+        &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Array_data_structure&quot;&gt;Arrays&#x2F;Lists&#x2F;Vectors&lt;&#x2F;a&gt;
+    </p>
+
+    <span class="define-body">
+        &lt;p&gt;&lt;strong&gt;Arrays and Lists are an ordered data type&lt;&#x2F;strong&gt;. Use them when you need to
+keep track of the order things happened in, like queuing an event.
+Try to keep them &lt;em&gt;relatively small&lt;&#x2F;em&gt; since they are fast for retrieval but not inherently space efficient.&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<p>%{ define(word="<a href="https://en.wikipedia.org/wiki/Hash_table">Hash-table/Key-Value/Dictionary</a>" %}
+<strong>Hashes are useful for storing unordered data</strong> with keys, like an address book or a small database.
+We use them to access data quickly and easily since data is retrieved using a key and always takes approximately the same amount of time.
+When you get data out of a dictionary you provide a key and get back the associated data, just like (you guessed it) <em>a real dictionary</em> where provided the word you get back a definition.</p>
+<p>Hash-tables are useful tools but should only be used for <em>relatively small</em> amounts of data.
+There is a bit of overhead in creating the table for storing your data so if your data-set gets too big you'll run out of memory.
+{% end %}</p>
+<span class="define">
+    <span class="define-word">
+        &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Linked_list&quot;&gt;Linked Lists&#x2F;Sorted Trees&lt;&#x2F;a&gt;
+    </p>
+
+    <span class="define-body">
+        &lt;p&gt;Linked Lists and Sorted Trees aren&#x27;t exactly the same thing but I&#x27;m lumping them together because they both deal with a lot of the same concepts and can be implemented in similar ways.
+In learning about LL&#x2F;ST you&#x27;ll probably deal with Structs, Nodes, Pointers, and dynamic memory allocation, which if you&#x27;re like me will totally break your brain and then become second-nature.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;One advantage to these structures is that they can be implemented to take up only the space they require&lt;&#x2F;strong&gt;.
+Where Hash-maps and lists are hard to make the &lt;em&gt;right size&lt;&#x2F;em&gt;, LL&#x2F;ST can only take up exactly as much room as they need.
+The trade-off (a word you hear a lot when dealing choosing data structures) is that they&#x27;re not always the &lt;em&gt;fastest&lt;&#x2F;em&gt; way to store&#x2F;retrieve data.
+Just consider your use-case and think about what you need for the task at hand.&lt;&#x2F;p&gt;
+&lt;p&gt;If you&#x27;re interested in learning Rust though there&#x27;s a great guide on &lt;a href=&quot;http:&#x2F;&#x2F;cglab.ca&#x2F;~abeinges&#x2F;blah&#x2F;too-many-lists&#x2F;book&#x2F;README.html&quot;&gt;Learning Rust With Entirely Too Many Linked Lists&lt;&#x2F;a&gt;.
+I do suggest it.&lt;&#x2F;p&gt;
+
+    </span>
+</span>
+<p><strong>These are all just the structures you're giving your data</strong> (a series of ones and zeros on disk and in memory).
+Anybody that's done work with a sufficiently complicated project (e.g., the Linux Kernel) can tell you that one glob of data can be treated as a Linked List, Array, Hash -- or all three at the same time!
+The structure you give your data is just so <em>you</em> can work with it, the computer doesn't really care one way or another, so choose what makes the most sense.</p>
+<p><em>Speaking of data structures...</em></p>
+<h2 id="objects-classes">Objects/Classes</h2>
+<p><strong>Objects are logical groupings of data (variables) and functions that act on that data</strong>.
+They differ from structs in that they are (usually) private by default, meaning that variables declared in an object are not accessible from the <em>outside</em> unless you explicitly say so.
+Variables are usually manipulated via a method called a <em>getter</em> and <em>setter</em>.</p>
+<p>Well... what I've actually described so far is creating a <strong>class: aka a blueprint for an object</strong>.
+This python is a pretty succinct way to describe classes and objects:</p>
+<pre data-lang="python" style="background-color:#191919;color:#f8f8f2;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#6d6d6d;">&quot;&quot;&quot;
+</span><span style="color:#6d6d6d;">objects_example.py
+</span><span style="color:#6d6d6d;">
+</span><span style="color:#6d6d6d;">Declare a class named BazClass.
+</span><span style="color:#6d6d6d;">&quot;&quot;&quot;
+</span><span style="font-style:italic;color:#ff5e5e;">class </span><span style="text-decoration:underline;color:#8cdaff;">BazClass</span><span>(</span><span style="text-decoration:underline;font-style:italic;color:#8cdaff;">object</span><span>):
+</span><span>    </span><span style="font-style:italic;color:#ff5e5e;">def </span><span style="color:#6699cc;">__init__</span><span>(</span><span style="font-style:italic;color:#fc9354;">self</span><span>, </span><span style="font-style:italic;color:#fc9354;">x</span><span style="color:#ff5e5e;">=</span><span style="color:#ff8942;">None</span><span>):
+</span><span>        </span><span style="color:#6d6d6d;">&quot;&quot;&quot;
+</span><span style="color:#6d6d6d;">        The __init__ function sets class variables and sets up the object.
+</span><span style="color:#6d6d6d;">        &quot;&quot;&quot;
+</span><span>        </span><span style="color:#e9fdac;">self</span><span>.var1 </span><span style="color:#ff5e5e;">= </span><span>x
+</span><span>        </span><span style="color:#e9fdac;">self</span><span>.var2 </span><span style="color:#ff5e5e;">= </span><span style="color:#fdb082;">6
+</span><span>
+</span><span>    </span><span style="font-style:italic;color:#ff5e5e;">def </span><span style="color:#8cdaff;">a</span><span>(</span><span style="font-style:italic;color:#fc9354;">self</span><span>):
+</span><span>        </span><span style="color:#6d6d6d;">&quot;&quot;&quot;
+</span><span style="color:#6d6d6d;">        a() acts on the object variables (accessed via `self`).
+</span><span style="color:#6d6d6d;">        &quot;&quot;&quot;
+</span><span>        </span><span style="color:#6699cc;">print</span><span>(</span><span style="color:#ffffff;">&quot;</span><span style="color:#fbe3bf;">Variable you set </span><span style="color:#fdb082;">{}</span><span style="color:#ffffff;">&quot;</span><span>.</span><span style="color:#e9fdac;">format</span><span>(</span><span style="color:#e9fdac;">self</span><span>.var1))
+</span><span>        </span><span style="color:#6699cc;">print</span><span>(</span><span style="color:#ffffff;">&quot;</span><span style="color:#fbe3bf;">Variable set by class definition </span><span style="color:#fdb082;">{}</span><span style="color:#ffffff;">&quot;</span><span>.</span><span style="color:#e9fdac;">format</span><span>(</span><span style="color:#e9fdac;">self</span><span>.var2))
+</span><span>
+</span><span style="color:#6d6d6d;">&quot;&quot;&quot;
+</span><span style="color:#6d6d6d;">Creating an instance of the class and call the `a()` function.
+</span><span style="color:#6d6d6d;">&quot;&quot;&quot;
+</span><span>foo_object </span><span style="color:#ff5e5e;">= </span><span style="color:#e9fdac;">BazClass</span><span>(</span><span style="color:#fdb082;">7</span><span>)
+</span><span>foo_object.</span><span style="color:#e9fdac;">a</span><span>()
+</span></code></pre>
+<p>Objects are something that will <em>click</em> after you use the for a while.
+There's some nuances and implementation quirks depending on the language you're using, but in the end they're just logical collections of private data and functions.</p>
+<h2 id="functional-programming">Functional Programming</h2>
+<p><a href="https://en.wikipedia.org/wiki/Functional_programming">Functional Programming</a> (FP) was my first big paradigm shift in CS since functions. FP includes concepts of variable immutability (once it's set it's set), callbacks (functions calling functions and propagating results up), program state -- the list goes on. Here's an example to get us started.</p>
+<p>Non-functional paradigm:</p>
+<pre data-lang="javascript" style="background-color:#191919;color:#f8f8f2;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="font-style:italic;color:#fbdfb5;">function </span><span style="color:#8cdaff;">average_evens</span><span style="color:#ffffff;">(</span><span style="font-style:italic;color:#fc9354;">x</span><span style="color:#ffffff;">) </span><span>{
+</span><span>    </span><span style="color:#e9fdac;">avg </span><span style="color:#ff5e5e;">= </span><span style="color:#fdb082;">0</span><span>;
+</span><span>
+</span><span>    </span><span style="color:#ff5e5e;">for </span><span>(</span><span style="color:#e9fdac;">i </span><span style="color:#ff5e5e;">= </span><span style="color:#fdb082;">0</span><span>; </span><span style="color:#e9fdac;">i </span><span style="color:#ff5e5e;">&lt; </span><span style="color:#e9fdac;">x</span><span>.length; </span><span style="color:#e9fdac;">i</span><span style="color:#ff5e5e;">++</span><span>) {
+</span><span>        </span><span style="color:#ff5e5e;">if </span><span>(</span><span style="color:#e9fdac;">x</span><span>[</span><span style="color:#e9fdac;">i</span><span>] </span><span style="color:#ff5e5e;">% </span><span style="color:#fdb082;">2 </span><span style="color:#ff5e5e;">== </span><span style="color:#fdb082;">0</span><span>) {
+</span><span>            </span><span style="color:#e9fdac;">avg </span><span style="color:#ff5e5e;">+= </span><span style="color:#e9fdac;">x</span><span>[</span><span style="color:#e9fdac;">i</span><span>];
+</span><span>        }
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#e9fdac;">avg </span><span style="color:#ff5e5e;">= </span><span style="color:#e9fdac;">avg</span><span style="color:#ff5e5e;">/</span><span style="color:#e9fdac;">x</span><span>.length;
+</span><span>    </span><span style="color:#ff5e5e;">return </span><span style="color:#e9fdac;">avg</span><span>;
+</span><span>}
+</span></code></pre>
+<p>Functional Paradigm:</p>
+<pre data-lang="javascript" style="background-color:#191919;color:#f8f8f2;" class="language-javascript "><code class="language-javascript" data-lang="javascript"><span style="font-style:italic;color:#fbdfb5;">function </span><span style="color:#8cdaff;">average_evens</span><span style="color:#ffffff;">(</span><span style="font-style:italic;color:#fc9354;">x</span><span style="color:#ffffff;">) </span><span>{
+</span><span>    </span><span style="color:#ff5e5e;">return </span><span style="color:#e9fdac;">x</span><span>.</span><span style="color:#8cdaff;">reduce</span><span>(</span><span style="font-style:italic;color:#fbdfb5;">function</span><span style="color:#ffffff;">(</span><span style="font-style:italic;color:#fc9354;">x</span><span style="color:#ffffff;">) </span><span>{
+</span><span>        </span><span style="color:#ff5e5e;">if </span><span>(</span><span style="color:#e9fdac;">x </span><span style="color:#ff5e5e;">% </span><span style="color:#fdb082;">2 </span><span style="color:#ff5e5e;">== </span><span style="color:#fdb082;">0</span><span>) {
+</span><span>            </span><span style="color:#ff5e5e;">return </span><span style="color:#e9fdac;">x</span><span>;
+</span><span>        }
+</span><span>    }) </span><span style="color:#ff5e5e;">/ </span><span style="color:#e9fdac;">x</span><span>.length;
+</span><span>}
+</span></code></pre>
+<p>In the non-functional example one would create a variable, iterate with a for-loop, and return a variable at the end.
+In the functional example you call functions which return data that you handle (callback) and that result is added to or replaces the original data. I'm honestly not doing this topic justice but it's one of those things you either learn first or you learn the hard way.</p>
+<p>This is just the tip of the ice-berg; many people prefer functional programming.
+If you are even remotely interested you should find one of those people and let them talk your ear off.</p>
+<p>If you're learning functional programming I suggest either <a href="http://learnyouahaskell.com/chapters">Learn You a Haskell for Great Good</a> if you're interested in learning Haskell (which is interesting an interesting language if nothing else) or <a href="http://www.oreilly.com/programming/free/functional-programming-python.csp">Functional Programming in Python</a> for <em>pythonistas</em>.</p>
+<h2 id="frameworks">Frameworks</h2>
+<p><strong>Frameworks are a collection of libraries, methods, and tools to accomplish a specific type of task</strong>.
+If you want to get something <em>complicated</em> done <em>fast</em>, you'll use a framework.
+Take for instance a web-app like Facebook or Twitter: it needs to be able to <em>send/receive HTTP requests</em>, <em>interface with a database</em> / <em>craft database queries</em>, <em>render web-pages</em>, <em>and</em> whatever the actual website is supposed to do.</p>
+<p>Frameworks can be very small or very large but they are always a big hurdle for those of us that have never worked with one before.
+A good starter framework I suggest is <a href="http://flask.pocoo.org/">Flask</a> for Python-based web-apps.</p>
+<h2 id="testing">Testing</h2>
+<p><strong>Testing is writing a program to test your program</strong>.
+There are many different <em>kinds</em> of tests from <em>unit tests</em> (checking single functions), to <em>integration tests</em> (checking that your functions work <em>together</em>), to <em>random tests</em> (trying to break your program by telling a computer to break your functions by using they in weird ways).</p>
+<p>Remember that first program you wrote for class?
+You wrote one that prompted the user for data and then manipulated that input in some way?
+Remember how you tested that?
+Probably in the most tedious way imaginable: <strong>by hand</strong>.
+Tests are much easier to write than your actual code and while they're a tedious investment up-front it's a small commitment relative to the <em>hours</em> you'd spend checking your program every time you made a change.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>The last thing isn't really about programming but about <em>fixing</em> your programming.
+When you're learning a new paradigm, language, or framework you're going to spend a lot of time <em>fixing</em> what doesn't currently work much more than you're going to actually be producing working code.
+This skill can also be summed up as 'How to Read Error Messages and Google well'.</p>
+<p>My troubleshooting advice is to <em>read</em> the error message, don't give up, and search for anything that looks meaningful.
+Once you find an answer try to <em>grok</em> what the answer means so you can learn <em>why</em> that worked instead of knowing <em>if I type this in a certain way it will not fall down</em>.
+Future you will appreciate the investment you put into <em>understanding</em> the problem and it's solution.</p>
+<p>Also don't be afraid to experiment. Make a copy of your program (or use <a href="https://git-scm.com/">git</a>) and see if some crazy idea is exactly what you need.</p>
+<hr />
+<p>This list is far from complete but it still felt worth sharing.
+If you think I missed something, <a href="/about/#contact">contact me</a> and I might do a follow-up post.</p>
+
+  </main>
+  <p>
+        Tags:
+          <a href="/tags/programming/">#programming</a>
+  </p>
+<footer>
+  Made with <a href="https://www.getzola.org/">Zola</a>;
+  theme inspired by <a href="https://codeberg.org/alanpearce/zola-bearblog">Zola ʕ•ᴥ•ʔ Bear</a>.
+</footer>
+</body>
+</html>
